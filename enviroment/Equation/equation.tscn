@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://b47fietgvlfph"]
+
+[ext_resource type="Script" uid="uid://db61rgphxf650" path="res://enviroment/Equation/equation.gd" id="1_msofc"]
+
+[node name="Equation" type="Node2D"]
+script = ExtResource("1_msofc")
+
+[node name="Text" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Default"

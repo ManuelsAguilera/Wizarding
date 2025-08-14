@@ -1,0 +1,39 @@
+[gd_resource type="TileSet" load_steps=4 format=3 uid="uid://0pm56xlpn385"]
+
+[ext_resource type="Texture2D" uid="uid://dgjvxb0x801wb" path="res://assets/WizardTileset.png" id="1_vu7lj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j4xyq"]
+absorbent = true
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iu0q7"]
+resource_name = "Dungeon Tiles"
+texture = ExtResource("1_vu7lj")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-2, 0, -0.5, 32, 32, 32, 32, 0)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -4, 32, -3.5, 32, 32, -32, 32)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, 0.5, -0.5, 0, 0, 32, -32, 32)
+0:1/0 = 0
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, 2, 32, 1.5, 32, -32, -1.5, -32)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, 4, 32, 3, 32, -32, -32, -32)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(0.5, 1, -32, 1.5, -32, -32, -0.5, -32)
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-2, -32, -1.5, 32, 32, 32, 32, -32)
+5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(1, -32, 1, 32, -32, 32, -32, -32)
+5:0/0 = 0
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+
+[resource]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 7
+physics_layer_0/collision_mask = 7
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_j4xyq")
+sources/0 = SubResource("TileSetAtlasSource_iu0q7")
