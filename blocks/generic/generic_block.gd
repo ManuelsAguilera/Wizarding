@@ -2,7 +2,18 @@ extends CharacterBody2D
 
 class_name GenericBlock
 
+
+
+
 @onready var particleEffect = $DustParticles
+
+
+#Variables exportadas de sprites
+
+@onready var sprite = $sprite
+@export var spriteName:String="default"
+@export var frame:int = 0
+
 
 const Tile_Size:Vector2 = Vector2(64,64)
 
@@ -29,12 +40,23 @@ func snap_to_grid():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	setSprite()
 	snap_to_grid()
 	initial_position = global_position
 
 #Para identificar objeto
 func isABlock():
 	pass
+
+
+
+func setSprite():
+	
+	
+	sprite.play(spriteName)
+	sprite.frame = frame
+	sprite.pause()
+
 
 
 func set_direction(dir):
@@ -73,6 +95,3 @@ func move(delta):
 		global_position = initial_position + (Tile_Size * direction*percent_moved)
 func _process(delta):
 	pass
-
-
-

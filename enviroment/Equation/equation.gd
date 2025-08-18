@@ -5,8 +5,8 @@ class_name Equation
 
 @onready var label:Label = $Text
 
-@export var equation:String = ""
-
+@export var equation:String = "default"
+@export var color:String = "white"
 
 
 
@@ -30,7 +30,15 @@ const position_speed: float = 1.0 # Ajusta la velocidad de la animación
 
 
 func _ready():
-	primary_color = Color(0.8,0.8,0.95)
+
+	changeEquation(equation)
+
+	if color == "white":
+		primary_color = Color(0.8,0.8,0.95)
+	else:
+		primary_color = Color(color)
+	
+
 	modulation_color = Color(1,1,0.2)
 	modulation= 0 
 

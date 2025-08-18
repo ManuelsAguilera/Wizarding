@@ -1,11 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://b47fietgvlfph"]
+[gd_scene load_steps=4 format=3 uid="uid://b47fietgvlfph"]
 
 [ext_resource type="Script" uid="uid://db61rgphxf650" path="res://enviroment/Equation/equation.gd" id="1_msofc"]
+
+[sub_resource type="SystemFont" id="SystemFont_msofc"]
+font_names = PackedStringArray("Fantasy")
+
+[sub_resource type="LabelSettings" id="LabelSettings_vm3h4"]
+font = SubResource("SystemFont_msofc")
+font_size = 64
 
 [node name="Equation" type="Node2D"]
 script = ExtResource("1_msofc")
 
 [node name="Text" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Default"
+offset_right = 84.0
+offset_bottom = 34.0
+text = "x=1"
+label_settings = SubResource("LabelSettings_vm3h4")
