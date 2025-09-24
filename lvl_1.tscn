@@ -20,7 +20,7 @@ tile_set = ExtResource("2_clg6b")
 map_size = Vector2(14, 14)
 
 [node name="GenericBlock4" parent="LevelManager/BlockManager" index="0" instance=ExtResource("3_t6wp4")]
-position = Vector2(287, 352)
+position = Vector2(352, 352)
 scale = Vector2(0.81, 0.81)
 spriteName = "num"
 frame = 2
@@ -37,6 +37,11 @@ spriteName = "="
 position = Vector2(418, 288)
 spriteName = "num"
 frame = 1
+
+[node name="GenericBlock5" parent="LevelManager/BlockManager" index="4" instance=ExtResource("3_t6wp4")]
+position = Vector2(352, 224)
+scale = Vector2(0.81, 0.81)
+spriteName = "y"
 
 [node name="Player" parent="." index="1" instance=ExtResource("3_clg6b")]
 position = Vector2(466, 447)

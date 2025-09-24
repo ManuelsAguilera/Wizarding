@@ -1,118 +1,127 @@
 extends Node2D
 
-# Guardar los bloques en un mapa segun su posicion Vector2
+# ============================================================================
+# VARIABLES DE CONFIGURACIÓN
+# ============================================================================
 
-# Usar un dictionary: 	
-@export var map_size = Vector2(10,10)
+## Tamaño del mapa para futura implementación de grid
+@export var map_size: Vector2 = Vector2(10, 10)
 
-#Lista de lista de bloques encadenados.
-var concatBlocks = []
+# ============================================================================
+# VARIABLES DE ESTADO
+# ============================================================================
 
-#Todos los bloques, para buscarlos facilmente
-var blocklist = []
+## Lista de listas de bloques encadenados encontrados
+var concatBlocks: Array[Array] = []
 
-#Lista de variables, que son candidatos a cadenas.
-var variableBlocks = []
+## Todos los bloques GenericBlock en la escena para búsquedas rápidas
+var blocklist: Array[GenericBlock] = []
 
+## Bloques de tipo variable (x,y,z) que pueden iniciar cadenas
+var variableBlocks: Array[GenericBlock] = []
 
-#Solo buscar cadenas despues de que un bloque se haya movido
-var chains_searched = false
-
-
-func _ready():
-	
-	for i in get_children():
-		if i is GenericBlock:
-			blocklist.append(i)
-
-			if i.getTypeBlock() == "variable":
-				variableBlocks.append(i)
+## Flag para evitar búsquedas innecesarias de cadenas
+var chains_searched: bool = false
 
 
-	for i in blocklist:
-		print(i.getTypeBlock()," ",i.getSnappedPosition())
+# ============================================================================
+# MÉTODOS DE INICIALIZACIÓN
+# ============================================================================
 
+func _ready() -> void:
+	_initialize_blocks()
+	#_debug_print_blocks()
 
-# Metodo para que GenericBlock hijo llame cuando se mueva
-func notify_block_moved():
+## Inicializa las listas de bloques buscando todos los GenericBlock hijos
+func _initialize_blocks() -> void:
+	for child in get_children():
+		if child is GenericBlock:
+			blocklist.append(child)
+			if child.getTypeBlock() == "variable":
+				variableBlocks.append(child)
+
+## Imprime información de debug de todos los bloques encontrados
+func _debug_print_blocks() -> void:
+	for block in blocklist:
+		print(block.getTypeBlock(), " ", block.getSnappedPosition())
+
+# ============================================================================
+# MÉTODOS DE NOTIFICACIÓN
+# ============================================================================
+
+## Método para que GenericBlock hijo llame cuando se mueva
+func notify_block_moved() -> void:
 	chains_searched = false
 
+# ============================================================================
+# MÉTODOS DE BÚSQUEDA DE CADENAS
+# ============================================================================
 
-
-
-#busca en una direccion dada todos los bloques conectados
-func searchBlocks(initial_pos: Vector2, dir: Vector2) -> Array:
-	var cadena = []
-	var current_pos = initial_pos + dir
+## Busca recursivamente bloques conectados en una dirección específica
+func searchBlocks(initial_pos: Vector2, direction: Vector2) -> Array[GenericBlock]:
+	var chain: Array[GenericBlock] = []
+	var current_pos: Vector2 = initial_pos + direction
 	
 	# Buscar bloque en la posición actual
 	for block in blocklist:
 		if block.getSnappedPosition() == current_pos:
-			cadena.append(block)
-			# Continuar búsqueda recursiva
-			cadena += searchBlocks(current_pos, dir)
+			chain.append(block)
+			# Continuar búsqueda recursiva en la misma dirección
+			chain.append_array(searchBlocks(current_pos, direction))
 			break
-
-	return cadena
-
-
-
-
-func generar_cadenas():
-
-	#Vaciar lista de cadenas
-	concatBlocks.clear()
-
-	for variable in variableBlocks:
-		var v_pos = variable.getSnappedPosition()
-		var v_down = v_pos + Vector2(0,1)
-		var v_right = v_pos + Vector2(1,0)
-
-		#Revisar en la lista si hay algun bloque abajo o derecha
-		#Si hay, seguir esa direccion y añadir a lista de concatBlocks
-		#No importa si no es eficiente buscar en la lista, porque nunca
-		#habra muchos bloques en pantalla
-
-		for block in blocklist:
-			#Candidato a estar conectado
-			var candidate = [variable,block]
-			var b_pos = block.getSnappedPosition()
-			if b_pos == v_down:
-				concatBlocks.append( candidate + searchBlocks(b_pos, Vector2(0,1)))
-			elif b_pos == v_right:
-				concatBlocks.append( candidate + searchBlocks(b_pos, Vector2(1,0)))
-
-			# Si no hay bloques conectados, no anadir nada
-
-
-
-func printCadenas():
-	print("Cadenas encontradas:")
-	for c in concatBlocks:
-		var s = ""
-		for b in c:
-			var type = b.getTypeBlock()
-
-
-			s +=  type + " "
-
-			if type == "num":
-				s += str(b.getTypeNumber()) + ","
-			elif type == "var":
-				s += b.getTypeVariable() + ","
-			elif type == "op":
-				s += b.getTypeOperation() + ","
-
-		print("[",s,"]")
-
-func _process(delta):
 	
-	#Buscar abajo y derecha de los bloques si es que hay mas
+	return chain
 
+## Genera todas las cadenas de bloques válidas
+func generar_cadenas() -> void:
+	concatBlocks.clear()
+	
+	for variable in variableBlocks:
+		var variable_pos: Vector2 = variable.getSnappedPosition()
+		var down_pos: Vector2 = variable_pos + Vector2(0, 1)
+		var right_pos: Vector2 = variable_pos + Vector2(1, 0)
+		
+		# Buscar bloques conectados hacia abajo y hacia la derecha
+		for block in blocklist:
+			var block_pos: Vector2 = block.getSnappedPosition()
+			var initial_chain: Array[GenericBlock] = [variable, block]
+			
+			if block_pos == down_pos:
+				var complete_chain = initial_chain + searchBlocks(block_pos, Vector2(0, 1))
+				concatBlocks.append(complete_chain)
+			elif block_pos == right_pos:
+				var complete_chain = initial_chain + searchBlocks(block_pos, Vector2(1, 0))
+				concatBlocks.append(complete_chain)
+
+# ============================================================================
+# MÉTODOS DE DEBUG Y VISUALIZACIÓN
+# ============================================================================
+
+## Imprime todas las cadenas encontradas en formato legible
+func printCadenas() -> void:
+	print("Cadenas encontradas:")
+	for chain in concatBlocks:
+		var chain_string: String = ""
+		for block in chain:
+			var block_type: String = block.getTypeBlock()
+			chain_string += block_type + " "
+			
+			match block_type:
+				"num":
+					chain_string += str(block.getTypeNumber()) + ","
+				"variable":
+					chain_string += str(block.getTypeVariable()) + ","
+				"operator":
+					chain_string += str(block.getTypeOperation()) + ","
+		
+		print("[", chain_string, "]")
+
+# ============================================================================
+# MÉTODOS DEL MOTOR GODOT
+# ============================================================================
+
+func _process(_delta: float) -> void:
 	if not chains_searched:
 		chains_searched = true
 		generar_cadenas()
-
 		printCadenas()
-		
-	#Vaciar lista para la siguiente iteracion
