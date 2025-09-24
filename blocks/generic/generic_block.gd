@@ -15,6 +15,7 @@ class_name GenericBlock
 @export var frame:int = 0
 
 
+var parentManager =null; #Referencia al bloque que lo contiene
 var typeBlock:String=""
 
 const Tile_Size:Vector2 = Vector2(64,64)
@@ -73,7 +74,9 @@ func _ready():
 	snap_to_grid()
 	initial_position = global_position
 
-	setTypeBlock()	
+	setTypeBlock()
+
+	parentManager = get_parent()
 
 
 #Para identificar objeto
@@ -148,8 +151,11 @@ func move(delta):
 		direction = Vector2.ZERO
 		percent_moved = 0.0
 		print("Moving")
+		parentManager.notify_block_moved()
 	else:
+		#En movimiento
 		global_position = initial_position + (Tile_Size * direction*percent_moved)
+		
 
 
 func _process(delta):
