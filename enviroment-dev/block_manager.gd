@@ -93,6 +93,63 @@ func generar_cadenas() -> void:
 				var complete_chain = initial_chain + searchBlocks(block_pos, Vector2(1, 0))
 				concatBlocks.append(complete_chain)
 
+
+# ============================================================================
+# MÉTODOS DE REVISION SINTAXIS
+# ============================================================================
+
+
+func revisar_sintaxis(cadena: Array[GenericBlock]) -> String:
+	# La cadena debe tener al menos 3 bloques (variable, operador, número/variable)
+	if cadena.size() < 3:
+		return "invalid"
+	
+	
+	#La respuesta final para luego ser devuelta a una clase encargada de evaluar la cadena
+	var final_string = ""
+
+	# La cadena debe comenzar con una variable
+	var first_block = cadena[0]
+	if first_block.getTypeBlock() != "variable":
+		return "invalid"
+
+	
+
+	final_string += first_block.getTypeVariable()
+
+	var second_block = cadena[1]
+	# El segundo bloque debe ser un operador
+	if second_block.getTypeBlock() != "=":
+		return "invalid"
+
+	final_string += "="
+	
+	# Variables para rastrear el estado esperado
+	var expecting_number = true
+	
+	# Iterar desde el índice 2 en adelante
+	for i in range(2, cadena.size()):
+		var block = cadena[i]
+		var block_type = block.getTypeBlock()
+		
+		if expecting_number:
+			if block_type == "num":
+				expecting_number = false
+				final_string += str(block.getTypeNumber())
+			else:
+				return "invalid"
+		else:
+			if block_type == "operator":
+				expecting_number = true
+				final_string += block.getTypeOperation()
+			else:
+				return "invalid"
+	
+
+	# La cadena no debe terminar esperando un número
+	return final_string if not expecting_number else "invalid"
+
+
 # ============================================================================
 # MÉTODOS DE DEBUG Y VISUALIZACIÓN
 # ============================================================================
@@ -124,4 +181,8 @@ func _process(_delta: float) -> void:
 	if not chains_searched:
 		chains_searched = true
 		generar_cadenas()
-		printCadenas()
+
+		for chain in concatBlocks:
+			var result = revisar_sintaxis(chain)
+			if result != "invalid":
+				print("Cadena valida: ", result)
