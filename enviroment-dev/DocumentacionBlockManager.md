@@ -1,3 +1,36 @@
+# Bloques genericos
+
+
+
+Los bloques tienen 5 tipos principales:
+
+- variable: x,y,z
+
+- num: digitos del 0-9
+
+- =: Para el bloque '='
+
+- operation: +,-,*,/
+ 
+- invalid/null: Para cuando no cumpla ningun caso.
+
+
+Estos bloques se definen segun las variables exportadas para seleccionar el sprite. Puedes
+ver cuales son los correctos viendo los sprites asignados en AnimatedSprite2D, donde depende de:
+
+- El nombre de la animación
+- El frame de la animación.
+
+
+
+Puedes obtener el tipo de bloque usando el metodo:
+
+- getTypeBlock() -> String con el tipo de bloque.
+
+Y subtipos:
+- getTypeNum() -> int con el tipo de numero 0-9
+- getTypeOperation() -> String con el tipo de operacion +,-,/,*
+- getTypeVariable() -> String con el tipo de variable x,y,z
 
 # Pseudocódigo de logica de encadenación
 

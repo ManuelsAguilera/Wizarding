@@ -29,7 +29,7 @@ var direction:Vector2 = Vector2()
 
 
 func snap_to_grid():
-	#Revisar si ya esta snapped pq sino se bugea
+	#Revisar si ya esta snapped porque sino se producen bugs
 	var snapped_pos = global_position.snapped(Tile_Size)
 
 	if global_position == snapped_pos:
@@ -37,6 +37,13 @@ func snap_to_grid():
 	else:
 		global_position = snapped_pos+ Vector2(1,-1)*Tile_Size/2
 		
+
+#Devuelve la posicion del bloque como si estuviese en un grid
+func getSnappedPosition():
+	if is_moving:
+		return initial_position.snapped(Tile_Size)/64
+	else:
+		return global_position.snapped(Tile_Size)/64
 
 func setTypeBlock():
 	if spriteName == "default":
@@ -143,5 +150,7 @@ func move(delta):
 		print("Moving")
 	else:
 		global_position = initial_position + (Tile_Size * direction*percent_moved)
+
+
 func _process(delta):
 	pass
