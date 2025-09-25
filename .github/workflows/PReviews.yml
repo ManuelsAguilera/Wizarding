@@ -1,0 +1,33 @@
+# .github/copilot.yml
+copilot:
+  pr_review:
+    enabled: true
+    language: "es"
+    description: |
+      Revisa cada pull request en español. Asegúrate de que el nuevo código:
+      - Sea coherente con la estructura del proyecto Godot.
+      - Siga buenas prácticas de GDScript.
+      - No rompa escenas ni referencias en archivos `.tscn`.
+      - Esté correctamente documentado.
+      - Mantenga la organización del proyecto y aproveche reutilización de nodos, señales y scripts.
+
+    instructions: |
+      - Analiza los scripts `.gd` y cómo se relacionan con las escenas `.tscn`.
+      - Verifica que los cambios no rompan la arquitectura general del juego.
+      - Compara con otros scripts existentes para asegurar coherencia de estilo y estructura.
+      - Si se agregan nuevas escenas, asegúrate de que tengan propósito claro y estén bien organizadas.
+      - Verifica que las señales, nodos y paths sean correctos y no generen errores en tiempo de ejecución.
+      - Revisa si se necesita actualizar documentación o comentarios.
+      - Comenta en español de forma clara, técnica y respetuosa.
+
+  context:
+    include:
+      - "**/*.gd"         # Scripts en GDScript
+      - "**/*.tscn"       # Escenas
+      - "**/*.tres"       # Recursos (opcional)
+      - "project.godot"   # Configuración principal
+      - "README.md"
+      - "docs/**"         # Carpeta de documentación
+    exclude:
+      - "addons/**"       # Si usas plugins externos, puedes excluirlos si no se modifican
+      - ".import/**"      # Carpeta generada automáticamente
