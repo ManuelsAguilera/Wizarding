@@ -105,7 +105,7 @@ func revisar_sintaxis(cadena: Array[GenericBlock]) -> String:
 		return "invalid"
 	
 	
-	#La respuesta final para luego ser devuelta a una clase encargada de evaluar la cadena
+	# La respuesta final para luego ser devuelta a una clase encargada de evaluar la cadena
 	var final_string = ""
 
 	# La cadena debe comenzar con una variable
