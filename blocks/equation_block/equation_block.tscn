@@ -1,6 +1,5 @@
-[gd_scene load_steps=6 format=3 uid="uid://b47fietgvlfph"]
+[gd_scene load_steps=5 format=3 uid="uid://b47fietgvlfph"]
 
-[ext_resource type="PackedScene" uid="uid://dfjrgvseq2osg" path="res://blocks/equation_block/goal_block/goal_block.tscn" id="1_bjq60"]
 [ext_resource type="Script" uid="uid://c1jqxuv7jxikd" path="res://blocks/equation_block/equation_block.gd" id="1_tqoe7"]
 [ext_resource type="Script" uid="uid://db61rgphxf650" path="res://blocks/equation_block/equation.gd" id="3_k5518"]
 
@@ -14,8 +13,6 @@ font_size = 64
 
 [node name="EquationBlock" type="Node2D"]
 script = ExtResource("1_tqoe7")
-
-[node name="GoalBlock" parent="." instance=ExtResource("1_bjq60")]
 
 [node name="TextEquation" type="Node2D" parent="."]
 position = Vector2(0, -95)

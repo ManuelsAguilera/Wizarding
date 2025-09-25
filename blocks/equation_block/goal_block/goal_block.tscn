@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://dfjrgvseq2osg"]
+[gd_scene load_steps=9 format=3 uid="uid://dfjrgvseq2osg"]
 
 [ext_resource type="Script" uid="uid://dkp3nb2w7agxs" path="res://blocks/equation_block/goal_block/goal_block.gd" id="1_1uq5b"]
+[ext_resource type="Script" uid="uid://bu75u4y76jlb" path="res://blocks/equation_block/goal_block/goal_post_collition.gd" id="2_a461f"]
 [ext_resource type="Texture2D" uid="uid://dgjvxb0x801wb" path="res://assets/WizardTileset.png" id="2_byd1h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a461f"]
@@ -28,13 +29,24 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bgg37"]
+size = Vector2(64, 64)
+
 [node name="GoalBlock" type="Node2D"]
 script = ExtResource("1_1uq5b")
 
-[node name="GoalPost" type="CharacterBody2D" parent="."]
+[node name="GoalCollision" type="CharacterBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_a461f")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalPost"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalCollision"]
 shape = SubResource("RectangleShape2D_a461f")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GoalPost"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GoalCollision"]
 sprite_frames = SubResource("SpriteFrames_3hgkq")
+
+[node name="Area2D" type="Area2D" parent="GoalCollision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalCollision/Area2D"]
+shape = SubResource("RectangleShape2D_bgg37")

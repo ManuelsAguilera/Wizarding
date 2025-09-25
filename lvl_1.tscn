@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://c44nd1strvac3"]
+[gd_scene load_steps=10 format=4 uid="uid://c44nd1strvac3"]
 
 [ext_resource type="PackedScene" uid="uid://dq0d6naagkltb" path="res://enviroment-dev/devworld.tscn" id="1_6mpcb"]
 [ext_resource type="PackedScene" uid="uid://df6eejm7lhc5e" path="res://enviroment-dev/block_manager/block_manager.tscn" id="2_bcbm8"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://ls0o0fycav6i" path="res://player/player.tscn" id="3_clg6b"]
 [ext_resource type="PackedScene" uid="uid://duty7jtc6tl0j" path="res://blocks/generic/generic_block.tscn" id="3_t6wp4"]
 [ext_resource type="Script" uid="uid://cy8tnsw3715c6" path="res://enviroment-dev/equation_manager/equation_manager.gd" id="6_bcbm8"]
+[ext_resource type="PackedScene" uid="uid://b47fietgvlfph" path="res://blocks/equation_block/equation_block.tscn" id="7_a1bqk"]
+[ext_resource type="PackedScene" uid="uid://dfjrgvseq2osg" path="res://blocks/equation_block/goal_block/goal_block.tscn" id="8_4snel"]
 
 [node name="lvl1" instance=ExtResource("1_6mpcb")]
 
@@ -50,6 +52,11 @@ spriteName = "+"
 
 [node name="EquationManager" type="Node2D" parent="LevelManager" index="3"]
 script = ExtResource("6_bcbm8")
+
+[node name="EquationBlock" parent="LevelManager/EquationManager" index="0" instance=ExtResource("7_a1bqk")]
+position = Vector2(224, 480)
+
+[node name="GoalBlock2" parent="LevelManager/EquationManager/EquationBlock" index="1" instance=ExtResource("8_4snel")]
 
 [node name="Player" parent="." index="1" instance=ExtResource("3_clg6b")]
 position = Vector2(466, 447)

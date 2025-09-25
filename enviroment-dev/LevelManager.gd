@@ -2,7 +2,7 @@ extends Node2D
 
 #Necesitas un config para cambiar variables de cada nivel, en caso de
 var config:Config;
-var eqManager:EquationManager = get_node("EquationManager");
+var eqManager:EquationManager;
 
 #Variables del nivel
 var level_complete: bool = false;
@@ -40,7 +40,7 @@ func aplicarConf():
 func _ready():
 	
 	config = get_node("Config")
-	
+	eqManager = get_node("EquationManager");
 	if (config):
 		aplicarConf()
 	
@@ -49,6 +49,16 @@ func _ready():
 func equation_found():
 
 	pass
+
+func on_player_reach_goal():
+	if not level_complete:
+		level_complete = true
+		print("LevelManager: Level Complete!")
+		#Aqui puedes agregar logica para finalizar el nivel, como cargar la siguiente escena o mostrar una pantalla de victoria.
+
+
+
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
