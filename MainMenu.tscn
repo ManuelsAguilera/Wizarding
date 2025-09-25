@@ -1,0 +1,92 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6jjvsltw4pbb"]
+
+[ext_resource type="Script" uid="uid://b1uidrfcxruw" path="res://main_menu.gd" id="1_i26rj"]
+
+[node name="MenuPrincipal" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i26rj")
+
+[node name="TextureRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.381703, 0.381703, 0.381703, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Jugar" type="Button" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Jugar"
+
+[node name="Opciones" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Opciones"
+
+[node name="Salir" type="Button" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Salir"
+
+[node name="Control" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Volver" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -28.5
+offset_top = -40.0
+offset_right = 28.5
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Volver"
+
+[node name="SettingsCenterContainer" type="CenterContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/SettingsCenterContainer"]
+layout_mode = 2
+
+[node name="Video" type="Button" parent="Control/SettingsCenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Video"
+
+[node name="Audio" type="Button" parent="Control/SettingsCenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Audio"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Opciones" to="." method="_on_opciones_pressed"]
