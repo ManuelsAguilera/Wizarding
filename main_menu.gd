@@ -15,4 +15,5 @@ func salir_del_juego():
 
 
 func _on_opciones_pressed():
-	
+	#Corrigiendo una linea, para testear sistema de prs
+	pass
