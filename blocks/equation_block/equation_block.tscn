@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://b47fietgvlfph"]
+
+[ext_resource type="PackedScene" uid="uid://dfjrgvseq2osg" path="res://blocks/equation_block/goal_block/goal_block.tscn" id="1_bjq60"]
+[ext_resource type="Script" uid="uid://c1jqxuv7jxikd" path="res://blocks/equation_block/equation_block.gd" id="1_tqoe7"]
+[ext_resource type="Script" uid="uid://db61rgphxf650" path="res://blocks/equation_block/equation.gd" id="3_k5518"]
+
+[sub_resource type="SystemFont" id="SystemFont_msofc"]
+font_names = PackedStringArray("Fantasy")
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_vm3h4"]
+font = SubResource("SystemFont_msofc")
+font_size = 64
+
+[node name="EquationBlock" type="Node2D"]
+script = ExtResource("1_tqoe7")
+
+[node name="GoalBlock" parent="." instance=ExtResource("1_bjq60")]
+
+[node name="TextEquation" type="Node2D" parent="."]
+position = Vector2(0, -95)
+script = ExtResource("3_k5518")
+
+[node name="Text" type="Label" parent="TextEquation"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -53.5
+offset_right = 53.5
+offset_bottom = 88.0
+grow_horizontal = 2
+text = "x=1"
+label_settings = SubResource("LabelSettings_vm3h4")

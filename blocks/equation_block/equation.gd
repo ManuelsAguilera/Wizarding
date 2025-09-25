@@ -1,14 +1,11 @@
 extends Node2D
 
-class_name Equation
+class_name TextEquation
 
-
-@onready var label:Label = $Text
-
-@export var equation:String = "default"
-@export var color:String = "white"
-
-
+# Missing variable declarations
+var equation: String = ""
+var color: String = "white"
+var label: Label
 
 var base_scale:Vector2
 
@@ -30,6 +27,8 @@ const position_speed: float = 1.0 # Ajusta la velocidad de la animación
 
 
 func _ready():
+	# Initialize label reference
+	label = get_node("Text")  # Assuming the Label node is a direct child
 
 	changeEquation(equation)
 
@@ -84,6 +83,7 @@ func getEquation()->String:
 	return equation
 
 
-func changeEquation(newEq:String):
-	equation=newEq
-	label.text = equation
+func changeEquation(newEq: String):
+	equation = newEq
+	if label:
+		label.text = equation

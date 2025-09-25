@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=4 uid="uid://c44nd1strvac3"]
+[gd_scene load_steps=8 format=4 uid="uid://c44nd1strvac3"]
 
 [ext_resource type="PackedScene" uid="uid://dq0d6naagkltb" path="res://enviroment-dev/devworld.tscn" id="1_6mpcb"]
-[ext_resource type="PackedScene" uid="uid://df6eejm7lhc5e" path="res://enviroment-dev/block_manager.tscn" id="2_bcbm8"]
+[ext_resource type="PackedScene" uid="uid://df6eejm7lhc5e" path="res://enviroment-dev/block_manager/block_manager.tscn" id="2_bcbm8"]
 [ext_resource type="TileSet" uid="uid://0pm56xlpn385" path="res://DungeonTileSet.tres" id="2_clg6b"]
-[ext_resource type="PackedScene" uid="uid://bv34mjfjmmsit" path="res://enviroment-dev/config.tscn" id="2_t6wp4"]
+[ext_resource type="PackedScene" uid="uid://bv34mjfjmmsit" path="res://enviroment-dev/config/config.tscn" id="2_t6wp4"]
 [ext_resource type="PackedScene" uid="uid://ls0o0fycav6i" path="res://player/player.tscn" id="3_clg6b"]
 [ext_resource type="PackedScene" uid="uid://duty7jtc6tl0j" path="res://blocks/generic/generic_block.tscn" id="3_t6wp4"]
+[ext_resource type="Script" uid="uid://cy8tnsw3715c6" path="res://enviroment-dev/equation_manager/equation_manager.gd" id="6_bcbm8"]
 
 [node name="lvl1" instance=ExtResource("1_6mpcb")]
 
@@ -46,6 +47,9 @@ spriteName = "y"
 [node name="GenericBlock6" parent="LevelManager/BlockManager" index="5" instance=ExtResource("3_t6wp4")]
 position = Vector2(416, 288)
 spriteName = "+"
+
+[node name="EquationManager" type="Node2D" parent="LevelManager" index="3"]
+script = ExtResource("6_bcbm8")
 
 [node name="Player" parent="." index="1" instance=ExtResource("3_clg6b")]
 position = Vector2(466, 447)
