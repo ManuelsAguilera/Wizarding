@@ -235,9 +235,9 @@ func _physics_process(delta: float) -> void:
 #Este metodo debe ser invocado por su manager
 func set_in_chain(in_chain: bool) -> void:
 	if in_chain:
-		sprite.modulate = Color(1, 1, 1) # Color verdoso
+		sprite.modulate = Color(1, 1, 1) # Color normal
 		print("Seleccionado en cadena")
 	else:
-		sprite.modulate = Color(0.5, 0.5, 0.5) # Color normal
+		sprite.modulate = Color(0.5, 0.5, 0.5) # Color opaco
 	
 	is_in_chain = in_chain
