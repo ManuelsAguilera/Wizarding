@@ -180,9 +180,22 @@ func printCadenas() -> void:
 func _process(_delta: float) -> void:
 	if not chains_searched:
 		chains_searched = true
+
+
+		#deseleccionar cadenas
+		if concatBlocks.size() > 0:
+			for block in blocklist:
+				block.set_in_chain(false)
+
+
 		generar_cadenas()
 
 		for chain in concatBlocks:
-			var result = revisar_sintaxis(chain)
+
+			#No se puede enviar chain, porque se modifica en revisar_sintaxis
+			var result = revisar_sintaxis(chain.duplicate())
 			if result != "invalid":
 				print("Cadena valida: ", result)
+				#Activar color de bloques en cadena
+				for block in chain:
+					block.set_in_chain(true)

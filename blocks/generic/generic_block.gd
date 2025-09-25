@@ -54,6 +54,9 @@ var percent_moved: float = 0.0
 ## Dirección del movimiento actual
 var direction: Vector2 = Vector2()
 
+## Indica si el bloque está en una cadena
+var is_in_chain: bool = false
+
 
 
 # ============================================================================
@@ -66,6 +69,9 @@ func _ready() -> void:
 	_setup_position()
 	_setup_type()
 	_setup_parent_reference()
+
+	#Inicializar modulación
+	set_in_chain(false)
 
 ## Configura el sprite inicial del bloque
 func _setup_sprite() -> void:
@@ -197,11 +203,17 @@ func _finish_movement() -> void:
 	direction = Vector2.ZERO
 	percent_moved = 0.0
 	print("Moving")
+	#Quitar de cadena si es que esta
+
+	if is_in_chain:
+		set_in_chain(false)
+		is_in_chain = false
 	parentManager.notify_block_moved()
 
 ## Actualiza la posición durante el movimiento
 func _update_movement_position() -> void:
 	global_position = initial_position + (TILE_SIZE * direction * percent_moved)
+
 
 # ============================================================================
 # MÉTODOS DEL MOTOR GODOT
@@ -213,3 +225,19 @@ func _physics_process(delta: float) -> void:
 		move(delta)
 	else:
 		is_moving = false
+
+
+# ============================================================================
+# MÉTODOS DE CAMBIO ESTETICO
+# ============================================================================
+
+#Cambiar modulacion del sprite cuando este en una cadena
+#Este metodo debe ser invocado por su manager
+func set_in_chain(in_chain: bool) -> void:
+	if in_chain:
+		sprite.modulate = Color(1, 1, 1) # Color verdoso
+		print("Seleccionado en cadena")
+	else:
+		sprite.modulate = Color(0.5, 0.5, 0.5) # Color normal
+	
+	is_in_chain = in_chain
