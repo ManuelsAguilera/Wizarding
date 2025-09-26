@@ -13,9 +13,6 @@ func _ready():
 	for child in get_children():
 		if child is EquationBlock:
 			solutions.append(child)
-			child.event_blocks = get_tree().get_nodes_in_group("EventBlock")
-			print("EquationManager: Registered equation ", child.equation, " with solution ", child.solution)
-
 # ============================================================================
 # Llamado por level manager, para que verifque si es una respuesta correcta
 # y notifique a los bloques de eventos

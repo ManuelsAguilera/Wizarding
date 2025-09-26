@@ -89,6 +89,7 @@ func changeEquation(newEq: String):
 		label.text = equation
 
 func changeColor(newColor: String):
+	
 	color = newColor
 	if color == "white":
 		primary_color = Color(0.8,0.8,0.95)

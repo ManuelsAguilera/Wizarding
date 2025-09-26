@@ -35,18 +35,18 @@ size = Vector2(64, 64)
 [node name="GoalBlock" type="Node2D"]
 script = ExtResource("1_1uq5b")
 
-[node name="GoalCollision" type="CharacterBody2D" parent="."]
+[node name="GoalBody" type="CharacterBody2D" parent="."]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("2_a461f")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalCollision"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalBody"]
 shape = SubResource("RectangleShape2D_a461f")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GoalCollision"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GoalBody"]
 sprite_frames = SubResource("SpriteFrames_3hgkq")
 
-[node name="Area2D" type="Area2D" parent="GoalCollision"]
+[node name="Area2D" type="Area2D" parent="GoalBody"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalCollision/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalBody/Area2D"]
 shape = SubResource("RectangleShape2D_bgg37")

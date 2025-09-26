@@ -13,13 +13,14 @@ const TILE_SIZE: Vector2 = Vector2(64, 64)
 # ============================================================================
 # VARIABLES EXPORTADAS
 # ============================================================================
-
 @export var equation: String = "default"
 @export var color: String = "white"
 
 var text: TextEquation
+var event_blocks: Array[Node] = []  # Agregar esta línea de vuelta
 
-var event_blocks: Array = []
+
+
 
 #La variable que debe ser solucionada
 @export var variableType:String = "x"
@@ -64,12 +65,7 @@ func _ready():
 		text.changeEquation(equation)
 		text.changeColor(color)
 		text._ready()
-
-	# Buscar todos los EventBlock hijos
-	for child in get_children():
-		if child is EventBlock:
-			event_blocks.append(child)
-			print("Event block found: ", child)
+	
 
 
 
@@ -85,21 +81,23 @@ func get_solution() -> float:
 
 ## Notifica a los bloques de evento que la ecuación ha sido resuelta correctamente
 func triggerEvents(solved_value:bool) -> void:
-
+	
 	if solved == solved_value:
 		return # No hay cambio en el estado, no hacer nada
-	print("EquationBlock: Equation ", equation, " solved state changed to ", solved_value)
 	
 	solved = solved_value
+
+	for event in get_children():
+		if event is EventBlock:
+			event.trigger(solved)
+			print("Triggered event: ", event)
+
+
 	if solved:
-		for event in event_blocks:
-			print("EquationBlock: Triggering event block ", event)
-			event.trigger()
 		color="green"
-		text.changeColor("green")
+		if text:
+			text.changeColor("green")
 	else:
 		color="white"
-		text.changeColor("white")
-		for event in event_blocks:
-			print("EquationBlock: Resetting event block ", event)
-			event.deactivate()
+		if text:
+			text.changeColor("white")
