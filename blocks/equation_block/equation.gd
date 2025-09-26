@@ -2,7 +2,6 @@ extends Node2D
 
 class_name TextEquation
 
-# Missing variable declarations
 var equation: String = ""
 var color: String = "white"
 var label: Label
