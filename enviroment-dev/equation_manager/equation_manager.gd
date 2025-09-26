@@ -24,13 +24,20 @@ func verify_equation(equation: String) -> bool:
 
 	#Revisar cada bloque EquationBlock
 	for solution in solutions:
-		if compare_solutions(equation,solution):
-			print("EquationManager: Correct solution for equation: ", equation)
-			# Notify event blocks
-			
-			solution.triggerEvents()
+
+		var is_solved = compare_solutions(equation,solution)
+		
+
+		# Notify event blocks
+		solution.triggerEvents(is_solved)
+		print("EquationManager: Triggered events for equation: ", equation)
+
+
+		# Asumimos que una sola solucion es correcta
+		if is_solved:
+			print("EquationManager: Correct solution for equation: ", equation)			
 			return true
-	
+
 	print("EquationManager: No correct solution found for equation: ", equation)
 	return false
 

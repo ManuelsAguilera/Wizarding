@@ -48,6 +48,19 @@ func _ready():
 		aplicarConf()
 	
 
+func reset_solutions():
+	#Llamado por BlockManager cuando un bloque se mueve
+	#Resetea todas las soluciones de los bloques EquationBlock
+	if (eqManager):
+		for child in eqManager.get_children():
+			if child is EquationBlock:
+				child.triggerEvents(false) # Notificar que la ecuacion ya no es correcta
+				print("LevelManager: Resetting solution for equation: ", child.equation)
+	else:
+		print("LevelManager: No EquationManager found to reset solutions!")
+
+
+
 #Invocado por su hijo, el BlockManager cuando encuentra ecuacion valida
 func equation_found(equation:String):
 	print("LevelManager: Equation found: ", equation)

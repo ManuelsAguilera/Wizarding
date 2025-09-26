@@ -62,7 +62,7 @@ func _ready():
 	text = get_node("TextEquation")
 	if text:
 		text.changeEquation(equation)
-		text.color = color
+		text.changeColor(color)
 		text._ready()
 
 	# Buscar todos los EventBlock hijos
@@ -84,10 +84,22 @@ func get_solution() -> float:
 # ============================================================================
 
 ## Notifica a los bloques de evento que la ecuación ha sido resuelta correctamente
-func triggerEvents() -> void:
+func triggerEvents(solved_value:bool) -> void:
 
-	solved = !solved
+	if solved == solved_value:
+		return # No hay cambio en el estado, no hacer nada
+	print("EquationBlock: Equation ", equation, " solved state changed to ", solved_value)
+	
+	solved = solved_value
 	if solved:
 		for event in event_blocks:
 			print("EquationBlock: Triggering event block ", event)
 			event.trigger()
+		color="green"
+		text.changeColor("green")
+	else:
+		color="white"
+		text.changeColor("white")
+		for event in event_blocks:
+			print("EquationBlock: Resetting event block ", event)
+			event.deactivate()

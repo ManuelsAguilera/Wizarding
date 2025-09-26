@@ -53,6 +53,9 @@ func _debug_print_blocks() -> void:
 func notify_block_moved() -> void:
 	chains_searched = false
 
+	#Avisar a LevelManager para que resetee las soluciones
+	get_parent().reset_solutions()
+
 # ============================================================================
 # MÉTODOS DE BÚSQUEDA DE CADENAS
 # ============================================================================
@@ -202,10 +205,14 @@ func _process(_delta: float) -> void:
 				#Activar color de bloques en cadena
 				for block in chain:
 					block.set_in_chain(true)
+			
+
 
 # ============================================================================
 # Metodos a el padre LevelManager
 # ============================================================================
+
+
 
 
 func equation_found(equation: String) -> void:
