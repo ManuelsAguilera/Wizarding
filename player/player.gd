@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+
+class_name Player
+
 @onready var sprite:AnimatedSprite2D = $PlayerSprite
 @onready var magicParticle:CPUParticles2D = $MagicParticle
 @onready var nearRay:RayCast2D =$NearRay
