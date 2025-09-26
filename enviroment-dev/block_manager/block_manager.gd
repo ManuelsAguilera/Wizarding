@@ -195,7 +195,21 @@ func _process(_delta: float) -> void:
 			#No se puede enviar chain, porque se modifica en revisar_sintaxis
 			var result = revisar_sintaxis(chain.duplicate())
 			if result != "invalid":
-				print("Cadena valida: ", result)
+				#print("Cadena valida: ", result)
+				#Notificar a LevelManager
+				equation_found(result)
+
 				#Activar color de bloques en cadena
 				for block in chain:
 					block.set_in_chain(true)
+
+# ============================================================================
+# Metodos a el padre LevelManager
+# ============================================================================
+
+
+func equation_found(equation: String) -> void:
+	print("BlockManager: Ecuacion valida encontrada!")
+	var level_manager = get_parent()
+	if level_manager and level_manager is LevelManager:
+		level_manager.equation_found(equation)

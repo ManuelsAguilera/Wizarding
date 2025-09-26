@@ -21,6 +21,15 @@ var text: TextEquation
 
 var event_blocks: Array = []
 
+#La variable que debe ser solucionada
+@export var variableType:String = "x"
+#El valor que debe tener la variable
+@export var solution: float = 0.0/0.0
+
+
+#estado de solucion
+
+var solved:bool = false
 # ============================================================================
 # MÉTODOS DE SNAPPING
 # ============================================================================
@@ -56,7 +65,7 @@ func _ready():
 		text.color = color
 		text._ready()
 
-	#Buscar todos los EventBlock hijos
+	# Buscar todos los EventBlock hijos
 	for child in get_children():
 		if child is EventBlock:
 			event_blocks.append(child)
@@ -64,7 +73,21 @@ func _ready():
 
 
 
-func on_body_entered(body):
-	if body is Player:
-		print("Goal Block: Player entered the goal area")
-		get_parent().on_player_reach_goal()
+# Para que equation manager pueda obtener la solucion
+# y verificar si es correcta
+func get_solution() -> float:
+	return solution
+
+
+# ============================================================================
+# MÉTODOS DE NOTIFICACIÓN
+# ============================================================================
+
+## Notifica a los bloques de evento que la ecuación ha sido resuelta correctamente
+func triggerEvents() -> void:
+
+	solved = !solved
+	if solved:
+		for event in event_blocks:
+			print("EquationBlock: Triggering event block ", event)
+			event.trigger()

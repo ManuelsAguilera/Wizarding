@@ -1,5 +1,8 @@
 extends Node2D
 
+class_name LevelManager
+
+
 #Necesitas un config para cambiar variables de cada nivel, en caso de
 var config:Config;
 var eqManager:EquationManager;
@@ -46,9 +49,18 @@ func _ready():
 	
 
 #Invocado por su hijo, el BlockManager cuando encuentra ecuacion valida
-func equation_found():
+func equation_found(equation:String):
+	print("LevelManager: Equation found: ", equation)
+	if (eqManager):
+		var correct:bool = eqManager.verify_equation(equation)
+		if (correct):
+			print("LevelManager: Equation is correct!")
+		else:
+			print("LevelManager: Equation is incorrect.")
+	else:
+		print("LevelManager: No EquationManager found!")
 
-	pass
+
 
 func on_player_reach_goal():
 	if not level_complete:
