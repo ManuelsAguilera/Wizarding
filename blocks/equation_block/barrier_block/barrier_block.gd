@@ -4,7 +4,7 @@ class_name BarrierBlock
 
 
 
-## Referencia al cuerpo físico de la meta que controla colisiones
+## Referencia al cuerpo físico de la barrera que controla colisiones
 var body: BarrierBody
 
 # ============================================================================
@@ -17,7 +17,7 @@ var body: BarrierBody
 # MÉTODOS DE INICIALIZACIÓN
 # ============================================================================
 
-## Inicialización del GoalBlock
+## Inicialización del BarrierBlock
 func _ready() -> void:
 	super._ready()  # Llamar al _ready() del padre (EventBlock)
 	body = get_child(0)
