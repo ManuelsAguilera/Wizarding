@@ -15,7 +15,7 @@ const TILE_SIZE: Vector2 = Vector2(64, 64)
 # ============================================================================
 @export var equation: String = "default"
 @export var color: String = "white"
-
+@export var size:Vector2 = Vector2(1,1)
 var text: TextEquation
 var event_blocks: Array[Node] = []  # Agregar esta línea de vuelta
 
@@ -48,9 +48,7 @@ func snap_to_grid() -> void:
 func getSnappedPosition() -> Vector2:
 	return global_position.snapped(TILE_SIZE) / 64
 
-## Configura la posición inicial en el grid
-func _setup_position() -> void:
-	snap_to_grid()
+
 
 
 
@@ -60,13 +58,12 @@ func _setup_position() -> void:
 # ============================================================================
 
 func _ready():
-	# Configurar posición en el grid
-	_setup_position()
-	
+
 	text = get_node("TextEquation")
 	if text:
 		text.changeEquation(equation)
 		text.changeColor(color)
+		text.changeBaseScale(size)
 		text._ready()
 	
 

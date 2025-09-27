@@ -51,11 +51,12 @@ frame = 4
 position = Vector2(8, 16)
 
 [node name="puerta2" parent="LevelManager/EquationManager" index="0" instance=ExtResource("7_xyg57")]
-position = Vector2(80, 472)
+position = Vector2(89, 379)
 equation = "12=x+5"
 solution = 7.0
 
 [node name="GoalBlock2" parent="LevelManager/EquationManager/puerta2" index="1" instance=ExtResource("8_mw7wc")]
+position = Vector2(-3, 84)
 
 [node name="Player" parent="." index="1" instance=ExtResource("9_j0krj")]
 position = Vector2(400, 40)

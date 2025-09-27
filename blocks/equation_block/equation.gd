@@ -40,7 +40,7 @@ func _ready():
 	modulation_color = Color(1,1,0.2)
 	modulation= 0 
 
-	base_scale= self.scale
+	self.scale=base_scale
 
 	base_position = position 
 
@@ -94,3 +94,8 @@ func changeColor(newColor: String):
 		primary_color = Color(0.8,0.8,0.95)
 	else:
 		primary_color = Color(color)
+
+
+func changeBaseScale(newScale:Vector2):
+	base_scale=newScale
+	scale=base_scale

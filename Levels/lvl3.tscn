@@ -85,12 +85,13 @@ position = Vector2(8, 16)
 script = ExtResource("6_xsxlx")
 
 [node name="puerta" parent="LevelManager/EquationManager" index="0" instance=ExtResource("7_y3eed")]
-position = Vector2(656, 152)
+position = Vector2(664, 80)
 equation = "7y-40=-13-4y"
 variableType = "y"
 solution = 9.0
 
 [node name="GoalBlock2" parent="LevelManager/EquationManager/puerta" index="1" instance=ExtResource("8_nsrt8")]
+position = Vector2(0, 56)
 
 [node name="barrera1" parent="LevelManager/EquationManager" index="1" instance=ExtResource("7_y3eed")]
 position = Vector2(152, 273)
