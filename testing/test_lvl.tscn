@@ -1,4 +1,8 @@
+<<<<<<< HEAD:testing/test_lvl.tscn
 [gd_scene load_steps=11 format=4 uid="uid://c44nd1strvac3"]
+=======
+[gd_scene load_steps=10 format=4 uid="uid://cn45p5w2hob17"]
+>>>>>>> b1e290a0c64bca8c9ad04e5853768315b7d3202a:lvl_1.tscn
 
 [ext_resource type="PackedScene" uid="uid://dq0d6naagkltb" path="res://enviroment-dev/devworld.tscn" id="1_6mpcb"]
 [ext_resource type="PackedScene" uid="uid://df6eejm7lhc5e" path="res://enviroment-dev/block_manager/block_manager.tscn" id="2_bcbm8"]
