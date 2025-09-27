@@ -27,7 +27,7 @@ frame = 1
 
 [node name="y" parent="LevelManager/BlockManager" index="3" instance=ExtResource("3_1jsee")]
 position = Vector2(160, 288)
-spriteName = "x"
+spriteName = "y"
 
 [node name="1" parent="LevelManager/BlockManager" index="4" instance=ExtResource("3_1jsee")]
 position = Vector2(160, 416)
