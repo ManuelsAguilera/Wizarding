@@ -1,27 +1,16 @@
 extends EventBlock
 
-class_name GoalBlock
+class_name BarrierBlock
 
-# ============================================================================
-# GOALBLOCK - EVENTO DE META DE NIVEL
-# ============================================================================
-## GoalBlock es un tipo específico de EventBlock que controla las metas
-## del nivel. Se activa cuando se resuelve correctamente la ecuación asociada,
-## permitiendo al jugador completar el nivel.
 
-# ============================================================================
-# REFERENCIAS DE COMPONENTES
-# ============================================================================
 
 ## Referencia al cuerpo físico de la meta que controla colisiones
-var body: GoalPostBody
+var body: BarrierBody
 
 # ============================================================================
 # VARIABLES DE ESTADO
 # ============================================================================
 
-## Estado de activación de la meta (true = jugador puede pasar)
-var goal_reached: bool = false
 
 
 # ============================================================================
