@@ -202,8 +202,7 @@ func _finish_movement() -> void:
 	is_moving = false
 	direction = Vector2.ZERO
 	percent_moved = 0.0
-	print("Moving")
-	#Quitar de cadena si es que esta
+	#Quitar de cadena si es que esta en una
 
 	if is_in_chain:
 		set_in_chain(false)
@@ -236,7 +235,6 @@ func _physics_process(delta: float) -> void:
 func set_in_chain(in_chain: bool) -> void:
 	if in_chain:
 		sprite.modulate = Color(1, 1, 1) # Color normal
-		print("Seleccionado en cadena")
 	else:
 		sprite.modulate = Color(0.5, 0.5, 0.5) # Color opaco
 	
