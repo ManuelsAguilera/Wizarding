@@ -17,7 +17,7 @@ var body: BarrierBody
 # MÉTODOS DE INICIALIZACIÓN
 # ============================================================================
 
-## Inicialización del GoalBlock
+## Inicialización del BarrierBlock
 func _ready() -> void:
 	super._ready()  # Llamar al _ready() del padre (EventBlock)
 	body = get_child(0)
