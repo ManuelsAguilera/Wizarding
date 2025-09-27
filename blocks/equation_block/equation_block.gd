@@ -52,6 +52,9 @@ func getSnappedPosition() -> Vector2:
 func _setup_position() -> void:
 	snap_to_grid()
 
+
+
+
 # ============================================================================
 # MÉTODOS DE INICIALIZACIÓN
 # ============================================================================
@@ -75,6 +78,9 @@ func get_solution() -> float:
 	return solution
 
 
+func get_solved() -> bool:
+	return solved
+
 # ============================================================================
 # MÉTODOS DE NOTIFICACIÓN
 # ============================================================================
@@ -90,7 +96,6 @@ func triggerEvents(solved_value:bool) -> void:
 	for event in get_children():
 		if event is EventBlock:
 			event.trigger(solved)
-			print("Triggered event: ", event)
 
 
 	if solved:

@@ -68,7 +68,7 @@ solution = 6.0
 [node name="GoalBlock2" parent="LevelManager/EquationManager/puerta" index="1" instance=ExtResource("8_mw7wc")]
 
 [node name="barrera" parent="LevelManager/EquationManager" index="1" instance=ExtResource("7_xyg57")]
-position = Vector2(274, 536)
+position = Vector2(273, 535)
 equation = "6=2-4x"
 solution = -1.0
 
