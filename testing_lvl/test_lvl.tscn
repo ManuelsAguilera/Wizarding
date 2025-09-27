@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dq0d6naagkltb" path="res://enviroment-dev/devworld.tscn" id="1_ocdgp"]
 [ext_resource type="PackedScene" uid="uid://df6eejm7lhc5e" path="res://enviroment-dev/block_manager/block_manager.tscn" id="2_h3vwv"]
 [ext_resource type="PackedScene" uid="uid://duty7jtc6tl0j" path="res://blocks/generic/generic_block.tscn" id="3_1jsee"]
-[ext_resource type="PackedScene" uid="uid://cevcl4gnpy3ah" path="res://enviroment-dev/EquationManager/equation_manager.tscn" id="3_cg1w3"]
+[ext_resource type="PackedScene" uid="uid://cevcl4gnpy3ah" path="res://enviroment-dev/equation_manager/equation_manager.tscn" id="3_cg1w3"]
 [ext_resource type="PackedScene" uid="uid://ls0o0fycav6i" path="res://player/player.tscn" id="4_1jsee"]
 [ext_resource type="PackedScene" uid="uid://b47fietgvlfph" path="res://blocks/equation_block/equation_block.tscn" id="5_7l6tv"]
 [ext_resource type="PackedScene" uid="uid://bv34mjfjmmsit" path="res://enviroment-dev/config/config.tscn" id="5_603kl"]
