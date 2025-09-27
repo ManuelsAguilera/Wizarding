@@ -1,17 +1,44 @@
-extends Node2D
+extends Node
 
-
-#Todos los bloques que tengan un evento que se active cuando la ecuacion es correcta deben extender esta clase
 class_name EventBlock
 
+# ============================================================================
+# CLASE BASE PARA EVENTOS DE ECUACIONES
+# ============================================================================
+## EventBlock proporciona una interfaz común para todos los eventos que
+## se activan cuando se resuelve o resetea una ecuación.
+## Utiliza el patrón Template Method para permitir comportamientos específicos.
+
+# ============================================================================
+# VARIABLES DE ESTADO
+# ============================================================================
+
+## Estado actual de la ecuación asociada a este evento
+var equation_correct: bool;
 
 
-#Metodos que deben ser sobreescritos por las clases hijas
-#Para definir comportamiento de eventos
+func _ready() -> void:
+	equation_correct = false;
 
-#trigger es llamado cuando el estado de la ecuacion cambia
-#Si la ecuacion pasa a estar correcta, se activa el evento
-#Si la ecuacion pasa a estar incorrecta, se desactiva el evento
-func trigger(solved_value:bool) -> void:
-    pass
+#Estas se tienen que hacer override
+func _trigger_solved():
+	pass
+
+
+func _trigger_unsolved():
+	pass
+
+#Esta la ejecuta su padre, no es necesario sobreescribir
+func trigger(solved_value: bool) -> void:
+	if equation_correct == solved_value:
+		return # si es el mismo valor no cambiar
+	
+	equation_correct = solved_value
+	
+	if equation_correct:
+		_trigger_solved()
+	else:
+		_trigger_unsolved()
+
+
 
