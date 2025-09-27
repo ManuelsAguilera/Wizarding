@@ -4,7 +4,7 @@ class_name BarrierBlock
 
 
 
-## Referencia al cuerpo físico de la meta que controla colisiones
+## Referencia al cuerpo físico de la barrera que controla colisiones
 var body: BarrierBody
 
 # ============================================================================
