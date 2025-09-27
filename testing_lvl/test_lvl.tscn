@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b8xjb4wm14bqu"]
+[gd_scene load_steps=10 format=3 uid="uid://b8xjb4wm14bqu"]
 
 [ext_resource type="PackedScene" uid="uid://dq0d6naagkltb" path="res://enviroment-dev/devworld.tscn" id="1_ocdgp"]
 [ext_resource type="PackedScene" uid="uid://df6eejm7lhc5e" path="res://enviroment-dev/block_manager/block_manager.tscn" id="2_h3vwv"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://ls0o0fycav6i" path="res://player/player.tscn" id="4_1jsee"]
 [ext_resource type="PackedScene" uid="uid://b47fietgvlfph" path="res://blocks/equation_block/equation_block.tscn" id="5_7l6tv"]
 [ext_resource type="PackedScene" uid="uid://bv34mjfjmmsit" path="res://enviroment-dev/config/config.tscn" id="5_603kl"]
+[ext_resource type="PackedScene" uid="uid://dfjrgvseq2osg" path="res://blocks/equation_block/goal_block/goal_block.tscn" id="6_7l6tv"]
+[ext_resource type="PackedScene" uid="uid://cbpm6kjlqjbfy" path="res://blocks/equation_block/barrier_block/barrier_block.tscn" id="7_eia1w"]
 
 [node name="devworld" instance=ExtResource("1_ocdgp")]
 
@@ -49,14 +51,21 @@ position = Vector2(427, 192)
 [node name="EquationManager" parent="LevelManager" index="4" instance=ExtResource("3_cg1w3")]
 
 [node name="EquationBlock" parent="LevelManager/EquationManager" index="0" instance=ExtResource("5_7l6tv")]
-position = Vector2(96, 121)
+position = Vector2(96, 96)
 equation = "x=0"
 solution = 1.0
 
+[node name="GoalBlock2" parent="LevelManager/EquationManager/EquationBlock" index="1" instance=ExtResource("6_7l6tv")]
+position = Vector2(0, 67)
+
 [node name="EquationBlock2" parent="LevelManager/EquationManager" index="1" instance=ExtResource("5_7l6tv")]
-position = Vector2(480, 128)
-equation = "x=3"
-solution = 3.0
+position = Vector2(544, 96)
+equation = "y=1"
+variableType = "y"
+solution = 1.0
+
+[node name="BarrierBlock" parent="LevelManager/EquationManager/EquationBlock2" index="1" instance=ExtResource("7_eia1w")]
+position = Vector2(-64, 192)
 
 [node name="Player" parent="LevelManager" index="5" instance=ExtResource("4_1jsee")]
 position = Vector2(288, 160)

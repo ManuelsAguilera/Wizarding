@@ -21,13 +21,12 @@ func _ready():
 
 func activate():
 	#Cambiar modulacion para ponerlo con color
-	sprite.modulate = Color(1, 1,1)
+	sprite.modulate = Color(1, 1, 1)
 
 	#Dejar pasar al jugador
 	#Pero detectarlo
 	collision.disabled = true
 	area.monitoring = true
-	area.monitorable = true
 	sprite.visible = true
 
 func deactivate():
@@ -38,6 +37,5 @@ func deactivate():
 	#Ni detectarlo
 	collision.disabled = false
 	area.monitoring = false
-	area.monitorable = false
 	sprite.visible = true
 	
