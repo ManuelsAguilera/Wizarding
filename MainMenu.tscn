@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://b6jjvsltw4pbb"]
+[gd_scene load_steps=5 format=3 uid="uid://b6jjvsltw4pbb"]
 
 [ext_resource type="Script" uid="uid://b1uidrfcxruw" path="res://main_menu.gd" id="1_i26rj"]
+[ext_resource type="Shader" uid="uid://cm4n3eug76odr" path="res://MenuBackground.gdshader" id="2_h7a2f"]
+[ext_resource type="Texture2D" uid="uid://drr1bd18wv1u4" path="res://assets/backgrounds/Dungeon_brick_wall_grey.png" id="3_qoqlk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iwfq2"]
+shader = ExtResource("2_h7a2f")
 
 [node name="MenuPrincipal" type="Control"]
 layout_mode = 3
@@ -11,14 +16,34 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_i26rj")
 
-[node name="TextureRect" type="ColorRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = -4096
+texture_repeat = 2
+material = SubResource("ShaderMaterial_iwfq2")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -640.0
+offset_top = -220.0
+offset_right = 640.0
+offset_bottom = 220.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.381703, 0.381703, 0.381703, 1)
+texture = ExtResource("3_qoqlk")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -167.5
+offset_top = 67.0
+offset_right = 168.5
+offset_bottom = 163.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 70
+text = "Wizarding"
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -28,65 +53,102 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="BotonesPrincipales" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
+theme_override_constants/separation = 8
 
-[node name="Jugar" type="Button" parent="CenterContainer/VBoxContainer"]
-unique_name_in_owner = true
+[node name="Jugar" type="Button" parent="CenterContainer/BotonesPrincipales"]
 layout_mode = 2
 text = "Jugar"
 
-[node name="Opciones" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="Opciones" type="Button" parent="CenterContainer/BotonesPrincipales"]
 layout_mode = 2
 text = "Opciones"
 
-[node name="Salir" type="Button" parent="CenterContainer/VBoxContainer"]
-unique_name_in_owner = true
+[node name="Creditos" type="Button" parent="CenterContainer/BotonesPrincipales"]
+layout_mode = 2
+text = "Creditos"
+
+[node name="Salir" type="Button" parent="CenterContainer/BotonesPrincipales"]
 layout_mode = 2
 text = "Salir"
 
-[node name="Control" type="Control" parent="."]
+[node name="MenuOpciones" type="VBoxContainer" parent="CenterContainer"]
 visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
+theme_override_constants/separation = 5
 
-[node name="Volver" type="Button" parent="Control"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -28.5
-offset_top = -40.0
-offset_right = 28.5
-offset_bottom = -9.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="PantallaCompleta" type="CheckBox" parent="CenterContainer/MenuOpciones"]
+layout_mode = 2
+text = "Pantalla completa"
+alignment = 1
+
+[node name="VolumenGeneral" type="HSlider" parent="CenterContainer/MenuOpciones"]
+custom_minimum_size = Vector2(0, 65)
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="Label" type="Label" parent="CenterContainer/MenuOpciones/VolumenGeneral"]
+layout_mode = 0
+offset_right = 168.0
+offset_bottom = 23.0
+text = "Volumen General"
+horizontal_alignment = 1
+
+[node name="VolumenMusica" type="HSlider" parent="CenterContainer/MenuOpciones"]
+custom_minimum_size = Vector2(0, 65)
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="Label" type="Label" parent="CenterContainer/MenuOpciones/VolumenMusica"]
+layout_mode = 0
+offset_right = 167.0
+offset_bottom = 23.0
+text = "Volumen Musica"
+horizontal_alignment = 1
+
+[node name="VolumenSFX" type="HSlider" parent="CenterContainer/MenuOpciones"]
+custom_minimum_size = Vector2(0, 65)
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="Label" type="Label" parent="CenterContainer/MenuOpciones/VolumenSFX"]
+layout_mode = 0
+offset_right = 169.0
+offset_bottom = 23.0
+text = "Volumen SFX"
+horizontal_alignment = 1
+
+[node name="Volver" type="Button" parent="CenterContainer/MenuOpciones"]
+layout_mode = 2
 text = "Volver"
 
-[node name="SettingsCenterContainer" type="CenterContainer" parent="Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/SettingsCenterContainer"]
+[node name="MenuCreditos" type="VBoxContainer" parent="CenterContainer"]
+visible = false
 layout_mode = 2
 
-[node name="Video" type="Button" parent="Control/SettingsCenterContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="CenterContainer/MenuCreditos"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "Video"
+text = "Un juego desarrollado por genios"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
-[node name="Audio" type="Button" parent="Control/SettingsCenterContainer/VBoxContainer"]
+[node name="Volver" type="Button" parent="CenterContainer/MenuCreditos"]
 layout_mode = 2
-text = "Audio"
+text = "Volver"
 
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Opciones" to="." method="_on_opciones_pressed"]
+[connection signal="pressed" from="CenterContainer/BotonesPrincipales/Jugar" to="." method="_on_jugar_pressed"]
+[connection signal="pressed" from="CenterContainer/BotonesPrincipales/Opciones" to="." method="_on_opciones_pressed"]
+[connection signal="pressed" from="CenterContainer/BotonesPrincipales/Creditos" to="." method="_on_creditos_pressed"]
+[connection signal="pressed" from="CenterContainer/BotonesPrincipales/Salir" to="." method="_on_salir_pressed"]
+[connection signal="toggled" from="CenterContainer/MenuOpciones/PantallaCompleta" to="." method="_on_pantalla_completa_toggled"]
+[connection signal="value_changed" from="CenterContainer/MenuOpciones/VolumenGeneral" to="." method="_on_volumen_general_value_changed"]
+[connection signal="value_changed" from="CenterContainer/MenuOpciones/VolumenMusica" to="." method="_on_volumen_musica_value_changed"]
+[connection signal="value_changed" from="CenterContainer/MenuOpciones/VolumenSFX" to="." method="_on_volumen_sfx_value_changed"]
+[connection signal="pressed" from="CenterContainer/MenuOpciones/Volver" to="." method="_on_volver_pressed"]
+[connection signal="pressed" from="CenterContainer/MenuCreditos/Volver" to="." method="_on_volver_pressed"]
