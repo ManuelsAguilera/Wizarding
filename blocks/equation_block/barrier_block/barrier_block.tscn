@@ -15,6 +15,10 @@ region = Rect2(0, 64, 64, 64)
 script = ExtResource("1_ewsfq")
 
 [node name="BarrierBody" type="CharacterBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+motion_mode = 1
+platform_floor_layers = 4294967040
 script = ExtResource("2_p4o82")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BarrierBody"]

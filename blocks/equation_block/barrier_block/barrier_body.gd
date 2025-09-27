@@ -9,6 +9,7 @@ var sprite: Sprite2D
 
 
 func _ready():
+	set_physics_process(false)
 	for child in get_children():
 		if child is CollisionShape2D:
 			collision = child
@@ -19,22 +20,15 @@ func _ready():
 
 func activate():
 	# Aparecer cuando se activa
-	print("Activado barrier##########################")
-	sprite.modulate = Color(1,1,1)
+	sprite.modulate = Color(1,1,1,1)
 	# Dejar pasar al jugador
 	# Pero detectarlo
-	collision.disabled = true
+	collision.disabled = false
 
 func deactivate():
 	# Desaparecer al desactivar
-	print("Desactivar #####################################")
-	sprite.modulate = Color(0.2,0.2,0.2)
+	sprite.modulate = Color(1,1,1,0.2)
 	# No dejar pasar al jugador
 	# Ni detectarlo
-	collision.disabled = false
-
-	#No dejar pasar al jugador
-	#Ni detectarlo
-	collision.disabled = false
-	sprite.visible = true
+	collision.disabled = true
 	

@@ -30,9 +30,10 @@ func _ready() -> void:
 # ============================================================================
 
 func _trigger_solved():
-	body.activate()
+	body.deactivate()
 	
 
 
 func _trigger_unsolved():
-	body.deactivate()
+	body.activate()
+
