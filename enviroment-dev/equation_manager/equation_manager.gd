@@ -39,6 +39,10 @@ func verify_equation(equation: String) -> bool:
 	
 	# Revisar cada bloque EquationBlock
 	for solution in solutions:
+
+		if solution.get_solved():
+			continue # Ya está resuelto, de todas maneras se resetean al mover bloques
+		
 		var is_solved: bool = compare_solutions(equation, solution)
 		
 		# Notificar estado a los bloques de eventos

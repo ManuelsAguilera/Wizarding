@@ -45,7 +45,7 @@ Cuando revises código, verifica que:
 - Revisa archivos `.tscn` (escenas) para verificar integridad
 - Considera archivos `.tres` (recursos) si son relevantes
 - Ten en cuenta `project.godot` para configuraciones
-- Actualiza documentación en `README.md` y `docs/` si es necesario
+- Actualiza documentación en `README.md` y `documentacion/` si es necesario
 
 ### Exclusiones
 - Ignora cambios en `addons/` a menos que sean modificaciones intencionales
