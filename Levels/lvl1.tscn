@@ -5,7 +5,7 @@
 [ext_resource type="TileSet" uid="uid://0pm56xlpn385" path="res://DungeonTileSet.tres" id="3_nqixr"]
 [ext_resource type="PackedScene" uid="uid://df6eejm7lhc5e" path="res://enviroment-dev/block_manager/block_manager.tscn" id="4_itee2"]
 [ext_resource type="PackedScene" uid="uid://duty7jtc6tl0j" path="res://blocks/generic/generic_block.tscn" id="5_vov02"]
-[ext_resource type="PackedScene" uid="uid://cevcl4gnpy3ah" path="res://enviroment-dev/EquationManager/equation_manager.tscn" id="6_tg51p"]
+[ext_resource type="PackedScene" uid="uid://cevcl4gnpy3ah" path="res://enviroment-dev/equation_manager/equation_manager.tscn" id="6_tg51p"]
 [ext_resource type="PackedScene" uid="uid://b47fietgvlfph" path="res://blocks/equation_block/equation_block.tscn" id="7_xyg57"]
 [ext_resource type="PackedScene" uid="uid://dfjrgvseq2osg" path="res://blocks/equation_block/goal_block/goal_block.tscn" id="8_mw7wc"]
 [ext_resource type="PackedScene" uid="uid://ls0o0fycav6i" path="res://player/player.tscn" id="9_j0krj"]
@@ -50,7 +50,7 @@ frame = 4
 [node name="EquationManager" parent="LevelManager" index="3" instance=ExtResource("6_tg51p")]
 position = Vector2(8, 16)
 
-[node name="puerta2" parent="LevelManager/EquationManager" index="1" instance=ExtResource("7_xyg57")]
+[node name="puerta2" parent="LevelManager/EquationManager" index="0" instance=ExtResource("7_xyg57")]
 position = Vector2(80, 472)
 equation = "12=x+5"
 solution = 7.0

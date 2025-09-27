@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://b6p1q1ntobg8d"]
+[gd_scene load_steps=11 format=4 uid="uid://b6p1q1ntobg8d"]
 
 [ext_resource type="PackedScene" uid="uid://dq0d6naagkltb" path="res://enviroment-dev/devworld.tscn" id="1_c6a2a"]
 [ext_resource type="PackedScene" uid="uid://bv34mjfjmmsit" path="res://enviroment-dev/config/config.tscn" id="2_ievrn"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://cy8tnsw3715c6" path="res://enviroment-dev/equation_manager/equation_manager.gd" id="6_xsxlx"]
 [ext_resource type="PackedScene" uid="uid://b47fietgvlfph" path="res://blocks/equation_block/equation_block.tscn" id="7_y3eed"]
 [ext_resource type="PackedScene" uid="uid://dfjrgvseq2osg" path="res://blocks/equation_block/goal_block/goal_block.tscn" id="8_nsrt8"]
+[ext_resource type="PackedScene" uid="uid://cbpm6kjlqjbfy" path="res://blocks/equation_block/barrier_block/barrier_block.tscn" id="9_j6x1a"]
 [ext_resource type="PackedScene" uid="uid://ls0o0fycav6i" path="res://player/player.tscn" id="9_spwt3"]
 
 [node name="lvl2" instance=ExtResource("1_c6a2a")]
@@ -92,44 +93,44 @@ solution = 9.0
 [node name="GoalBlock2" parent="LevelManager/EquationManager/puerta" index="1" instance=ExtResource("8_nsrt8")]
 
 [node name="barrera1" parent="LevelManager/EquationManager" index="1" instance=ExtResource("7_y3eed")]
-position = Vector2(144, 280)
+position = Vector2(152, 273)
 equation = "x=5"
 solution = 5.0
 
-[node name="GoalBlock4" parent="LevelManager/EquationManager/barrera1" index="0" instance=ExtResource("8_nsrt8")]
-position = Vector2(64, 0)
+[node name="BarrierBlock2" parent="LevelManager/EquationManager/barrera1" index="1" instance=ExtResource("9_j6x1a")]
 
-[node name="GoalBlock3" parent="LevelManager/EquationManager/barrera1" index="1" instance=ExtResource("8_nsrt8")]
+[node name="BarrierBlock" parent="LevelManager/EquationManager/barrera1" index="2" instance=ExtResource("9_j6x1a")]
 position = Vector2(-64, 0)
 
-[node name="GoalBlock2" parent="LevelManager/EquationManager/barrera1" index="3" instance=ExtResource("8_nsrt8")]
+[node name="BarrierBlock3" parent="LevelManager/EquationManager/barrera1" index="3" instance=ExtResource("9_j6x1a")]
+position = Vector2(64, 0)
 
 [node name="barrera2" parent="LevelManager/EquationManager" index="2" instance=ExtResource("7_y3eed")]
-position = Vector2(400, 280)
+position = Vector2(408, 272)
 equation = "y=11"
 variableType = "y"
 solution = 11.0
 
-[node name="GoalBlock4" parent="LevelManager/EquationManager/barrera2" index="0" instance=ExtResource("8_nsrt8")]
-position = Vector2(64, 0)
+[node name="BarrierBlock2" parent="LevelManager/EquationManager/barrera2" index="1" instance=ExtResource("9_j6x1a")]
 
-[node name="GoalBlock3" parent="LevelManager/EquationManager/barrera2" index="1" instance=ExtResource("8_nsrt8")]
+[node name="BarrierBlock" parent="LevelManager/EquationManager/barrera2" index="2" instance=ExtResource("9_j6x1a")]
 position = Vector2(-64, 0)
 
-[node name="GoalBlock2" parent="LevelManager/EquationManager/barrera2" index="3" instance=ExtResource("8_nsrt8")]
+[node name="BarrierBlock3" parent="LevelManager/EquationManager/barrera2" index="3" instance=ExtResource("9_j6x1a")]
+position = Vector2(64, 0)
 
 [node name="barrera3" parent="LevelManager/EquationManager" index="3" instance=ExtResource("7_y3eed")]
-position = Vector2(656, 280)
+position = Vector2(664, 273)
 equation = "11-3x=2x-4"
 solution = 3.0
 
-[node name="GoalBlock4" parent="LevelManager/EquationManager/barrera3" index="0" instance=ExtResource("8_nsrt8")]
-position = Vector2(64, 0)
+[node name="BarrierBlock2" parent="LevelManager/EquationManager/barrera3" index="1" instance=ExtResource("9_j6x1a")]
 
-[node name="GoalBlock3" parent="LevelManager/EquationManager/barrera3" index="1" instance=ExtResource("8_nsrt8")]
+[node name="BarrierBlock" parent="LevelManager/EquationManager/barrera3" index="2" instance=ExtResource("9_j6x1a")]
 position = Vector2(-64, 0)
 
-[node name="GoalBlock2" parent="LevelManager/EquationManager/barrera3" index="3" instance=ExtResource("8_nsrt8")]
+[node name="BarrierBlock3" parent="LevelManager/EquationManager/barrera3" index="3" instance=ExtResource("9_j6x1a")]
+position = Vector2(64, 0)
 
 [node name="Player" parent="." index="1" instance=ExtResource("9_spwt3")]
 position = Vector2(8, 616)
