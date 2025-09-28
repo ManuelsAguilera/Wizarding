@@ -129,7 +129,7 @@ func equation_found(equation: String) -> void:
 ## Maneja la llegada del jugador a la meta
 ## Llamado cuando el player entra en contacto con un GoalBlock activo
 func on_player_reach_goal() -> void:
-	print("Goal ha tocado a player")
+	print("LevelManager: Player reached goal")
 	_complete_level()
 
 ## Ejecuta la lógica de finalización del nivel
