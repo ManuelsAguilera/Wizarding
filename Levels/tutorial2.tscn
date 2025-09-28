@@ -26,7 +26,7 @@ tile_set = ExtResource("3_ehhca")
 map_size = Vector2(14, 14)
 
 [node name="x" parent="LevelManager/BlockManager" index="0" instance=ExtResource("5_u033s")]
-position = Vector2(280, 176)
+position = Vector2(280, 160)
 spriteName = "x"
 
 [node name="=" parent="LevelManager/BlockManager" index="1" instance=ExtResource("5_u033s")]
@@ -34,7 +34,7 @@ position = Vector2(280, 288)
 spriteName = "="
 
 [node name="1" parent="LevelManager/BlockManager" index="2" instance=ExtResource("5_u033s")]
-position = Vector2(280, 360)
+position = Vector2(280, 352)
 spriteName = "num"
 frame = 1
 
@@ -43,7 +43,7 @@ position = Vector2(8, 16)
 script = ExtResource("6_bhi23")
 
 [node name="puerta" parent="LevelManager/EquationManager" index="0" instance=ExtResource("7_qqw3w")]
-position = Vector2(272, 472)
+position = Vector2(280, 464)
 equation = "x=1"
 solution = 1.0
 
