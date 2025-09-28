@@ -171,6 +171,7 @@ func _complete_level() -> void:
 ## Evento personalizable para cuando se completa el nivel
 func _on_level_complete() -> void:
 	# Override este método en clases hijas para comportamiento específico
+	get_tree().change_scene_to_file("res://Interfaces/LevelCompleted/LevelCompletedScreen.tscn")
 	pass
 
 # ============================================================================
