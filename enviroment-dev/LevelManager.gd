@@ -116,9 +116,8 @@ func equation_found(equation: String) -> void:
 	var is_correct: bool = eqManager.verify_equation(equation)
 	
 	if is_correct:
-		equations_solved += 1
 		print("LevelManager: Equation solved correctly! Total solved: ", equations_solved)
-		_check_level_completion()
+
 	else:
 		print("LevelManager: Equation is incorrect: ", equation)
 
@@ -126,31 +125,12 @@ func equation_found(equation: String) -> void:
 # GESTIÓN DE FINALIZACIÓN DEL NIVEL
 # ============================================================================
 
-## Verifica si el nivel puede considerarse completado
-func _check_level_completion() -> void:
-	# Verificar si todas las ecuaciones necesarias han sido resueltas
-	if eqManager and eqManager.solutions.size() > 0:
-		var all_solved: bool = true
-		for solution in eqManager.solutions:
-			if not solution.solved:
-				all_solved = false
-				break
-		
-		if all_solved and not level_complete:
-			_complete_level()
 
 ## Maneja la llegada del jugador a la meta
 ## Llamado cuando el player entra en contacto con un GoalBlock activo
 func on_player_reach_goal() -> void:
-	if level_complete:
-		print("LevelManager: Player reached goal - Level already complete!")
-		return
-	
-	# Verificar que al menos una ecuación esté resuelta
-	if equations_solved > 0:
-		_complete_level()
-	else:
-		print("LevelManager: Player reached goal but no equations solved yet!")
+	print("Goal ha tocado a player")
+	_complete_level()
 
 ## Ejecuta la lógica de finalización del nivel
 func _complete_level() -> void:
@@ -172,6 +152,8 @@ func _complete_level() -> void:
 func _on_level_complete() -> void:
 	# Override este método en clases hijas para comportamiento específico
 	get_tree().change_scene_to_file("res://Interfaces/LevelCompleted/LevelCompletedScreen.tscn")
+
+	
 	pass
 
 # ============================================================================
