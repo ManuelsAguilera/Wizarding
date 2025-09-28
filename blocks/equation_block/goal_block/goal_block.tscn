@@ -50,3 +50,5 @@ sprite_frames = SubResource("SpriteFrames_3hgkq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GoalBody/Area2D"]
 shape = SubResource("RectangleShape2D_bgg37")
+
+[connection signal="body_entered" from="GoalBody/Area2D" to="." method="_on_body_entered"]
