@@ -9,7 +9,7 @@ func _ready():
 
 func _on_jugar_pressed():
 	# Cambiar escena a escena principal del juego
-	get_tree().change_scene_to_file("res://eliseo/tutorial.tscn")
+	get_tree().change_scene_to_file("res://Levels/tutorial2.tscn")
 
 func _on_opciones_pressed():
 	# Esconder menu principal y mostrar opciones
@@ -51,4 +51,3 @@ func _on_volumen_musica_value_changed(value: float):
 
 func _on_volumen_sfx_value_changed(value: float):
 	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index("SFX"), value)
-
