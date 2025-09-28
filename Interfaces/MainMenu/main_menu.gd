@@ -9,7 +9,8 @@ func _ready():
 
 func _on_jugar_pressed():
 	# Cambiar escena a escena principal del juego
-	get_tree().change_scene_to_file("res://Levels/tutorial2.tscn")
+	Global.game_controller.change_to_level(Global.game_controller.getLevel(0))
+	Global.game_controller.change_gui_scene(Global.game_controller.menus["GameUI"])
 
 func _on_opciones_pressed():
 	# Esconder menu principal y mostrar opciones
