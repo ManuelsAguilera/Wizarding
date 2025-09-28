@@ -150,11 +150,14 @@ func _complete_level() -> void:
 
 ## Evento personalizable para cuando se completa el nivel
 func _on_level_complete() -> void:
-	# Override este método en clases hijas para comportamiento específico
-	get_tree().change_scene_to_file("res://Interfaces/LevelCompleted/LevelCompletedScreen.tscn")
-
 	
-	pass
+
+	Global.game_controller.change_gui_scene(Global.game_controller.menus["LevelCompleted"])
+	Global.game_controller.hide_level()
+
+
+
+
 
 # ============================================================================
 # MÉTODOS DE DEBUG Y UTILIDADES
