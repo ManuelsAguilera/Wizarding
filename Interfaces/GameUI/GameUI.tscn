@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://dowkj7lifbfvv"]
+[gd_scene load_steps=2 format=3 uid="uid://dowkj7lifbfvv"]
+
+[ext_resource type="Script" uid="uid://b72762bhmfs18" path="res://Interfaces/GameUI/game_ui.gd" id="1_1dfbg"]
 
 [node name="GameUi" type="Control"]
 layout_mode = 3
@@ -9,3 +11,34 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+script = ExtResource("1_1dfbg")
+
+[node name="Reset" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 32.0
+offset_top = -15.5
+offset_right = 80.0
+offset_bottom = 15.5
+grow_vertical = 2
+pivot_offset = Vector2(32, 0)
+text = "reset"
+
+[node name="NextLevel" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 32.0
+offset_top = 22.5
+offset_right = 117.0
+offset_bottom = 53.5
+grow_vertical = 2
+pivot_offset = Vector2(32, 0)
+text = "NextLevel
+"
+
+[connection signal="pressed" from="Reset" to="." method="_on_reset_pressed"]
+[connection signal="pressed" from="NextLevel" to="." method="_on_next_level_pressed"]
