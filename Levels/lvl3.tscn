@@ -95,7 +95,7 @@ position = Vector2(0, 56)
 
 [node name="barrera1" parent="LevelManager/EquationManager" index="1" instance=ExtResource("7_y3eed")]
 position = Vector2(152, 273)
-equation = "x=5"
+equation = "6x-4=2x+16"
 solution = 5.0
 
 [node name="BarrierBlock2" parent="LevelManager/EquationManager/barrera1" index="1" instance=ExtResource("9_j6x1a")]
@@ -108,7 +108,7 @@ position = Vector2(64, 0)
 
 [node name="barrera2" parent="LevelManager/EquationManager" index="2" instance=ExtResource("7_y3eed")]
 position = Vector2(408, 272)
-equation = "y=11"
+equation = "10y=121-y"
 variableType = "y"
 solution = 11.0
 
