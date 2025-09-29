@@ -51,11 +51,6 @@ func change_gui_scene(new_scene: String, delete: bool = true, keep_running: bool
 
 func change_to_level(new_scene: String, delete: bool = true, keep_running: bool = false) -> void:
 	
-	if Global.level_index >= levels.size() and Global.level_index < 0:
-		Global.level_index = 0
-
-		
-
 
 	if current_lvl != null:
 		if delete:
