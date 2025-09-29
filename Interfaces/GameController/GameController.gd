@@ -19,22 +19,40 @@ var menus:Dictionary = {
 }
 
 
-
+var camera:Camera2D
 
 var current_gui_scene:Control
 var current_lvl:Node2D
 
 func _ready() -> void:
 	Global.game_controller = self
+	camera = $World2D/Camera2D
+	print("GameController: Camera assigned",camera)
 	change_gui_scene(menus["MainMenu"])
 
 
 
 ##Getters
 
+func get_camera() -> Camera2D:
+	print("GameController: Getting camera",camera)
+
+	return self.camera
+	
 
 func getLevel(index:int):
 	return levels[index]
+
+
+
+
+##Changing scenes
+
+func change_zoom(zoom:Vector2):
+	if camera != null:
+		camera.zoom = zoom
+	else:
+		print("GameController: Warning - No Camera found in the scene!")
 
 
 func change_gui_scene(new_scene: String, delete: bool = true, keep_running: bool = false) -> void:

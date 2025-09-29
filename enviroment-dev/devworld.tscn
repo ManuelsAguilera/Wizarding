@@ -21,6 +21,6 @@ position = Vector2(-552, 815)
 spriteName = "="
 metadata/_edit_lock_ = true
 
-[node name="MainCamera" type="Camera2D" parent="LevelManager"]
+[node name="MainCamera" type="Camera2D" parent="."]
 anchor_mode = 0
-position_smoothing_speed = 2.0
+enabled = false
