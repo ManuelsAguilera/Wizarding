@@ -22,7 +22,7 @@ var config: Config
 var eqManager: EquationManager
 
 ## Referencia a la cámara principal del nivel
-@onready var mainCamera: Camera2D = get_node("MainCamera")
+@onready var mainCamera: Camera2D = _get_camera()
 
 # ============================================================================
 # VARIABLES DE ESTADO DEL NIVEL
@@ -37,6 +37,20 @@ var equations_solved: int = 0
 # ============================================================================
 # MÉTODOS DE INICIALIZACIÓN
 # ============================================================================
+func _get_camera() -> Camera2D:
+
+	var cam:Camera2D
+	if Global.game_controller == null:
+		print("LevelManager: Warning - No GlobalCamera found in the scene!")
+		cam = get_parent().get_node("MainCamera") as Camera2D
+		cam.enabled= true
+	else:
+			
+		cam = Global.game_controller.get_camera()
+	
+		print("LevelManager: GlobalCamera found and assigned")
+	return cam
+
 
 ## Inicialización principal del nivel
 func _ready() -> void:
@@ -151,7 +165,7 @@ func _complete_level() -> void:
 ## Evento personalizable para cuando se completa el nivel
 func _on_level_complete() -> void:
 	
-
+	Global.game_controller.change_zoom(Vector2(1,1))
 	Global.game_controller.change_gui_scene(Global.game_controller.menus["LevelCompleted"])
 	Global.game_controller.hide_level()
 

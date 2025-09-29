@@ -86,16 +86,19 @@ script = ExtResource("6_xsxlx")
 
 [node name="puerta" parent="LevelManager/EquationManager" index="0" instance=ExtResource("7_y3eed")]
 position = Vector2(664, 80)
-equation = "7y-40=-13-4y"
+equation = "7y-40=-13+4y"
+size = Vector2(0.5, 0.5)
 variableType = "y"
 solution = 9.0
 
 [node name="GoalBlock2" parent="LevelManager/EquationManager/puerta" index="1" instance=ExtResource("8_nsrt8")]
-position = Vector2(0, 56)
+position = Vector2(0, 64)
+scale = Vector2(0.9, 0.9)
 
 [node name="barrera1" parent="LevelManager/EquationManager" index="1" instance=ExtResource("7_y3eed")]
 position = Vector2(152, 273)
 equation = "6x-4=2x+16"
+size = Vector2(0.5, 0.5)
 solution = 5.0
 
 [node name="BarrierBlock2" parent="LevelManager/EquationManager/barrera1" index="1" instance=ExtResource("9_j6x1a")]
@@ -109,6 +112,7 @@ position = Vector2(64, 0)
 [node name="barrera2" parent="LevelManager/EquationManager" index="2" instance=ExtResource("7_y3eed")]
 position = Vector2(408, 272)
 equation = "10y=121-y"
+size = Vector2(0.5, 0.5)
 variableType = "y"
 solution = 11.0
 
@@ -123,6 +127,7 @@ position = Vector2(64, 0)
 [node name="barrera3" parent="LevelManager/EquationManager" index="3" instance=ExtResource("7_y3eed")]
 position = Vector2(664, 273)
 equation = "11-3x=2x-4"
+size = Vector2(0.5, 0.5)
 solution = 3.0
 
 [node name="BarrierBlock2" parent="LevelManager/EquationManager/barrera3" index="1" instance=ExtResource("9_j6x1a")]

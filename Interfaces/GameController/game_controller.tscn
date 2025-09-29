@@ -9,6 +9,9 @@ gui = NodePath("Control")
 
 [node name="World2D" type="Node2D" parent="."]
 
+[node name="Camera2D" type="Camera2D" parent="World2D"]
+anchor_mode = 0
+
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15

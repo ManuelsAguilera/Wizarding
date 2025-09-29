@@ -64,6 +64,7 @@ script = ExtResource("6_e6p3t")
 [node name="puerta" parent="LevelManager/EquationManager" index="0" instance=ExtResource("7_xyg57")]
 position = Vector2(536, 496)
 equation = "17=2x+5"
+size = Vector2(0.6, 0.6)
 solution = 6.0
 
 [node name="GoalBlock2" parent="LevelManager/EquationManager/puerta" index="1" instance=ExtResource("8_mw7wc")]
@@ -72,6 +73,7 @@ position = Vector2(0, 33)
 [node name="barrera" parent="LevelManager/EquationManager" index="1" instance=ExtResource("7_xyg57")]
 position = Vector2(280, 528)
 equation = "6=2-4x"
+size = Vector2(0.6, 0.6)
 solution = -1.0
 
 [node name="BarrierBlock" parent="LevelManager/EquationManager/barrera" index="1" instance=ExtResource("9_o0e6j")]
