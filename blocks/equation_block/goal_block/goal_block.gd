@@ -45,21 +45,13 @@ func _trigger_solved():
 func _trigger_unsolved():
 	body.deactivate()
 
-#Encontrada en google
-func find_parent_by_name(node_name: String) -> Node:
-	var current_node = self
-	while current_node != null:
-			if current_node.name == node_name:
-					return current_node
-			current_node = current_node.get_parent()
-	return null
 
 func _on_body_entered(body: Node2D) -> void:
 	if not (body is Player):
 		return
 	
 	# Buscar a LevelManager
-	var level_manager = find_parent_by_name("LevelManager")
+	var level_manager = get_tree().get_root().find_child("LevelManager", true, false)
 	
 	if level_manager == null:
 		print("No levelManager found")

@@ -17,6 +17,10 @@ func _ready():
 			sprite = child
 		elif child is Area2D:
 			area = child
+	
+
+	#Inicialmente desactivado
+	deactivate()
 
 
 func activate():
