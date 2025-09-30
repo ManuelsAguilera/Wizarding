@@ -12,7 +12,7 @@
 
 [node name="devworld" instance=ExtResource("1_ocdgp")]
 
-[node name="BlockManager" parent="LevelManager" index="3" instance=ExtResource("2_h3vwv")]
+[node name="BlockManager" parent="LevelManager" index="2" instance=ExtResource("2_h3vwv")]
 
 [node name="x" parent="LevelManager/BlockManager" index="0" instance=ExtResource("3_1jsee")]
 position = Vector2(96, 352)
@@ -48,7 +48,7 @@ frame = 2
 [node name="extra" parent="LevelManager/BlockManager" index="7" instance=ExtResource("3_1jsee")]
 position = Vector2(427, 192)
 
-[node name="EquationManager" parent="LevelManager" index="4" instance=ExtResource("3_cg1w3")]
+[node name="EquationManager" parent="LevelManager" index="3" instance=ExtResource("3_cg1w3")]
 
 [node name="EquationBlock" parent="LevelManager/EquationManager" index="0" instance=ExtResource("5_7l6tv")]
 position = Vector2(96, 96)
@@ -67,7 +67,7 @@ solution = 1.0
 [node name="BarrierBlock" parent="LevelManager/EquationManager/EquationBlock2" index="1" instance=ExtResource("7_eia1w")]
 position = Vector2(-64, 192)
 
-[node name="Player" parent="LevelManager" index="5" instance=ExtResource("4_1jsee")]
+[node name="Player" parent="LevelManager" index="4" instance=ExtResource("4_1jsee")]
 position = Vector2(288, 160)
 
-[node name="Config" parent="LevelManager" index="6" instance=ExtResource("5_603kl")]
+[node name="Config" parent="LevelManager" index="5" instance=ExtResource("5_603kl")]
