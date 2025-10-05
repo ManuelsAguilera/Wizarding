@@ -7,6 +7,11 @@ func _ready():
 	$CenterContainer/MenuOpciones/VolumenSFX.value = db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("SFX")))
 
 
+	#Modo dev
+	if Global.dev_mode:
+		var dev_btn = $CenterContainer/BotonesPrincipales/NivelTest
+		dev_btn.visible = true
+
 func _on_jugar_pressed():
 	# Cambiar escena a escena principal del juego
 	Global.game_controller.change_to_level(Global.game_controller.getLevel(0))
@@ -34,6 +39,10 @@ func _on_volver_pressed():
 	$CenterContainer/MenuOpciones.visible = false
 	$CenterContainer/BotonesPrincipales.visible = true
 
+
+func _on_nivel_test_pressed():
+	Global.game_controller.change_to_level(Global.game_controller.getTestLevel())
+	Global.game_controller.change_gui_scene(Global.game_controller.menus["GameUI"])
 
 func _on_pantalla_completa_toggled(toggled_on: bool) -> void:
 	if (toggled_on):

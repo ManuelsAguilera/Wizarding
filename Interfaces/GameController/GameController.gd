@@ -34,11 +34,15 @@ func _ready() -> void:
 
 ##Getters
 
+
+
 func get_camera() -> Camera2D:
 	print("GameController: Getting camera",camera)
 
 	return self.camera
-	
+
+func getTestLevel():
+	return "res://testing_lvl/test_lvl.tscn"
 
 func getLevel(index:int):
 	return levels[index]
@@ -94,15 +98,16 @@ func reload_scene() -> void:
 	
 	# Recargar las escenas si existen
 	if gui_scene_path != "":
-		print("GameController: Reloading GUI scene: ", gui_scene_path)
+
 		change_gui_scene(gui_scene_path)
 	
 	if level_scene_path != "":
-		print("GameController: Reloading level scene: ", level_scene_path)
+
 		change_to_level(level_scene_path)
 	
 	if gui_scene_path == "" and level_scene_path == "":
-		print("GameController: No active scenes to reload")
+		return
+
 
 
 

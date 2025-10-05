@@ -13,32 +13,37 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_1dfbg")
 
-[node name="Reset" type="Button" parent="."]
+[node name="BotonesNivel" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 32.0
-offset_top = -15.5
-offset_right = 80.0
-offset_bottom = 15.5
+offset_top = -35.0
+offset_right = 85.0
+offset_bottom = 35.0
 grow_vertical = 2
-pivot_offset = Vector2(32, 0)
+theme_override_constants/separation = 8
+
+[node name="Reset" type="Button" parent="BotonesNivel"]
+layout_mode = 2
 text = "reset"
 
-[node name="NextLevel" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 32.0
-offset_top = 22.5
-offset_right = 117.0
-offset_bottom = 53.5
-grow_vertical = 2
-pivot_offset = Vector2(32, 0)
+[node name="Menu" type="Button" parent="BotonesNivel"]
+layout_mode = 2
+text = "Menu"
+
+[node name="NextLevel" type="Button" parent="BotonesNivel"]
+visible = false
+layout_mode = 2
 text = "NextLevel
 "
 
-[connection signal="pressed" from="Reset" to="." method="_on_reset_pressed"]
-[connection signal="pressed" from="NextLevel" to="." method="_on_next_level_pressed"]
+[node name="LastLevel" type="Button" parent="BotonesNivel"]
+visible = false
+layout_mode = 2
+text = "LastLevel"
+
+[connection signal="pressed" from="BotonesNivel/Reset" to="." method="_on_reset_pressed"]
+[connection signal="pressed" from="BotonesNivel/Menu" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="BotonesNivel/NextLevel" to="." method="_on_next_level_pressed"]
+[connection signal="pressed" from="BotonesNivel/LastLevel" to="." method="_on_last_level_pressed"]
