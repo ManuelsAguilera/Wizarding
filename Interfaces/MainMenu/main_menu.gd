@@ -52,3 +52,8 @@ func _on_volumen_musica_value_changed(value: float):
 
 func _on_volumen_sfx_value_changed(value: float):
 	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index("SFX"), value)
+
+
+
+
+
