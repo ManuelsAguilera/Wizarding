@@ -34,16 +34,21 @@ func _ready() -> void:
 
 ##Getters
 
+
+
 func get_camera() -> Camera2D:
 	print("GameController: Getting camera",camera)
 
 	return self.camera
-	
+
+func getTestLevel():
+	return "res://testing_lvl/test_lvl.tscn"
 
 func getLevel(index:int):
 	return levels[index]
 
-
+func getCurrentZoom():
+	return camera.zoom
 
 
 ##Changing scenes
@@ -53,6 +58,7 @@ func change_zoom(zoom:Vector2):
 		camera.zoom = zoom
 	else:
 		print("GameController: Warning - No Camera found in the scene!")
+
 
 
 func change_gui_scene(new_scene: String, delete: bool = true, keep_running: bool = false) -> void:
@@ -81,6 +87,32 @@ func change_to_level(new_scene: String, delete: bool = true, keep_running: bool 
 	world_2d.add_child(new)
 	current_lvl = new
 
+func reload_scene() -> void:
+	var gui_scene_path: String = ""
+	var level_scene_path: String = ""
+	
+	# Obtener las rutas de las escenas actuales
+	if current_gui_scene != null:
+		gui_scene_path = current_gui_scene.scene_file_path
+	
+	if current_lvl != null:
+		level_scene_path = current_lvl.scene_file_path
+	
+	# Recargar las escenas si existen
+	if gui_scene_path != "":
+
+		change_gui_scene(gui_scene_path)
+	
+	if level_scene_path != "":
+
+		change_to_level(level_scene_path)
+	
+	if gui_scene_path == "" and level_scene_path == "":
+		return
+
+
+
+
 
 func hide_level(delete: bool = false):
 	if current_lvl != null:
@@ -88,3 +120,9 @@ func hide_level(delete: bool = false):
 			current_lvl.queue_free()
 		else:
 			current_lvl.visible = false
+
+func _input(event):
+
+	if event.is_action_pressed("dev"):
+		Global.toggle_dev()
+		reload_scene()

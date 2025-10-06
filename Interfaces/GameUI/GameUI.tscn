@@ -13,32 +13,57 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_1dfbg")
 
-[node name="Reset" type="Button" parent="."]
+[node name="AspectContainer" type="AspectRatioContainer" parent="."]
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 32.0
-offset_top = -15.5
-offset_right = 80.0
-offset_bottom = 15.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(32, 0)
+stretch_mode = 3
+
+[node name="BotonesNivel" type="VBoxContainer" parent="AspectContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Reset" type="Button" parent="AspectContainer/BotonesNivel"]
+layout_mode = 2
 text = "reset"
 
-[node name="NextLevel" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 32.0
-offset_top = 22.5
-offset_right = 117.0
-offset_bottom = 53.5
-grow_vertical = 2
-pivot_offset = Vector2(32, 0)
+[node name="Menu" type="Button" parent="AspectContainer/BotonesNivel"]
+layout_mode = 2
+text = "Menu"
+
+[node name="BotonesDev" type="VBoxContainer" parent="AspectContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="NextLevel" type="Button" parent="AspectContainer/BotonesDev"]
+layout_mode = 2
 text = "NextLevel
 "
 
-[connection signal="pressed" from="Reset" to="." method="_on_reset_pressed"]
-[connection signal="pressed" from="NextLevel" to="." method="_on_next_level_pressed"]
+[node name="LastLevel" type="Button" parent="AspectContainer/BotonesDev"]
+layout_mode = 2
+text = "LastLevel"
+
+[node name="HelpTest" type="Button" parent="AspectContainer/BotonesDev"]
+layout_mode = 2
+text = "Ayuda"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+zoom = Vector2(0.91, 0.91)
+
+[connection signal="pressed" from="AspectContainer/BotonesNivel/Reset" to="." method="_on_reset_pressed"]
+[connection signal="pressed" from="AspectContainer/BotonesNivel/Menu" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="AspectContainer/BotonesDev/NextLevel" to="." method="_on_next_level_pressed"]
+[connection signal="pressed" from="AspectContainer/BotonesDev/LastLevel" to="." method="_on_last_level_pressed"]
+[connection signal="pressed" from="AspectContainer/BotonesDev/HelpTest" to="." method="_on_help_test_pressed"]
