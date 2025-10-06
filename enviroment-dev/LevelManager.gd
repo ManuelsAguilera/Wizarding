@@ -18,6 +18,10 @@ class_name LevelManager
 ## Configuración específica del nivel (zoom, parámetros, etc.)
 var config: Config
 
+
+## Para apagar todos los prints molestos
+var debug_mode:bool = false
+
 ## Gestor de ecuaciones y validación de soluciones
 var eqManager: EquationManager
 
@@ -41,14 +45,14 @@ func _get_camera() -> Camera2D:
 
 	var cam:Camera2D
 	if Global.game_controller == null:
-		print("LevelManager: Warning - No GlobalCamera found in the scene!")
+		
 		cam = get_parent().get_node("MainCamera") as Camera2D
 		cam.enabled= true
 	else:
 			
-		cam = Global.game_controller.get_camera()
-	
-		print("LevelManager: GlobalCamera found and assigned")
+		cam = null
+
+
 	return cam
 
 
@@ -63,24 +67,26 @@ func _setup_component_references() -> void:
 	config = get_node("Config")
 	eqManager = get_node("EquationManager")
 	
-	if not config:
-		print("LevelManager: Warning - No Config component found!")
-	if not eqManager:
-		print("LevelManager: Warning - No EquationManager component found!")
+	if debug_mode:
+		if not config:
+			print("LevelManager: Warning - No Config component found!")
+		if not eqManager:
+			print("LevelManager: Warning - No EquationManager component found!")
 
 ## Aplica la configuración inicial del nivel
 func _apply_level_configuration() -> void:
 	if config:
 		_apply_camera_settings()
-		print("LevelManager: Level configuration applied successfully")
+		
 	else:
-		print("LevelManager: Cannot apply configuration - Config component missing")
+		if debug_mode:
+			printerr("LevelManager: Cannot apply configuration - Config component missing")
 
 ## Inicializa el estado del nivel
 func _initialize_level_state() -> void:
 	level_complete = false
 	equations_solved = 0
-	print("LevelManager: Level initialized and ready")
+	
 
 # ============================================================================
 # MÉTODOS DE CONFIGURACIÓN
@@ -91,9 +97,10 @@ func _apply_camera_settings() -> void:
 	if mainCamera and config:
 		var zoom_level: Vector2 = config.getZoom()
 		mainCamera.zoom = zoom_level
-		print("LevelManager: Camera zoom set to: ", zoom_level)
 	else:
-		print("LevelManager: Cannot apply camera settings - missing components")
+		#Asumir que la camara es la global
+		Global.game_controller.change_zoom(config.getZoom())
+
 
 ## Aplica toda la configuración del nivel (método legacy)
 func aplicarConf() -> void:
@@ -110,30 +117,34 @@ func aplicarZoom() -> void:
 ## Resetea todas las soluciones cuando un bloque se mueve
 ## Llamado por BlockManager para invalidar soluciones previas
 func reset_solutions() -> void:
-	print("LevelManager: Resetting all solutions due to block movement")
+	
 	
 	if eqManager:
 		eqManager.reset_all_solutions()
 		equations_solved = 0
 	else:
-		print("LevelManager: Cannot reset solutions - EquationManager not found!")
+		if debug_mode:
+			print("LevelManager: Cannot reset solutions - EquationManager not found!")
 
 ## Procesa una ecuación válida encontrada por BlockManager
 ## Llamado cuando BlockManager detecta una cadena de bloques válida
 func equation_found(equation: String) -> void:
-	print("LevelManager: Processing equation: ", equation)
+	if debug_mode:
+		print("LevelManager: Processing equation: ", equation)
 	
 	if not eqManager:
-		print("LevelManager: Error - EquationManager not available!")
+		printerr("LevelManager: Error - EquationManager not available!")
 		return
 	
 	var is_correct: bool = eqManager.verify_equation(equation)
 	
-	if is_correct:
-		print("LevelManager: Equation solved correctly! Total solved: ", equations_solved)
+	if debug_mode:
+			
+		if is_correct:
+			print("LevelManager: Equation solved correctly! Total solved: ", equations_solved)
 
-	else:
-		print("LevelManager: Equation is incorrect: ", equation)
+		else:
+			print("LevelManager: Equation is incorrect: ", equation)
 
 # ============================================================================
 # GESTIÓN DE FINALIZACIÓN DEL NIVEL
@@ -143,7 +154,8 @@ func equation_found(equation: String) -> void:
 ## Maneja la llegada del jugador a la meta
 ## Llamado cuando el player entra en contacto con un GoalBlock activo
 func on_player_reach_goal() -> void:
-	print("LevelManager: Player reached goal")
+	if debug_mode:
+		print("LevelManager: Player reached goal")
 	_complete_level()
 
 ## Ejecuta la lógica de finalización del nivel
@@ -152,8 +164,7 @@ func _complete_level() -> void:
 		return
 	
 	level_complete = true
-	print("LevelManager: 🎉 LEVEL COMPLETED! 🎉")
-	print("LevelManager: Total equations solved: ", equations_solved)
+
 	
 	# Aquí se puede agregar lógica adicional:
 	# - Cargar siguiente escena

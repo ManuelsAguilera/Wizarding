@@ -47,7 +47,8 @@ func getTestLevel():
 func getLevel(index:int):
 	return levels[index]
 
-
+func getCurrentZoom():
+	return camera.zoom
 
 
 ##Changing scenes
@@ -57,6 +58,7 @@ func change_zoom(zoom:Vector2):
 		camera.zoom = zoom
 	else:
 		print("GameController: Warning - No Camera found in the scene!")
+
 
 
 func change_gui_scene(new_scene: String, delete: bool = true, keep_running: bool = false) -> void:
