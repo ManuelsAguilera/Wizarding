@@ -83,7 +83,9 @@ func generar_cadenas() -> void:
 		var variable_pos: Vector2 = variable.getSnappedPosition()
 		var down_pos: Vector2 = variable_pos + Vector2(0, 1)
 		var right_pos: Vector2 = variable_pos + Vector2(1, 0)
-		
+		var up_pos: Vector2 = variable_pos + Vector2(-1,0)
+		var left_pos: Vector2 = variable_pos + Vector2(0,-1)
+
 		# Buscar bloques conectados hacia abajo y hacia la derecha
 		for block in blocklist:
 			var block_pos: Vector2 = block.getSnappedPosition()
@@ -94,6 +96,12 @@ func generar_cadenas() -> void:
 				concatBlocks.append(complete_chain)
 			elif block_pos == right_pos:
 				var complete_chain = initial_chain + searchBlocks(block_pos, Vector2(1, 0))
+				concatBlocks.append(complete_chain)
+			elif block_pos == up_pos:
+				var complete_chain = initial_chain + searchBlocks(block_pos, Vector2(-1, 0))
+				concatBlocks.append(complete_chain)
+			elif block_pos == left_pos:
+				var complete_chain = initial_chain + searchBlocks(block_pos, Vector2(0, -1))
 				concatBlocks.append(complete_chain)
 
 
