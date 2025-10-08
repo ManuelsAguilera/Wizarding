@@ -82,27 +82,28 @@ func changeRayDirection():
 		return
 	nearRay.target_position = direction * Tile_Size
 	farRay.target_position = direction * Tile_Size*2
-	
+
+# Checkea si el jugador tiene un bloque movible al frente
+# .get_collider() retorna al objeto que esta intersectando
+# Si .get_collider() = null  : no hay objetos intersectando al raycast
+# Si .get_collider() = objeto: Existe un objeto intersectando al raycast
 func checkRayCast():
 	var collider  = nearRay.get_collider()
 	
+	# Si no hay objetos intersectando al raycast, establecemos que no se puede realizar el movimiento
 	if collider == null:
 		detected_block=null
 		cannot_move=false
 		return
 
-	#si no he visto bloques, y es tipo bloque
+	# Si no he visto bloques, y .get_collider devuelve un bloque movible
 	if (collider is GenericBlock) and (collider != null):
-
-		detected_block = collider
-	
+		detected_block = collider 
 	else:
 		detected_block = null
 	
 	cannot_move=true
-
 	is_moving=false
-
 
 func _physics_process(delta):
 	chooseSprite()
@@ -135,7 +136,8 @@ func move(delta):
 
 # Logic
 
-func _process(delta):	
+func _process(delta):
+	# Movimiento de los bloques
 	if (Input.is_action_just_pressed("primary") and is_moving==false):
 		magicParticle.emitting=false
 		magicParticle.emitting=true
