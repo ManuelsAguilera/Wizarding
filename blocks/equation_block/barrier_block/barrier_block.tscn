@@ -1,14 +1,14 @@
 [gd_scene load_steps=6 format=3 uid="uid://cbpm6kjlqjbfy"]
 
 [ext_resource type="Script" uid="uid://b7xuo1r0lss1o" path="res://blocks/equation_block/barrier_block/barrier_block.gd" id="1_ewsfq"]
-[ext_resource type="Texture2D" uid="uid://dgjvxb0x801wb" path="res://assets/WizardTileset.png" id="2_inb31"]
 [ext_resource type="Script" uid="uid://deewotu0kdf8s" path="res://blocks/equation_block/barrier_block/barrier_body.gd" id="2_p4o82"]
+[ext_resource type="Texture2D" uid="uid://dd4fo0hp7mgye" path="res://assets/WizardTilesetAlterno.png" id="3_inb31"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p4o82"]
 size = Vector2(64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u6hhw"]
-atlas = ExtResource("2_inb31")
+atlas = ExtResource("3_inb31")
 region = Rect2(0, 64, 64, 64)
 
 [node name="BarrierBlock" type="Node2D"]
