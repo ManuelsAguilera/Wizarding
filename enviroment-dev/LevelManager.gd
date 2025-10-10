@@ -194,7 +194,7 @@ func _complete_level() -> void:
 	timer.pauseTimer()
 	#Guardar info del nivel
 	Global.record_level_data(id,moves,timer.getTime())
-
+	
 	_on_level_complete()
 
 ## Evento personalizable para cuando se completa el nivel

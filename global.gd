@@ -4,10 +4,9 @@ extends Node
 var game_controller:GameController
 
 var level_index = 0
+var last_level:String = ""
 
 var dev_mode:bool=false
-
-
 
 
 
@@ -47,17 +46,18 @@ func record_level_data(level:String,moves:int,time:float):
 						"time":time
 						}
 
-	print(level_data)
+	#Asociar id a nivel si no existe
+	last_level=level
+
+	
 #Obtener los datos de algun nivel guardado
 
 func get_level_data(level:String="get_all"):
 	if level == "get_all":
-		print("Obtener todo")
+		return level_data
 
 	else:
-		print(level_data[level])
+		return level_data.get(level, null)
 
 	
 #Guardar persitentemente los datos actuales
-
-
