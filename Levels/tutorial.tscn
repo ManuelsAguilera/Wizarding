@@ -12,6 +12,9 @@
 
 [node name="tutorial" instance=ExtResource("1_7vrqn")]
 
+[node name="LevelManager" parent="." index="0"]
+id = "tuto_1"
+
 [node name="Config" parent="LevelManager" index="0" instance=ExtResource("2_bhfnd")]
 zoom = Vector2(1.11, 1.11)
 
