@@ -29,8 +29,6 @@ const ANIMATION_SPEED: float = 8.0
 ## Referencia al sprite animado del bloque
 @onready var sprite: AnimatedSprite2D = $sprite
 
-## Referencia al raycast del bloque
-@onready var directionRay:RayCast2D =$DirectionRay
 
 ## Efecto de partículas al mover el bloque
 @onready var particleEffect: CPUParticles2D = $DustParticles
@@ -60,8 +58,10 @@ var direction: Vector2 = Vector2()
 ## Indica si el bloque está en una cadena
 var is_in_chain: bool = false
 
-## Indica a cuantos bloques esta conectado
-var num_chain_blocks: int = 1
+
+
+## Esta en un grupo que se mueve por el jugador
+var is_in_group:bool = false
 
 
 # ============================================================================
@@ -171,7 +171,11 @@ func getSnappedPosition() -> Vector2:
 # ============================================================================
 
 ## Inicia el movimiento del bloque en una dirección específica
-func push(player_direction: Vector2) -> void:
+func push(player_direction: Vector2,set_group:bool=false) -> void:
+
+	if set_group:
+		is_in_group= true
+
 	if not is_moving:
 		_activate_particles()
 		direction = player_direction
@@ -212,7 +216,8 @@ func _finish_movement() -> void:
 	if is_in_chain:
 		set_in_chain(false)
 		is_in_chain = false
-	parentManager.notify_block_moved()
+	if !is_in_group:
+		parentManager.notify_block_moved()
 
 ## Actualiza la posición durante el movimiento
 func _update_movement_position() -> void:
@@ -245,17 +250,3 @@ func set_in_chain(in_chain: bool) -> void:
 	
 	is_in_chain = in_chain
 
-# =========
-# METODOS GETTERS
-# =========
-
-func get_concat_block_size(facedDirection: Vector2, block: GenericBlock, numBlocks: int) -> int:
-	directionRay.global_position = block.global_position
-	directionRay.target_position = facedDirection * TILE_SIZE 
-	directionRay.force_raycast_update()
-	
-	if (directionRay.is_colliding()):
-		var next_block = directionRay.get_collider() as GenericBlock
-		if next_block and next_block != block:
-			return get_concat_block_size(facedDirection, next_block, numBlocks + 1)
-	return numBlocks

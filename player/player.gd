@@ -154,7 +154,7 @@ func _process(delta):
 			return
 		
 		var blocks_to_push = get_blocks_in_path(detected_block, facedDirection)
-		print("A")
+
 		for block in blocks_to_push:
 			if block.is_block_moving():
 				return
@@ -162,8 +162,13 @@ func _process(delta):
 			return
 		
 		for i in range(blocks_to_push.size() - 1, -1, -1):
-			blocks_to_push[i].push(facedDirection)
-		
+			if i > 0:
+				##Para que el bloque no notifique como movimiento
+				blocks_to_push[i].push(facedDirection,true)
+			else:
+				##Notificar en el ultimo bloque
+				blocks_to_push[i].push(facedDirection)	
+
 		print("Blocks pushed:", blocks_to_push.size())
 
 func can_push_blocks(blocks: Array, direction: Vector2) -> bool:

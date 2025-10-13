@@ -20,8 +20,8 @@ func _ready():
 
 	#labels de movimientos y tiempo
 
-	var move_label = $CenterContainer/GridContainer/cantMovimientos
-	var time_label = $CenterContainer/GridContainer/cantTiempo
+	var move_label = $CenterContainer/ResultContainer/StatContainer/cantMovimientos
+	var time_label = $CenterContainer/ResultContainer/StatContainer/cantTiempo
 
 
 
@@ -32,10 +32,13 @@ func _ready():
 
 
 	if level_data != null:
-		var moves = str(level_data["moves"]) +" movimientos"
+		var moves = str(level_data["moves"]) 
 		var time = str(format_time(level_data["time"]))
 		move_label.text = moves
 		time_label.text = time
+
+		#Calcular estrellas
+		#TODO
 	else:
 		printerr("No se han encontrado datos del nivel")
 	

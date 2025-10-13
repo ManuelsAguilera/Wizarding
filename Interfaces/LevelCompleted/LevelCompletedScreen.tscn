@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://hpfo8i8j8f2"]
+[gd_scene load_steps=6 format=3 uid="uid://hpfo8i8j8f2"]
 
 [ext_resource type="Script" uid="uid://cpsyfnuf8gvhk" path="res://Interfaces/LevelCompleted/level_completed_screen.gd" id="1_6pme7"]
 [ext_resource type="Shader" uid="uid://2ip1onjiwtri" path="res://Interfaces/LevelCompleted/LevelCompletedScreen.gdshader" id="2_q1cuu"]
 [ext_resource type="Texture2D" uid="uid://drr1bd18wv1u4" path="res://assets/backgrounds/Dungeon_brick_wall_grey.png" id="3_qq52e"]
+[ext_resource type="Texture2D" uid="uid://ds6fd1hj14rpi" path="res://icon.svg" id="4_q1cuu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ebigs"]
 shader = ExtResource("2_q1cuu")
@@ -57,37 +58,57 @@ offset_bottom = 79.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GridContainer" type="GridContainer" parent="CenterContainer"]
+[node name="ResultContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="StatContainer" type="GridContainer" parent="CenterContainer/ResultContainer"]
 layout_mode = 2
 columns = 2
 
-[node name="Tiempo" type="Label" parent="CenterContainer/GridContainer"]
+[node name="Tiempo" type="Label" parent="CenterContainer/ResultContainer/StatContainer"]
 layout_mode = 2
 text = "Tiempo:"
 
-[node name="cantTiempo" type="Label" parent="CenterContainer/GridContainer"]
+[node name="cantTiempo" type="Label" parent="CenterContainer/ResultContainer/StatContainer"]
 layout_mode = 2
 text = "no hay datos"
 horizontal_alignment = 1
 
-[node name="Movimientos" type="Label" parent="CenterContainer/GridContainer"]
+[node name="Movimientos" type="Label" parent="CenterContainer/ResultContainer/StatContainer"]
 layout_mode = 2
 text = "Movimientos:"
 
-[node name="cantMovimientos" type="Label" parent="CenterContainer/GridContainer"]
+[node name="cantMovimientos" type="Label" parent="CenterContainer/ResultContainer/StatContainer"]
 layout_mode = 2
 text = "no hay datos"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Puntaje" type="Label" parent="CenterContainer/GridContainer"]
+[node name="Label" type="Label" parent="CenterContainer/ResultContainer/StatContainer"]
 layout_mode = 2
-text = "Puntaje:"
 
-[node name="cantPuntaje" type="Label" parent="CenterContainer/GridContainer"]
+[node name="StarContainer" type="HBoxContainer" parent="CenterContainer/ResultContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
-text = "100 puntos"
-horizontal_alignment = 1
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/ResultContainer/StarContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("4_q1cuu")
+expand_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="CenterContainer/ResultContainer/StarContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("4_q1cuu")
+expand_mode = 3
+
+[node name="TextureRect3" type="TextureRect" parent="CenterContainer/ResultContainer/StarContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("4_q1cuu")
+expand_mode = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
