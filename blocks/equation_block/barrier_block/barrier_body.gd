@@ -27,7 +27,7 @@ func activate():
 
 func deactivate():
 	# Desaparecer al desactivar
-	sprite.modulate = Color(1,1,1,0.2)
+	sprite.modulate = Color(0.7,0.9,1,0.2)
 	# No dejar pasar al jugador
 	# Ni detectarlo
 	collision.disabled = true

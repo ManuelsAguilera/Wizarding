@@ -22,7 +22,7 @@ script = ExtResource("1_tqoe7")
 solution = nan
 
 [node name="TextEquation" type="Node2D" parent="."]
-z_index = 99
+z_index = 100
 script = ExtResource("3_k5518")
 
 [node name="Text" type="Label" parent="TextEquation"]
