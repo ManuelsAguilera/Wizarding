@@ -16,7 +16,6 @@ var initial_position = Vector2()
 var is_moving=false
 var cannot_move=false #Para paredes y objetos
 
-
 var detected_block:GenericBlock=null
 
 var percent_moved = 0.0
@@ -82,43 +81,50 @@ func changeRayDirection():
 		return
 	nearRay.target_position = direction * Tile_Size
 	farRay.target_position = direction * Tile_Size*2
-	
+
 func checkRayCast():
-	var collider  = nearRay.get_collider()
+	# Verifica si el jugador tiene un bloque movible frente a el usando el raycast nearRay
+	var collider = nearRay.get_collider()
 	
+	# Si no hay colision, no hay bloque detectado
 	if collider == null:
-		detected_block=null
-		cannot_move=false
+		detected_block = null
+		cannot_move = false
 		return
 
-	#si no he visto bloques, y es tipo bloque
-	if (collider is GenericBlock) and (collider != null):
-
+	# Si el collider es un bloque movible, lo asigna a detected_block
+	if collider is GenericBlock:
 		detected_block = collider
-	
 	else:
 		detected_block = null
 	
-	cannot_move=true
-
-	is_moving=false
-
+	# Actualiza los flags de movimiento
+	cannot_move = true
+	is_moving = false
 
 func _physics_process(delta):
+	# Actualiza el sprite segun el estado del jugador
 	chooseSprite()
-
+	
+	# Si el jugador no se esta moviendo, obtiene direccion y verifica bloques
 	if not is_moving:
 		get_direction()
 		changeRayDirection()
 		checkRayCast()
+		
+	# Si el jugador se esta moviendo y hay direccion
 	if is_moving and direction != Vector2.ZERO:
-		# Si hay bloque detectado y no está moviéndose, empuja el bloque
+		
+		# Si hay bloque detectado y esta moviendose, espera a que termine
 		if detected_block != null and detected_block.is_block_moving():
 			# Espera a que el bloque termine de moverse
 			return
+		# Verifica si hay bloque frente al jugador
 		checkRayCast()
+		# Mueve al jugador segun delta
 		move(delta)
 	else:
+		# Marca que el jugador ya no se esta moviendo
 		is_moving=false
 
 
@@ -135,16 +141,74 @@ func move(delta):
 
 # Logic
 
-func _process(delta):	
+# Movimiento de los bloques
+# gestiona la interaccion del jugador con bloques movibles.
+func _process(delta):
+	# Movimiento de los bloques
 	if (Input.is_action_just_pressed("primary") and is_moving==false):
+		print("espacio presionado")
 		magicParticle.emitting=false
 		magicParticle.emitting=true
+		
+		if detected_block == null:
+			return
+		
+		var blocks_to_push = get_blocks_in_path(detected_block, facedDirection)
+		print("A")
+		for block in blocks_to_push:
+			if block.is_block_moving():
+				return
+		if not can_push_blocks(blocks_to_push, facedDirection):
+			return
+		
+		for i in range(blocks_to_push.size() - 1, -1, -1):
+			blocks_to_push[i].push(facedDirection)
+		
+		print("Blocks pushed:", blocks_to_push.size())
 
-		if detected_block != null and not detected_block.is_block_moving():
-			farRay.add_exception(detected_block)
-			farRay.force_raycast_update() 
-			
-			if !farRay.is_colliding():
-				detected_block.push(facedDirection)
-			print("block pushed")
-			farRay.remove_exception(detected_block)
+func can_push_blocks(blocks: Array, direction: Vector2) -> bool:
+	if blocks.size() == 0:
+		return false
+	
+	var last_block = blocks[blocks.size() - 1]
+	var next_pos = last_block.global_position + direction * Tile_Size
+	
+	var space_state = get_world_2d().direct_space_state
+	var query = PhysicsRayQueryParameters2D.create(last_block.global_position, next_pos)
+	#query.exclude[self] ## ignorar jugador
+	query.collide_with_bodies = true
+	
+	var collision = space_state.intersect_ray(query)
+	if collision.is_empty():
+		return true
+	elif collision.collider is GenericBlock:
+		return false
+	else:
+		return false
+
+
+func get_blocks_in_path(start_block: GenericBlock, direction: Vector2) -> Array:
+	var blocks = []
+	if start_block == null:
+		return blocks
+	
+	blocks.append(start_block)
+	var current_block = start_block
+	
+	while true:
+		var next_position = current_block.global_position + direction * Tile_Size
+		var space_state = get_world_2d().direct_space_state
+		var query = PhysicsRayQueryParameters2D.create(current_block.global_position, next_position)
+		query.exclude = [self]
+		query.collide_with_bodies = true
+		var collision = space_state.intersect_ray(query)
+		
+		if collision.is_empty() or !(collision.collider is GenericBlock):
+			break
+		
+		current_block = collision.collider
+		blocks.append(current_block)
+		
+	return blocks
+	
+	

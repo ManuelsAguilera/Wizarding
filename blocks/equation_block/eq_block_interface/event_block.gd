@@ -39,6 +39,3 @@ func trigger(solved_value: bool) -> void:
 		_trigger_solved()
 	else:
 		_trigger_unsolved()
-
-
-

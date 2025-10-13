@@ -6,7 +6,6 @@ func _ready():
 	$CenterContainer/MenuOpciones/VolumenMusica.value = db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Musica")))
 	$CenterContainer/MenuOpciones/VolumenSFX.value = db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("SFX")))
 
-
 	#Modo dev
 	if Global.dev_mode:
 		var dev_btn = $CenterContainer/BotonesPrincipales/NivelTest

@@ -31,6 +31,7 @@ var chains_searched: bool = false
 func _ready() -> void:
 	_initialize_blocks()
 	#_debug_print_blocks()
+	print_block_pos()
 
 ## Inicializa las listas de bloques buscando todos los GenericBlock hijos
 func _initialize_blocks() -> void:
@@ -78,7 +79,7 @@ func searchBlocks(initial_pos: Vector2, direction: Vector2) -> Array[GenericBloc
 ## Genera todas las cadenas de bloques válidas
 func generar_cadenas() -> void:
 	concatBlocks.clear()
-	
+
 	for variable in variableBlocks:
 		var variable_pos: Vector2 = variable.getSnappedPosition()
 		var down_pos: Vector2 = variable_pos + Vector2(0, 1)
@@ -104,6 +105,8 @@ func generar_cadenas() -> void:
 				var complete_chain = initial_chain + searchBlocks(block_pos, Vector2(0, -1))
 				concatBlocks.append(complete_chain)
 
+func get_concat_block_size() -> int:
+	return concatBlocks.size()
 
 # ============================================================================
 # MÉTODOS DE REVISION SINTAXIS
@@ -186,7 +189,7 @@ func printCadenas() -> void:
 
 # ============================================================================
 # MÉTODOS DEL MOTOR GODOT
-# ============================================================================
+# ============================================================================  
 
 func _process(_delta: float) -> void:
 	if not chains_searched:
@@ -221,10 +224,16 @@ func _process(_delta: float) -> void:
 # ============================================================================
 
 
-
+func print_block_pos():
+	var i = 0
+	for block in blocklist:
+		print("[",i,"] block", block.initial_position, "| type: ", block.typeBlock)
+		i += 1
 
 func equation_found(equation: String) -> void:
 	print("BlockManager: Ecuacion valida encontrada!")
 	var level_manager = get_parent()
 	if level_manager and level_manager is LevelManager:
 		level_manager.equation_found(equation)
+
+#func 
