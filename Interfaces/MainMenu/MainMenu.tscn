@@ -75,6 +75,12 @@ layout_mode = 2
 text = "NivelTest
 "
 
+[node name="Save" type="Button" parent="CenterContainer/BotonesPrincipales"]
+visible = false
+layout_mode = 2
+text = "Save
+"
+
 [node name="Salir" type="Button" parent="CenterContainer/BotonesPrincipales"]
 layout_mode = 2
 text = "Salir"
@@ -152,6 +158,7 @@ text = "Volver"
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/Opciones" to="." method="_on_opciones_pressed"]
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/Creditos" to="." method="_on_creditos_pressed"]
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/NivelTest" to="." method="_on_nivel_test_pressed"]
+[connection signal="pressed" from="CenterContainer/BotonesPrincipales/Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/Salir" to="." method="_on_salir_pressed"]
 [connection signal="toggled" from="CenterContainer/MenuOpciones/PantallaCompleta" to="." method="_on_pantalla_completa_toggled"]
 [connection signal="value_changed" from="CenterContainer/MenuOpciones/VolumenGeneral" to="." method="_on_volumen_general_value_changed"]

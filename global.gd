@@ -16,8 +16,13 @@ var level_data:Dictionary
 
 
 func _ready():
-	if level_data == null:
+
+	#Intentar cargar datos guardados
+	if !check_data_file():
+		# Inicializar diccionario vacío si no se pudo cargar
+
 		level_data = {}
+	
 
 func update_level_index(next:bool=true):
 
@@ -61,3 +66,35 @@ func get_level_data(level:String="get_all"):
 
 	
 #Guardar persitentemente los datos actuales
+func save_data():
+	var save_game = FileAccess.open("user://save_game.save", FileAccess.WRITE)
+	if save_game:
+		save_game.store_var(level_data)
+		save_game.close()
+		print("Juego guardado correctamente")
+	else:
+		printerr("No se ha podido guardar la partida")
+		
+
+func check_data_file():
+	var file = FileAccess.open("user://save_game.save", FileAccess.READ)
+	if file:
+		level_data = file.get_var()
+		file.close()
+		print("Datos cargados correctamente")
+		print(level_data)
+		return true
+	else:
+		print("No se ha encontrado un archivo de guardado, se creará uno nuevo al guardar la partida")
+		return false
+
+
+func save_json():
+	var file = FileAccess.open("user://save_game.json", FileAccess.WRITE)
+	if file:
+		var json = JSON.stringify(level_data)
+		file.store_string(json)
+		file.close()
+		print("Datos exportados a JSON correctamente")
+	else:
+		printerr("No se ha podido exportar los datos a JSON")

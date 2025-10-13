@@ -11,10 +11,6 @@ var levels:Array = [
 	"res://Levels/lvl3.tscn",
 ]
 
-var level_id:Array = [
-	
-]
-
 var menus:Dictionary = {
 	"MainMenu":"res://Interfaces/MainMenu/MainMenu.tscn",
 	"GameUI":"res://Interfaces/GameUI/GameUI.tscn",
