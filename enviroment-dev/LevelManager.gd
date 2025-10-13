@@ -38,6 +38,18 @@ var level_complete: bool = false
 ## Contador de ecuaciones resueltas correctamente
 var equations_solved: int = 0
 
+
+## Datos de nivel
+
+@export var id:String = "None"
+
+#Para guardar el tiempo jugado
+@onready var timer:LevelTimer = $LevelTimer
+
+#Para guardar los movimientos de el jugador
+
+var moves:int=0
+
 # ============================================================================
 # MÉTODOS DE INICIALIZACIÓN
 # ============================================================================
@@ -61,6 +73,11 @@ func _ready() -> void:
 	_setup_component_references()
 	_apply_level_configuration()
 	_initialize_level_state()
+
+	#Esperar un tiempo para iniciar el timer
+	await get_tree().create_timer(0.5).timeout
+	timer.reset_timer()
+	timer.unpauseTimer()
 
 ## Obtiene referencias a todos los componentes necesarios
 func _setup_component_references() -> void:
@@ -116,6 +133,15 @@ func aplicarZoom() -> void:
 
 ## Resetea todas las soluciones cuando un bloque se mueve
 ## Llamado por BlockManager para invalidar soluciones previas
+
+func _on_block_moved():
+
+	#Aumentar los movimientos del nivel
+	moves+=1
+
+	reset_solutions()
+
+
 func reset_solutions() -> void:
 	
 	
@@ -165,12 +191,10 @@ func _complete_level() -> void:
 	
 	level_complete = true
 
+	timer.pauseTimer()
+	#Guardar info del nivel
+	Global.record_level_data(id,moves,timer.getTime())
 	
-	# Aquí se puede agregar lógica adicional:
-	# - Cargar siguiente escena
-	# - Mostrar pantalla de victoria  
-	# - Guardar progreso
-	# - Efectos visuales de celebración
 	_on_level_complete()
 
 ## Evento personalizable para cuando se completa el nivel
@@ -204,11 +228,3 @@ func force_level_reset() -> void:
 	reset_solutions()
 	print("LevelManager: Level forcefully reset")
 
-# ============================================================================
-# MÉTODOS DEL MOTOR GODOT
-# ============================================================================
-
-## Procesamiento por frame (actualmente sin uso)
-func _process(_delta: float) -> void:
-	# Aquí se puede agregar lógica que necesite ejecutarse cada frame
-	pass

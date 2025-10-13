@@ -55,7 +55,7 @@ func notify_block_moved() -> void:
 	chains_searched = false
 
 	#Avisar a LevelManager para que resetee las soluciones
-	get_parent().reset_solutions()
+	get_parent()._on_block_moved()
 
 # ============================================================================
 # MÉTODOS DE BÚSQUEDA DE CADENAS

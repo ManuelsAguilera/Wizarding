@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=4 uid="uid://dq0d6naagkltb"]
+[gd_scene load_steps=5 format=4 uid="uid://dq0d6naagkltb"]
 
 [ext_resource type="TileSet" uid="uid://0pm56xlpn385" path="res://DungeonTileSet.tres" id="1_5cgd7"]
 [ext_resource type="Script" uid="uid://bhlffah0fomg3" path="res://enviroment-dev/LevelManager.gd" id="1_br5s6"]
 [ext_resource type="PackedScene" uid="uid://duty7jtc6tl0j" path="res://blocks/generic/generic_block.tscn" id="3_f5fwu"]
+[ext_resource type="Script" uid="uid://bkwrnyy62oxhq" path="res://enviroment-dev/level_timer.gd" id="4_n8wpn"]
 
 [node name="devworld" type="Node2D"]
 
@@ -20,6 +21,9 @@ tile_set = ExtResource("1_5cgd7")
 position = Vector2(-552, 815)
 spriteName = "="
 metadata/_edit_lock_ = true
+
+[node name="LevelTimer" type="Node2D" parent="LevelManager"]
+script = ExtResource("4_n8wpn")
 
 [node name="MainCamera" type="Camera2D" parent="."]
 anchor_mode = 0
