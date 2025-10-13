@@ -16,6 +16,7 @@ var solutions: Array[EquationBlock] = []
 ## Inicializa el manager recolectando todos los EquationBlock hijos
 func _ready() -> void:
 	_collect_equation_blocks()
+	
 
 ## Recolecta todos los bloques de ecuación disponibles en el nivel
 func _collect_equation_blocks() -> void:
