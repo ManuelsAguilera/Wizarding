@@ -58,4 +58,3 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 
 	level_manager.on_player_reach_goal()
-
