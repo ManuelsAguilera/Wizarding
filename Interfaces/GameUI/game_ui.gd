@@ -44,6 +44,4 @@ func _on_last_level_pressed() -> void:
 
 func _on_help_test_pressed() -> void:
 
-	#Para testear los dialogos
-	DialogueManager.show_dialogue_balloon(TEST_DIALOG)
-	
+	Global.invoke_dialog(TEST_DIALOG)

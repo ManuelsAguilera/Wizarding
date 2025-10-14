@@ -103,8 +103,13 @@ func checkRayCast():
 	is_moving = false
 
 func _physics_process(delta):
+
+	if Global.dialog_mode:
+		return
+
 	# Actualiza el sprite segun el estado del jugador
 	chooseSprite()
+
 	
 	# Si el jugador no se esta moviendo, obtiene direccion y verifica bloques
 	if not is_moving:
@@ -145,8 +150,7 @@ func move(delta):
 # gestiona la interaccion del jugador con bloques movibles.
 func _process(delta):
 	# Movimiento de los bloques
-	if (Input.is_action_just_pressed("primary") and is_moving==false):
-		print("espacio presionado")
+	if (Input.is_action_just_pressed("primary") and is_moving==false and Global.dialog_mode==false):
 		magicParticle.emitting=false
 		magicParticle.emitting=true
 		
@@ -169,7 +173,6 @@ func _process(delta):
 				##Notificar en el ultimo bloque
 				blocks_to_push[i].push(facedDirection)	
 
-		print("Blocks pushed:", blocks_to_push.size())
 
 func can_push_blocks(blocks: Array, direction: Vector2) -> bool:
 	if blocks.size() == 0:

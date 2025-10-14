@@ -9,6 +9,7 @@ var last_level:String = ""
 var dev_mode:bool=false
 
 
+var dialog_mode=false
 
 #Guardado de datos por nivel
 var level_data:Dictionary
@@ -22,7 +23,24 @@ func _ready():
 		# Inicializar diccionario vacío si no se pudo cargar
 
 		level_data = {}
-	
+
+### Dialogos
+
+
+func invoke_dialog(DIALOG:DialogueResource):
+	DialogueManager.show_dialogue_balloon(DIALOG)
+
+	dialog_mode=true
+
+	DialogueManager.dialogue_ended.connect(disable_dialog_mode)
+
+
+
+func disable_dialog_mode(DIALOG:DialogueResource):
+	#Desactivar el modo dialogo
+	dialog_mode=false
+
+###
 
 func update_level_index(next:bool=true):
 
