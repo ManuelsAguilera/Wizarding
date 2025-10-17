@@ -75,13 +75,36 @@ Los bloques se definen según las variables exportadas:
 ## Sistema de Notificación
 
 El BlockManager es notificado cuando un bloque se mueve mediante:
-- `notify_block_moved()`: Establece `chains_searched = false` y resetea soluciones en LevelManager
+- `notify_block_moved()`: llamado por quien inicie el movimiento (por ejemplo `Player`).
+
+Comportamiento actual en el código:
+
+- `notify_block_moved()` espera a que todos los `GenericBlock` acaben su animación antes de
+  ejecutar `search()`. Concretamente usa `_wait_for_blocks_to_finish_moving()` que hace polling
+  por frame consultando `is_block_moving()` en cada bloque.
+
+- El flag `chains_searched` existe en el código y se pone a `false` por compatibilidad, pero
+  actualmente no se usa como condición para ejecutar búsquedas (la búsqueda se lanza desde
+  `_ready()` y desde `notify_block_moved()` cuando termina el movimiento).
+
+Recomendación (mejora):
+
+- Migrar a señales: que cada `GenericBlock` emita `signal movement_finished` al terminar su
+  desplazamiento y que `BlockManager` conecte a esa señal para contar movimientos pendientes
+  (esto evita el polling y es más eficiente).
 
 ## Inicialización del Sistema
 
 `_initialize_blocks()`: Recopila todos los GenericBlock hijos:
 - Almacena en `blocklist` para búsquedas rápidas
 - Filtra variables (x,y,z) en `variableBlocks`
+
+Adicionalmente `_initialize_blocks()` es un buen lugar para realizar conexiones a señales
+de los `GenericBlock` si se adopta la variante por señales. Ejemplo de comportamiento recomendado:
+
+- conectar `generic_block.connect("movement_finished", self, "_on_block_movement_finished")`
+- llevar un contador `pending_movements` que se incremente cuando comience un movimiento y
+  se decremente al recibir la señal; cuando llegue a 0, ejecutar `search()`.
 
 ## Algoritmo de Búsqueda de Cadenas
 
@@ -94,11 +117,15 @@ El BlockManager es notificado cuando un bloque se mueve mediante:
 - Continúa en dirección específica hasta no encontrar bloques
 - Retorna Array[GenericBlock] con la cadena completa
 
-### 3. Procesamiento en tiempo real (`_process()`):
-- Ejecuta búsqueda cuando `chains_searched = false`
-- Deselecciona cadenas previas (set_in_chain(false))
-- Valida sintaxis de cada cadena encontrada
-- Activa resaltado visual para cadenas válidas
+### 3. Procesamiento y cuándo se ejecuta la búsqueda
+
+- La búsqueda de cadenas no está ligada a `_process()` en `BlockManager`. Actualmente las ejecuciones
+  relevantes son:
+  - `_ready()` — búsqueda inicial al cargar la escena.
+  - Después de `notify_block_moved()` — tras esperar a que todos los bloques terminen su movimiento.
+
+La espera en `notify_block_moved()` (polling) garantiza que `getSnappedPosition()` devuelva valores
+estables antes de generar y validar cadenas.
 
 ## Posicionamiento y grid
 - Los bloques se ajustan a un grid de 64x64 píxeles usando `snap_to_grid()`
@@ -123,16 +150,35 @@ El sistema ahora incluye validación completa de sintaxis mediante `revisar_sint
 4. Valida alternancia de números y operadores
 5. Retorna ecuación completa como String o "invalid"
 
-### Ejemplo de cadenas válidas:
+### Ejemplo de cadenas válidas (limitación actual)
+
+Nota: actualmente cada bloque `num` representa un dígito (0-9). El parser de `revisar_sintaxis`
+interpreta cada bloque `num` como un número independiente. Por tanto **no hay soporte nativo para
+números de varios dígitos** (como `10`) a menos que se agregue lógica adicional para concatenar
+bloques num en un número multi-dígito.
+
+Ejemplos válidos (con dígitos simples):
 - `x = 5`
 - `y = 3 + 2`
-- `z = 10 - 4 * 2`
+- `z = 9 - 4 * 2`
 
 ## Comunicación con LevelManager
 
 ### Notificación de ecuaciones válidas:
 - `equation_found(equation: String)`: Envía ecuaciones válidas al LevelManager padre
 - Integración completa con sistema de soluciones del nivel
+
+### Interacción con `Player`
+
+- `Player` (o quien provoque el movimiento) debe llamar `block_manager.notify_block_moved()` después de
+  iniciar el movimiento de los bloques. En el código actual `Player.push()` hace esto inmediatamente
+  después de llamar `push()` en los bloques.
+
+- Observación: `Player` actualmente comprueba `detected_block.is_block_moving()` al querer moverse
+  para evitar solapamientos. Esto es correcto, pero se detectaron un par de advertencias en `player.gd`:
+  - `_process(delta)` declara `delta` y no lo usa — renombrarlo a `_delta` si se mantiene intencional.
+  - Parámetros `direction` en `can_push_blocks` y `get_blocks_in_path` shadowean la variable
+    de instancia `direction` del `Player`. Se recomienda renombrarlos a `dir` o `_direction`.
 
 ## Métodos de Debug y Visualización
 
@@ -165,14 +211,28 @@ LevelManager
     └── Otros componentes del nivel
 ```
 
+
 ## Notas de Implementación
 
-- Sistema optimizado: solo busca cadenas cuando `chains_searched = false`
-- Manejo de estados visuales automático
-- Integración completa con sistema de física de Godot
+- El flag `chains_searched` está presente en `block_manager.gd` pero **no** controla actualmente
+  cuándo se ejecuta la búsqueda; se deja por compatibilidad o uso futuro.
+- Manejo de estados visuales automático mediante `set_in_chain()` en `GenericBlock`.
+- Integración completa con sistema de física de Godot (las detecciones de colisión se hacen desde `Player`).
 - Soporte para debug y desarrollo mediante métodos de impresión
+
+### Recomendaciones de mejora (próximos pasos)
+
+1. Migrar de polling a señales:
+  - Añadir `signal movement_finished` en `generic_block.gd` y emitirla en `_finish_movement()`.
+  - Conectar cada `GenericBlock` en `_initialize_blocks()` a un handler en `BlockManager`.
+  - Mantener un contador de movimientos pendientes y llamar `search()` sólo cuando llegue a 0.
+
+2. Añadir tests básicos (si se desea):
+  - Unit test/escena pequeña donde se simula push de 1-3 bloques y se verifica que
+    `notify_block_moved()` resulta en `equation_found()` cuando corresponde.
+
+3. Depurar advertencias de `player.gd` para mantener el proyecto limpio de warnings.
 
 ---
 
-**Documentación actualizada - Septiembre 2025**  
-*Incluye validación de sintaxis, sistema de resaltado visual y comunicación con LevelManager*
+**Documentación actualizada - Octubre 17 2025**  
