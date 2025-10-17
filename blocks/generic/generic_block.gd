@@ -60,10 +60,6 @@ var is_in_chain: bool = false
 
 
 
-## Esta en un grupo que se mueve por el jugador
-var is_in_group:bool = false
-
-
 # ============================================================================
 # MÉTODOS DE INICIALIZACIÓN
 # ============================================================================
@@ -171,17 +167,13 @@ func getSnappedPosition() -> Vector2:
 # ============================================================================
 
 ## Inicia el movimiento del bloque en una dirección específica
-func push(player_direction: Vector2,set_group:bool=false) -> void:
+func push(player_direction: Vector2) -> void:
 
-	if set_group:
-		is_in_group= true
-
-	if not is_moving:
-		_activate_particles()
-		direction = player_direction
-		is_moving = true
-		percent_moved = 0.0
-		initial_position = global_position
+	_activate_particles()
+	direction = player_direction
+	is_moving = true
+	percent_moved = 0.0
+	initial_position = global_position
 
 ## Activa el efecto de partículas
 func _activate_particles() -> void:
@@ -216,9 +208,7 @@ func _finish_movement() -> void:
 	if is_in_chain:
 		set_in_chain(false)
 		is_in_chain = false
-	if !is_in_group:
-		parentManager.notify_block_moved()
-
+	
 ## Actualiza la posición durante el movimiento
 func _update_movement_position() -> void:
 	global_position = initial_position + (TILE_SIZE * direction * percent_moved)

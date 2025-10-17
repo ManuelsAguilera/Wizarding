@@ -1,4 +1,6 @@
 extends Node2D
+class_name BlockManager
+
 
 # ============================================================================
 # VARIABLES DE CONFIGURACIÓN
@@ -29,9 +31,11 @@ var chains_searched: bool = false
 # ============================================================================
 
 func _ready() -> void:
+	# Recolecta referencias a `GenericBlock` hijos y realiza la primera búsqueda
 	_initialize_blocks()
 	#_debug_print_blocks()
-	print_block_pos()
+
+	search()
 
 ## Inicializa las listas de bloques buscando todos los GenericBlock hijos
 func _initialize_blocks() -> void:
@@ -50,12 +54,38 @@ func _debug_print_blocks() -> void:
 # MÉTODOS DE NOTIFICACIÓN
 # ============================================================================
 
-## Método para que GenericBlock hijo llame cuando se mueva
+## Método que debe llamarse cuando se mueva un bloque o varios.
+## Ejemplo de uso: `Player` invoca `block_manager.notify_block_moved()` justo
+## después de lanzar la animación de movimiento en los bloques.
+##
+## Comportamiento:
+## 1) Espera (polling por frame) hasta que TODOS los `GenericBlock` reporten
+##    `is_block_moving() == false`.
+## 2) Notifica al `LevelManager` con `_on_block_moved()` para que restablezca
+##    el estado de soluciones si es necesario.
+## 3) Ejecuta `search()` para detectar nuevas cadenas válidas.
 func notify_block_moved() -> void:
+	await _wait_for_blocks_to_finish_moving()
+	# Avisar a LevelManager para que resetee las soluciones
+	get_parent()._on_block_moved()
+	search()
 	chains_searched = false
 
-	#Avisar a LevelManager para que resetee las soluciones
-	get_parent()._on_block_moved()
+## Implementación actual: polling por frame.
+## Recomendación: si performance es un problema, cambiar a señales desde
+## `GenericBlock` (p. ej. `movement_finished`) y contar emisiones pendientes.
+func _wait_for_blocks_to_finish_moving() -> void:
+	while true:
+		var any_moving: bool = false
+		for block in blocklist:
+			# Se llama al método público del bloque; `GenericBlock` implementa esto
+			if block.is_block_moving():
+				any_moving = true
+				break
+		if not any_moving:
+			return
+		# Espera un frame antes de comprobar de nuevo
+		await get_tree().process_frame
 
 # ============================================================================
 # MÉTODOS DE BÚSQUEDA DE CADENAS
@@ -79,7 +109,7 @@ func searchBlocks(initial_pos: Vector2, direction: Vector2) -> Array[GenericBloc
 ## Genera todas las cadenas de bloques válidas
 func generar_cadenas() -> void:
 	concatBlocks.clear()
-
+	
 	for variable in variableBlocks:
 		var variable_pos: Vector2 = variable.getSnappedPosition()
 		var down_pos: Vector2 = variable_pos + Vector2(0, 1)
@@ -105,8 +135,29 @@ func generar_cadenas() -> void:
 				var complete_chain = initial_chain + searchBlocks(block_pos, Vector2(0, -1))
 				concatBlocks.append(complete_chain)
 
-func get_concat_block_size() -> int:
-	return concatBlocks.size()
+
+func search() -> void:
+	# Deseleccionar cadenas previas
+	if concatBlocks.size() > 0:
+		for block in blocklist:
+			block.set_in_chain(false)
+
+
+	generar_cadenas()
+
+	for chain in concatBlocks:
+
+		# No se puede enviar chain, porque se modifica en revisar_sintaxis
+		var result = revisar_sintaxis(chain.duplicate())
+		if result != "invalid":
+			# Notificar a LevelManager
+			equation_found(result)
+			
+			# Activar color de bloques en cadena
+			for block in chain:
+				block.set_in_chain(true)
+			
+
 
 # ============================================================================
 # MÉTODOS DE REVISION SINTAXIS
@@ -118,7 +169,6 @@ func revisar_sintaxis(cadena: Array[GenericBlock]) -> String:
 	if cadena.size() < 3:
 		return "invalid"
 	
-	
 	# La respuesta final para luego ser devuelta a una clase encargada de evaluar la cadena
 	var final_string = ""
 
@@ -127,12 +177,10 @@ func revisar_sintaxis(cadena: Array[GenericBlock]) -> String:
 	if first_block.getTypeBlock() != "variable":
 		return "invalid"
 
-	
-
 	final_string += first_block.getTypeVariable()
 
 	var second_block = cadena[1]
-	# El segundo bloque debe ser un operador
+	# El segundo bloque debe ser un operador (en este caso '=')
 	if second_block.getTypeBlock() != "=":
 		return "invalid"
 
@@ -159,7 +207,6 @@ func revisar_sintaxis(cadena: Array[GenericBlock]) -> String:
 			else:
 				return "invalid"
 	
-
 	# La cadena no debe terminar esperando un número
 	return final_string if not expecting_number else "invalid"
 
@@ -189,34 +236,8 @@ func printCadenas() -> void:
 
 # ============================================================================
 # MÉTODOS DEL MOTOR GODOT
-# ============================================================================  
+# ============================================================================
 
-func _process(_delta: float) -> void:
-	if not chains_searched:
-		chains_searched = true
-
-
-		#deseleccionar cadenas
-		if concatBlocks.size() > 0:
-			for block in blocklist:
-				block.set_in_chain(false)
-
-
-		generar_cadenas()
-
-		for chain in concatBlocks:
-
-			#No se puede enviar chain, porque se modifica en revisar_sintaxis
-			var result = revisar_sintaxis(chain.duplicate())
-			if result != "invalid":
-				#print("Cadena valida: ", result)
-				#Notificar a LevelManager
-				equation_found(result)
-
-				#Activar color de bloques en cadena
-				for block in chain:
-					block.set_in_chain(true)
-			
 
 
 # ============================================================================
@@ -224,16 +245,10 @@ func _process(_delta: float) -> void:
 # ============================================================================
 
 
-func print_block_pos():
-	var i = 0
-	for block in blocklist:
-		print("[",i,"] block", block.initial_position, "| type: ", block.typeBlock)
-		i += 1
+
 
 func equation_found(equation: String) -> void:
 	print("BlockManager: Ecuacion valida encontrada!")
 	var level_manager = get_parent()
 	if level_manager and level_manager is LevelManager:
 		level_manager.equation_found(equation)
-
-#func 
