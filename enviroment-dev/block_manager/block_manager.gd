@@ -31,7 +31,7 @@ var chains_searched: bool = false
 # ============================================================================
 
 func _ready() -> void:
-	# Recolecta referencias a `GenericBlock` hijos y realiza la primera búsqueda
+	# Recolecta referencias a `GenericBlock` hijos y realiza la primera búsqueda de cadenas válidas
 	_initialize_blocks()
 	#_debug_print_blocks()
 
