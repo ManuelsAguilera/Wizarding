@@ -1,0 +1,98 @@
+[gd_scene load_steps=2 format=3 uid="uid://clarjw5kffa2b"]
+
+[ext_resource type="Script" uid="uid://bvk73m2ucglge" path="res://Interfaces/FormUI/form_ui.gd" id="1_5q3t5"]
+
+[node name="FormUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5q3t5")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 639.0
+offset_bottom = 638.0
+color = Color(0.404511, 0.404511, 0.404511, 1)
+
+[node name="Titulo" type="Label" parent="."]
+layout_mode = 0
+offset_left = 238.0
+offset_top = 180.0
+offset_right = 452.0
+offset_bottom = 250.0
+theme_override_font_sizes/font_size = 41
+text = "Wizarding"
+horizontal_alignment = 1
+
+[node name="Subtitulo" type="Label" parent="Titulo"]
+offset_left = -1.0
+offset_top = -28.0
+offset_right = 213.0
+offset_bottom = 42.0
+theme_override_font_sizes/font_size = 27
+text = "bienvenido a"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 94.0
+offset_top = 288.0
+offset_right = 230.0
+offset_bottom = 393.0
+theme_override_constants/separation = 17
+alignment = 1
+
+[node name="Nombre" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Nombre"
+
+[node name="Edad" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Edad      "
+
+[node name="Correo" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Correo  "
+
+[node name="CampoNombre" type="LineEdit" parent="."]
+layout_mode = 2
+offset_left = 191.0
+offset_top = 289.0
+offset_right = 551.0
+offset_bottom = 320.0
+
+[node name="CampoEdad" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 190.0
+offset_top = 325.0
+offset_right = 552.0
+offset_bottom = 356.0
+
+[node name="CampoCorreo" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 190.0
+offset_top = 361.0
+offset_right = 552.0
+offset_bottom = 392.0
+
+[node name="Guardar" type="Button" parent="."]
+layout_mode = 0
+offset_left = 479.0
+offset_top = 409.0
+offset_right = 552.0
+offset_bottom = 440.0
+text = "Guardar"
+
+[node name="Omitir" type="Button" parent="."]
+layout_mode = 0
+offset_left = 401.0
+offset_top = 409.0
+offset_right = 474.0
+offset_bottom = 440.0
+text = "Omitir"
+
+[connection signal="pressed" from="Guardar" to="." method="_on_guardar_pressed"]
+[connection signal="pressed" from="Omitir" to="." method="_on_omitir_pressed"]
