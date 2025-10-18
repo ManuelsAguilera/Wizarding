@@ -6,6 +6,10 @@ func _ready():
 	$CenterContainer/MenuOpciones/VolumenMusica.value = db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Musica")))
 	$CenterContainer/MenuOpciones/VolumenSFX.value = db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("SFX")))
 
+	if Global.level_index != 0:
+		var continuar_btn = $CenterContainer/BotonesPrincipales/Continuar
+		continuar_btn.visible  = true
+		
 	#Modo dev
 	if Global.dev_mode:
 		var dev_btn = $CenterContainer/BotonesPrincipales/NivelTest
@@ -15,7 +19,13 @@ func _ready():
 
 func _on_jugar_pressed():
 	# Cambiar escena a escena principal del juego
+	Global.level_index=0
 	Global.game_controller.change_to_level(Global.game_controller.getLevel(0))
+	Global.game_controller.change_gui_scene(Global.game_controller.menus["GameUI"])
+
+func _on_continuar_pressed():
+	# Cambiar escena a nivel actual
+	Global.game_controller.change_to_level(Global.game_controller.getLevel(Global.level_index))
 	Global.game_controller.change_gui_scene(Global.game_controller.menus["GameUI"])
 
 func _on_opciones_pressed():
@@ -42,6 +52,7 @@ func _on_volver_pressed():
 
 
 func _on_nivel_test_pressed():
+	Global.level_index = -1
 	Global.game_controller.change_to_level(Global.game_controller.getTestLevel())
 	Global.game_controller.change_gui_scene(Global.game_controller.menus["GameUI"])
 

@@ -12,6 +12,9 @@
 
 [node name="devworld" instance=ExtResource("1_ocdgp")]
 
+[node name="LevelManager" parent="." index="0"]
+id = "test"
+
 [node name="BlockManager" parent="LevelManager" index="2" instance=ExtResource("2_h3vwv")]
 
 [node name="x" parent="LevelManager/BlockManager" index="0" instance=ExtResource("3_1jsee")]
