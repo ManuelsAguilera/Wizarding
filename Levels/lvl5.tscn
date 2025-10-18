@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://b6p1q1ntobg8d"]
+[gd_scene load_steps=11 format=4 uid="uid://dumr4wepwtqhu"]
 
 [ext_resource type="PackedScene" uid="uid://dq0d6naagkltb" path="res://enviroment-dev/devworld.tscn" id="1_fwm2l"]
 [ext_resource type="PackedScene" uid="uid://bv34mjfjmmsit" path="res://enviroment-dev/config/config.tscn" id="2_8u7yy"]

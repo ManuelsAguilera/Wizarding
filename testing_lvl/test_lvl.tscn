@@ -38,7 +38,7 @@ frame = 1
 
 [node name="+" parent="LevelManager/BlockManager" index="5" instance=ExtResource("3_1jsee")]
 position = Vector2(160, 480)
-spriteName = "+"
+spriteName = "-"
 
 [node name="2" parent="LevelManager/BlockManager" index="6" instance=ExtResource("3_1jsee")]
 position = Vector2(160, 544)
@@ -52,8 +52,8 @@ position = Vector2(427, 192)
 
 [node name="EquationBlock" parent="LevelManager/EquationManager" index="0" instance=ExtResource("5_7l6tv")]
 position = Vector2(96, 96)
-equation = "x=0"
-solution = 1.0
+equation = "x=-1"
+solution = -1.0
 
 [node name="GoalBlock2" parent="LevelManager/EquationManager/EquationBlock" index="1" instance=ExtResource("6_7l6tv")]
 position = Vector2(0, 67)
