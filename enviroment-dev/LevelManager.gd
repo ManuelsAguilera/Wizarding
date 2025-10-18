@@ -79,7 +79,6 @@ func _ready() -> void:
 	timer.reset_timer()
 	timer.unpauseTimer()
 
-	#Actualizar el current_id
 
 	Global.set_current_level_id(id)
 
