@@ -36,7 +36,7 @@ func show_stars(shown: Vector3) -> void:
 func _animate_stars(shown: Vector3) -> void:
 	is_animating = true
 	var vals: Array = [int(shown.x), int(shown.y), int(shown.z)]
-	print("Animating")
+	print_debug("Animating")
 
 	for i in range(3):
 		
