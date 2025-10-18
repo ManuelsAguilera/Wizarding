@@ -64,8 +64,7 @@ text = "Jugar"
 [node name="Continuar" type="Button" parent="CenterContainer/BotonesPrincipales"]
 visible = false
 layout_mode = 2
-text = "Continuar
-"
+text = "Continuar"
 
 [node name="Opciones" type="Button" parent="CenterContainer/BotonesPrincipales"]
 layout_mode = 2
