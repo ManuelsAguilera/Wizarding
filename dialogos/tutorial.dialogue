@@ -1,0 +1,27 @@
+~ Start
+Mago: Hola, ¿necesitas ayuda con este nivel?
+Mago: ¡Estoy aqui para ayudarte!
+- No entiendo la ecuación.
+	Mago: Tranquilo, solo tienes que recordar que x=1, o sea, que la incógnita "X" tiene como valor 1.
+	Mago: Suena sencillo, pero intenta conectar los bloques para obtener ese valor.
+- No entiendo el puzzle.
+	Mago: Solo debes completar la asignación "x=1" ¡Bienvenido al tutorial!
+- No entiendo los bloques.
+	Mago: Tranquilo, sé que es difícil al principio. Intenta empujar tanto los operadores como números e incógnitas con la tecla "Espacio".
+	Mago: ¿Quiéres un repaso de los tipos de bloques?
+	- ¿Qué era la incógnita?
+		Mago: Tanto los bloques X, Y y Z son incognitas, que al ser asignadas correctamente te dejan avanzar de habitación.
+		Mago: Recuerda que estos bloques se pueden mover, y deben quedar de la forma x="valor".
+	- ¿Qué es un operador?
+		Mago: Los operadores son del tipo +, -, *, %. Estos bloques siempre son blancos y sirven para juntar números.
+	- ¿Qué son los números?
+		Mago: Los bloques numéricos simplemente representan un numero del 1-9, con los cuales puedes operar para obtener un valor.
+	- Ya entendí.
+		=> END
+- No entiendo por qué no se encadenan mis bloques.
+	Mago: Te repasaré las reglas de encadenación. Tienes que siempre seguir la estructura incógnita = valor.
+	Mago: El valor se puede componer de varios números siendo operados. No se puede tener solamente un número y operación.
+	Mago: Y la incógnita no debe tener ni números ni operadores a su lado.
+- No pasa nada, entiendo todo.
+	Mago: Perfecto!
+	=> END
