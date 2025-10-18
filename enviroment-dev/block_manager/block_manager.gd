@@ -106,6 +106,23 @@ func searchBlocks(initial_pos: Vector2, direction: Vector2) -> Array[GenericBloc
 	
 	return chain
 
+func inverse_chain(chain:Array):
+	var new_chain:Array[GenericBlock] = []
+
+	#Si no tiene las 2 primeras partes que importan conservar
+	#Posible x=
+	if chain.size() <2:
+		return chain
+	
+	new_chain.append(chain.pop_front())
+	new_chain.append(chain.pop_front())
+
+	chain.reverse()
+
+	printCadena(new_chain+chain)
+	return new_chain + chain
+
+
 ## Genera todas las cadenas de bloques válidas
 func generar_cadenas() -> void:
 	concatBlocks.clear()
@@ -130,10 +147,10 @@ func generar_cadenas() -> void:
 				concatBlocks.append(complete_chain)
 			elif block_pos == up_pos:
 				var complete_chain = initial_chain + searchBlocks(block_pos, Vector2(-1, 0))
-				concatBlocks.append(complete_chain)
+				concatBlocks.append(inverse_chain(complete_chain))
 			elif block_pos == left_pos:
 				var complete_chain = initial_chain + searchBlocks(block_pos, Vector2(0, -1))
-				concatBlocks.append(complete_chain)
+				concatBlocks.append(inverse_chain(complete_chain))
 
 
 func search() -> void:
@@ -166,6 +183,7 @@ func search() -> void:
 
 func revisar_sintaxis(cadena: Array[GenericBlock]) -> String:
 	# La cadena debe tener al menos 3 bloques (variable, operador, número/variable)
+
 	if cadena.size() < 3:
 		return "invalid"
 	
@@ -233,6 +251,23 @@ func printCadenas() -> void:
 					chain_string += str(block.getTypeOperation()) + ","
 		
 		print("[", chain_string, "]")
+
+
+func printCadena(chain:Array):
+	var chain_string:String=""
+	for block in chain:
+		var block_type: String = block.getTypeBlock()
+		chain_string += block_type + " "
+		
+		match block_type:
+			"num":
+				chain_string += str(block.getTypeNumber()) + ","
+			"variable":
+				chain_string += str(block.getTypeVariable()) + ","
+			"operator":
+				chain_string += str(block.getTypeOperation()) + ","
+	
+	print("[", chain_string, "]")
 
 # ============================================================================
 # MÉTODOS DEL MOTOR GODOT

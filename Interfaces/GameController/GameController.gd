@@ -9,6 +9,9 @@ var levels:Array = [
 	"res://Levels/lvl1.tscn",
 	"res://Levels/lvl2.tscn",
 	"res://Levels/lvl3.tscn",
+	"res://Levels/lvl4.tscn",
+	"res://Levels/lvl5.tscn",
+	"res://Levels/lvl6.tscn"
 ]
 
 var menus:Dictionary = {
