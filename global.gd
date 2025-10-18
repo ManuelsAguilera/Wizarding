@@ -35,7 +35,6 @@ func invoke_dialog(DIALOG:DialogueResource,title:String=""):
 	if !DialogueManager.dialogue_ended.is_connected(disable_dialog_mode):
 		DialogueManager.dialogue_ended.connect(disable_dialog_mode)
 	
-	print_debug("title: ",title)
 	DialogueManager.show_dialogue_balloon(DIALOG, title)
 	dialog_mode = true
 
