@@ -61,6 +61,11 @@ theme_override_constants/separation = 8
 layout_mode = 2
 text = "Jugar"
 
+[node name="Continuar" type="Button" parent="CenterContainer/BotonesPrincipales"]
+visible = false
+layout_mode = 2
+text = "Continuar"
+
 [node name="Opciones" type="Button" parent="CenterContainer/BotonesPrincipales"]
 layout_mode = 2
 text = "Opciones"
@@ -155,6 +160,7 @@ layout_mode = 2
 text = "Volver"
 
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/Jugar" to="." method="_on_jugar_pressed"]
+[connection signal="pressed" from="CenterContainer/BotonesPrincipales/Continuar" to="." method="_on_continuar_pressed"]
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/Opciones" to="." method="_on_opciones_pressed"]
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/Creditos" to="." method="_on_creditos_pressed"]
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/NivelTest" to="." method="_on_nivel_test_pressed"]
