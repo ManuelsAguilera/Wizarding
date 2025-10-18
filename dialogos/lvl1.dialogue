@@ -1,0 +1,28 @@
+~ Start
+Mago: Hola, ¿necesitas ayuda con este nivel?
+Mago: ¡Estoy aqui para ayudarte!
+- No entiendo la ecuación.
+	Mago: ¡No te preocupes! Empecemos despejando la ecuación 12=x+5 de la puerta.
+	Mago: Queremos saber qué número es "X", por lo que podemos restar 5 en ambos lados para dejar la incógnita sola y revelar el valor 7=x.
+	Mago: ¡Intenta conectar los bloques para obtener ese valor!
+- No entiendo el puzzle.
+	Mago: ¡El operador "+" está atrapado! Navega con cuidado por alrededor y una vez lo liberes el nivel estárá casi listo.
+- No entiendo los bloques.
+	Mago: Tranquilo, sé que es difícil al principio. Intenta empujar tanto los operadores como números e incógnitas con la tecla "Espacio".
+	Mago: ¿Quiéres un repaso de los tipos de bloques?
+	- ¿Qué era la incógnita?
+		Mago: Tanto los bloques X, Y y Z son incognitas, que al ser asignadas correctamente te dejan avanzar de habitación.
+		Mago: Recuerda que estos bloques se pueden mover, y deben quedar de la forma x="valor".
+	- ¿Qué es un operador?
+		Mago: Los operadores son del tipo +, -, *, %. Estos bloques siempre son blancos y sirven para juntar números.
+	- ¿Qué son los números?
+		Mago: Los bloques numéricos simplemente representan un numero del 1-9, con los cuales puedes operar para obtener un valor.
+	- Ya entendí.
+		=> END
+- No entiendo por qué no se encadenan mis bloques.
+	Mago: Te repasaré las reglas de encadenación. Tienes que siempre seguir la estructura incógnita = valor.
+	Mago: El valor se puede componer de varios números siendo operados. No se puede tener solamente un número y operación.
+	Mago: Y la incógnita no debe tener ni números ni operadores a su lado.
+- No pasa nada, entiendo todo.
+	Mago: Perfecto!
+	=> END

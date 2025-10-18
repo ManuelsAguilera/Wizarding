@@ -227,4 +227,3 @@ func force_level_reset() -> void:
 	equations_solved = 0
 	reset_solutions()
 	print("LevelManager: Level forcefully reset")
-

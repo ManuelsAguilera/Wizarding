@@ -1,0 +1,145 @@
+[gd_scene load_steps=11 format=4 uid="uid://b6p1q1ntobg8d"]
+
+[ext_resource type="PackedScene" uid="uid://dq0d6naagkltb" path="res://enviroment-dev/devworld.tscn" id="1_fwm2l"]
+[ext_resource type="PackedScene" uid="uid://bv34mjfjmmsit" path="res://enviroment-dev/config/config.tscn" id="2_8u7yy"]
+[ext_resource type="TileSet" uid="uid://0pm56xlpn385" path="res://DungeonTileSet.tres" id="3_wu05g"]
+[ext_resource type="PackedScene" uid="uid://df6eejm7lhc5e" path="res://enviroment-dev/block_manager/block_manager.tscn" id="4_pusnt"]
+[ext_resource type="PackedScene" uid="uid://duty7jtc6tl0j" path="res://blocks/generic/generic_block.tscn" id="5_or8t0"]
+[ext_resource type="Script" uid="uid://cy8tnsw3715c6" path="res://enviroment-dev/equation_manager/equation_manager.gd" id="6_7rxgx"]
+[ext_resource type="PackedScene" uid="uid://b47fietgvlfph" path="res://blocks/equation_block/equation_block.tscn" id="7_44a1g"]
+[ext_resource type="PackedScene" uid="uid://dfjrgvseq2osg" path="res://blocks/equation_block/goal_block/goal_block.tscn" id="8_u0j5m"]
+[ext_resource type="PackedScene" uid="uid://cbpm6kjlqjbfy" path="res://blocks/equation_block/barrier_block/barrier_block.tscn" id="9_wm55d"]
+[ext_resource type="PackedScene" uid="uid://ls0o0fycav6i" path="res://player/player.tscn" id="10_t73w2"]
+
+[node name="lvl2" instance=ExtResource("1_fwm2l")]
+
+[node name="LevelManager" parent="." index="0"]
+id = "level_3"
+
+[node name="Config" parent="LevelManager" index="0" instance=ExtResource("2_8u7yy")]
+zoom = Vector2(0.769, 0.769)
+
+[node name="Scenary" parent="LevelManager/TileMaps" index="0"]
+tile_map_data = PackedByteArray("AAAAAAAAAAAFAAAAAAAAAAEAAAAFAAAAAAAAAAIAAAAFAAAAAAAAAAMAAAAFAAAAAAAAAAQAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAYAAAAFAAAAAAAAAAcAAAAFAAAAAAAAAAgAAAAFAAAAAAAAAAkAAAAFAAAAAAAAAAoAAAAFAAAAAAAAAAsAAAAFAAAAAAAAAAwAAAAFAAAAAAAAAA0AAAAFAAAAAAABAAAAAAAFAAAAAAABAAEAAAAAAAAAAAABAAIAAAAAAAAAAAABAAMAAAAAAAAAAAABAAQAAAAAAAAAAAABAAUAAAAFAAAAAAABAAYAAAAFAAAAAAABAAcAAAAFAAAAAAABAAgAAAAFAAAAAAABAAkAAAAFAAAAAAABAAoAAAAAAAAAAAABAAsAAAAAAAAAAAABAAwAAAAFAAAAAAABAA0AAAAFAAAAAAACAAAAAAAAAAAAAAACAAEAAAAAAAAAAAACAAIAAAAFAAAAAAACAAMAAAAFAAAAAAACAAQAAAAFAAAAAAACAAUAAAAFAAAAAAACAAYAAAAFAAAAAAACAAcAAAAFAAAAAAACAAgAAAAFAAAAAAACAAkAAAAAAAAAAAACAAoAAAAAAAAAAAACAAsAAAAAAAAAAAACAAwAAAAAAAAAAAACAA0AAAAFAAAAAAADAAAAAAAAAAAAAAADAAEAAAAFAAAAAAADAAIAAAAFAAAAAAADAAMAAAAFAAAAAAADAAQAAAAFAAAAAAADAAUAAAAFAAAAAAADAAYAAAAFAAAAAAADAAcAAAAFAAAAAAADAAgAAAAAAAAAAAADAAkAAAAAAAAAAAADAAoAAAAFAAAAAAADAAsAAAAFAAAAAAADAAwAAAAAAAAAAAADAA0AAAAFAAAAAAAEAAAAAAAFAAAAAAAEAAEAAAAFAAAAAAAEAAIAAAAFAAAAAAAEAAMAAAAAAAAAAAAEAAQAAAAAAAAAAAAEAAUAAAAAAAAAAAAEAAYAAAAAAAAAAAAEAAcAAAAAAAAAAAAEAAgAAAAAAAAAAAAEAAkAAAAFAAAAAAAEAAoAAAAFAAAAAAAEAAsAAAAFAAAAAAAEAAwAAAAAAAAAAAAEAA0AAAAFAAAAAAAFAAAAAAAFAAAAAAAFAAEAAAAFAAAAAAAFAAIAAAAAAAAAAAAFAAMAAAAAAAAAAAAFAAQAAAAFAAAAAAAFAAUAAAAFAAAAAAAFAAYAAAAFAAAAAAAFAAcAAAAFAAAAAAAFAAgAAAAFAAAAAAAFAAkAAAAFAAAAAAAFAAoAAAAFAAAAAAAFAAsAAAAFAAAAAAAFAAwAAAAAAAAAAAAFAA0AAAAFAAAAAAAGAAAAAAAFAAAAAAAGAAEAAAAAAAAAAAAGAAIAAAAAAAAAAAAGAAMAAAAFAAAAAAAGAAQAAAAFAAAAAAAGAAUAAAAFAAAAAAAGAAYAAAAFAAAAAAAGAAcAAAAFAAAAAAAGAAgAAAAFAAAAAAAGAAkAAAAFAAAAAAAGAAoAAAAFAAAAAAAGAAsAAAAFAAAAAAAGAAwAAAAFAAAAAAAGAA0AAAAFAAAAAAAHAAAAAAAFAAAAAAAHAAEAAAAAAAAAAAAHAAIAAAAFAAAAAAAHAAMAAAAFAAAAAAAHAAQAAAAFAAAAAAAHAAUAAAAFAAAAAAAHAAYAAAAFAAAAAAAHAAcAAAAFAAAAAAAHAAgAAAAAAAAAAAAHAAkAAAAAAAAAAAAHAAoAAAAAAAAAAAAHAAsAAAAFAAAAAAAHAAwAAAAFAAAAAAAHAA0AAAAFAAAAAAAIAAAAAAAFAAAAAAAIAAEAAAAFAAAAAAAIAAIAAAAFAAAAAAAIAAMAAAAFAAAAAAAIAAQAAAAFAAAAAAAIAAUAAAAFAAAAAAAIAAYAAAAFAAAAAAAIAAcAAAAAAAAAAAAIAAgAAAAAAAAAAAAIAAkAAAAFAAAAAAAIAAoAAAAAAAAAAAAIAAsAAAAAAAAAAAAIAAwAAAAFAAAAAAAIAA0AAAAFAAAAAAAJAAAAAAAFAAAAAAAJAAEAAAAAAAAAAAAJAAIAAAAAAAAAAAAJAAMAAAAAAAAAAAAJAAQAAAAAAAAAAAAJAAUAAAAFAAAAAAAJAAYAAAAAAAAAAAAJAAcAAAAAAAAAAAAJAAgAAAAFAAAAAAAJAAkAAAAFAAAAAAAJAAoAAAAFAAAAAAAJAAsAAAAAAAAAAAAJAAwAAAAAAAAAAAAJAA0AAAAFAAAAAAAKAAAAAAAAAAAAAAAKAAEAAAAAAAAAAAAKAAIAAAAFAAAAAAAKAAMAAAAFAAAAAAAKAAQAAAAAAAAAAAAKAAUAAAAAAAAAAAAKAAYAAAAAAAAAAAAKAAcAAAAFAAAAAAAKAAgAAAAFAAAAAAAKAAkAAAAFAAAAAAAKAAoAAAAFAAAAAAAKAAsAAAAAAAAAAAAKAAwAAAAAAAAAAAAKAA0AAAAAAAAAAAALAAAAAAAAAAAAAAALAAEAAAAFAAAAAAALAAIAAAAFAAAAAAALAAMAAAAFAAAAAAALAAQAAAAFAAAAAAALAAUAAAAFAAAAAAALAAYAAAAFAAAAAAALAAcAAAAFAAAAAAALAAgAAAAFAAAAAAALAAkAAAAAAAAAAAALAAoAAAAAAAAAAAALAAsAAAAAAAAAAAALAAwAAAAAAAAAAAALAA0AAAAAAAAAAAAMAAAAAAAFAAAAAAAMAAEAAAAFAAAAAAAMAAIAAAAFAAAAAAAMAAMAAAAFAAAAAAAMAAQAAAAFAAAAAAAMAAUAAAAFAAAAAAAMAAYAAAAFAAAAAAAMAAcAAAAFAAAAAAAMAAgAAAAAAAAAAAAMAAkAAAAAAAAAAAAMAAoAAAAAAAAAAAAMAAsAAAAAAAAAAAAMAAwAAAAAAAAAAAAMAA0AAAAAAAAAAAANAAAAAAAFAAAAAAANAAEAAAAFAAAAAAANAAIAAAAFAAAAAAANAAMAAAAFAAAAAAANAAQAAAAFAAAAAAANAAUAAAAFAAAAAAANAAYAAAAFAAAAAAANAAcAAAAFAAAAAAANAAgAAAAFAAAAAAANAAkAAAAFAAAAAAANAAoAAAAFAAAAAAANAAsAAAAFAAAAAAANAAwAAAAAAAAAAAANAA0AAAAAAAAAAAD+/wYAAAAFAAAAAAD+/wcAAAAFAAAAAAD+/wgAAAAFAAAAAAD+/wkAAAAFAAAAAAD+/woAAAAFAAAAAAD+/wsAAAAFAAAAAAD+/wwAAAAFAAAAAAD/////AAAFAAAAAAD//wAAAAAFAAAAAAD//wEAAAAFAAAAAAD//wIAAAAFAAAAAAD//wMAAAAFAAAAAAD//wQAAAAFAAAAAAD//wUAAAAFAAAAAAD//wYAAAAFAAAAAAD//wcAAAAFAAAAAAD//wgAAAAFAAAAAAD//wkAAAAFAAAAAAD//woAAAAFAAAAAAD//wsAAAAFAAAAAAD//wwAAAAFAAAAAAD//w0AAAAFAAAAAAAAAP//AAAFAAAAAAABAP//AAAFAAAAAAACAP//AAAFAAAAAAADAP//AAAFAAAAAAAEAP//AAAFAAAAAAAFAP//AAAFAAAAAAAGAP//AAAFAAAAAAAHAP//AAAFAAAAAAAIAP//AAAFAAAAAAAJAP//AAAFAAAAAAAKAP//AAAFAAAAAAALAP//AAAAAAAAAAAMAP//AAAAAAAAAAANAP//AAAFAAAAAAA=")
+
+[node name="Objetos" type="TileMapLayer" parent="LevelManager/TileMaps" index="1"]
+tile_map_data = PackedByteArray("AAAAAAAAAAACAAIAAAAAAAEAAAACAAIAAAAAAAIAAAACAAIAAAAAAAMAAAACAAIAAAAAAAQAAAACAAIAAAAAAAUAAAACAAIAAAAAAAYAAAACAAIAAAABAAAAAAACAAIAAAACAAAAAAACAAIAAAAGAAAAAAACAAIAAAAHAAAAAAACAAIAAAAIAAAAAAACAAIAAAAFAAAAAAACAAIAAAADAAAAAAACAAIAAAAEAAAAAAACAAIAAAAAAAoAAAACAAAAAAAJAAAAAAAEAAAAAAAKAAAAAAAEAAAAAAAAAAgAAAACAAEAAAAAAAcAAAAEAAAAAAALAAAAAAADAAIAAAAMAAAAAAAEAAAAAAAAAAwAAAAEAAAAAAAAAAsAAAADAAIAAAAEAAQAAAACAAIAAAAEAAMAAAACAAIAAAAEAAIAAAACAAIAAAAEAAEAAAACAAIAAAAMAAoAAAADAAIAAAAIAAEAAAACAAIAAAAIAAIAAAACAAIAAAAIAAMAAAACAAIAAAAIAAQAAAACAAIAAAAMAAEAAAAEAAAAAAAMAAIAAAADAAIAAAAMAAMAAAADAAIAAAAMAAQAAAAEAAAAAAAMAAUAAAAEAAAAAAAMAAYAAAAEAAAAAAAMAAcAAAAEAAAAAAAMAAgAAAAEAAAAAAAMAAkAAAADAAIAAAABAAwAAAAEAAAAAAACAAwAAAAEAAAAAAADAAwAAAAEAAAAAAAEAAwAAAADAAIAAAAFAAwAAAAEAAAAAAAGAAwAAAAEAAAAAAAHAAwAAAAEAAAAAAAIAAwAAAAEAAAAAAAJAAwAAAAEAAAAAAAKAAwAAAADAAIAAAALAAwAAAADAAIAAAAMAAwAAAADAAIAAAAMAAsAAAADAAIAAAD//wgAAAAEAAAAAAD//wkAAAAEAAAAAAD//woAAAAEAAAAAAD//wcAAAAEAAAAAAD//wsAAAAEAAAAAAABAAEAAAAFAAIAAAAHAAMAAAAFAAIAAAAFAAIAAAAFAAIAAAAJAAIAAAAFAAIAAAALAAEAAAAAAAIAAAALAAYAAAAEAAIAAAACAAkAAAAEAAIAAAAHAAsAAAAEAAIAAAADAAUAAAAEAAIAAAAHAAcAAAAEAAIAAAAKAAkAAAAEAAIAAAABAAsAAAAEAAIAAAA=")
+tile_set = ExtResource("3_wu05g")
+
+[node name="BlockManager" parent="LevelManager" index="2" instance=ExtResource("4_pusnt")]
+map_size = Vector2(14, 14)
+
+[node name="x" parent="LevelManager/BlockManager" index="0" instance=ExtResource("5_or8t0")]
+position = Vector2(280, 680)
+spriteName = "x"
+
+[node name="y" parent="LevelManager/BlockManager" index="1" instance=ExtResource("5_or8t0")]
+position = Vector2(80, 168)
+scale = Vector2(0.81, 0.81)
+spriteName = "y"
+
+[node name="=" parent="LevelManager/BlockManager" index="2" instance=ExtResource("5_or8t0")]
+position = Vector2(152, 488)
+spriteName = "="
+
+[node name="+" parent="LevelManager/BlockManager" index="3" instance=ExtResource("5_or8t0")]
+position = Vector2(656, 616)
+spriteName = "+"
+
+[node name="-" parent="LevelManager/BlockManager" index="4" instance=ExtResource("5_or8t0")]
+position = Vector2(344, 168)
+spriteName = "-"
+
+[node name="1" parent="LevelManager/BlockManager" index="5" instance=ExtResource("5_or8t0")]
+position = Vector2(528, 496)
+spriteName = "num"
+frame = 1
+
+[node name="2" parent="LevelManager/BlockManager" index="6" instance=ExtResource("5_or8t0")]
+position = Vector2(464, 168)
+spriteName = "num"
+frame = 2
+
+[node name="4" parent="LevelManager/BlockManager" index="7" instance=ExtResource("5_or8t0")]
+position = Vector2(272, 432)
+spriteName = "num"
+frame = 4
+
+[node name="6" parent="LevelManager/BlockManager" index="8" instance=ExtResource("5_or8t0")]
+position = Vector2(336, 560)
+scale = Vector2(0.81, 0.81)
+spriteName = "num"
+frame = 6
+
+[node name="7" parent="LevelManager/BlockManager" index="9" instance=ExtResource("5_or8t0")]
+position = Vector2(448, 616)
+scale = Vector2(0.81, 0.81)
+spriteName = "num"
+frame = 7
+
+[node name="8" parent="LevelManager/BlockManager" index="10" instance=ExtResource("5_or8t0")]
+position = Vector2(208, 168)
+scale = Vector2(0.81, 0.81)
+spriteName = "num"
+frame = 8
+
+[node name="EquationManager" type="Node2D" parent="LevelManager" index="3"]
+position = Vector2(8, 16)
+script = ExtResource("6_7rxgx")
+
+[node name="puerta" parent="LevelManager/EquationManager" index="0" instance=ExtResource("7_44a1g")]
+position = Vector2(664, 80)
+equation = "7y-40=-13+4y"
+size = Vector2(0.55, 0.55)
+variableType = "y"
+solution = 9.0
+
+[node name="GoalBlock2" parent="LevelManager/EquationManager/puerta" index="1" instance=ExtResource("8_u0j5m")]
+position = Vector2(0, 64)
+scale = Vector2(0.9, 0.9)
+
+[node name="barrera1" parent="LevelManager/EquationManager" index="1" instance=ExtResource("7_44a1g")]
+position = Vector2(152, 273)
+equation = "6x-4=2x+16"
+size = Vector2(0.7, 0.7)
+solution = 5.0
+
+[node name="BarrierBlock2" parent="LevelManager/EquationManager/barrera1" index="1" instance=ExtResource("9_wm55d")]
+
+[node name="BarrierBlock" parent="LevelManager/EquationManager/barrera1" index="2" instance=ExtResource("9_wm55d")]
+position = Vector2(-64, 0)
+
+[node name="BarrierBlock3" parent="LevelManager/EquationManager/barrera1" index="3" instance=ExtResource("9_wm55d")]
+position = Vector2(64, 0)
+
+[node name="barrera2" parent="LevelManager/EquationManager" index="2" instance=ExtResource("7_44a1g")]
+position = Vector2(408, 272)
+equation = "10y=121-y"
+size = Vector2(0.7, 0.7)
+variableType = "y"
+solution = 11.0
+
+[node name="BarrierBlock2" parent="LevelManager/EquationManager/barrera2" index="1" instance=ExtResource("9_wm55d")]
+
+[node name="BarrierBlock" parent="LevelManager/EquationManager/barrera2" index="2" instance=ExtResource("9_wm55d")]
+position = Vector2(-64, 0)
+
+[node name="BarrierBlock3" parent="LevelManager/EquationManager/barrera2" index="3" instance=ExtResource("9_wm55d")]
+position = Vector2(64, 0)
+
+[node name="barrera3" parent="LevelManager/EquationManager" index="3" instance=ExtResource("7_44a1g")]
+position = Vector2(664, 273)
+equation = "11-3x=2x-4"
+size = Vector2(0.7, 0.7)
+solution = 3.0
+
+[node name="BarrierBlock2" parent="LevelManager/EquationManager/barrera3" index="1" instance=ExtResource("9_wm55d")]
+
+[node name="BarrierBlock" parent="LevelManager/EquationManager/barrera3" index="2" instance=ExtResource("9_wm55d")]
+position = Vector2(-64, 0)
+
+[node name="BarrierBlock3" parent="LevelManager/EquationManager/barrera3" index="3" instance=ExtResource("9_wm55d")]
+position = Vector2(64, 0)
+
+[node name="Player" parent="." index="1" instance=ExtResource("10_t73w2")]
+position = Vector2(8, 616)
