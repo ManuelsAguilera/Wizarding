@@ -6,6 +6,8 @@ var game_controller:GameController
 var level_index = 0
 var last_level:String = ""
 
+var current_level_id = ""
+
 var dev_mode:bool=false
 
 
@@ -27,12 +29,15 @@ func _ready():
 ### Dialogos
 
 
-func invoke_dialog(DIALOG:DialogueResource):
-	DialogueManager.show_dialogue_balloon(DIALOG)
+func invoke_dialog(DIALOG:DialogueResource,title:String=""):
 
-	dialog_mode=true
-
-	DialogueManager.dialogue_ended.connect(disable_dialog_mode)
+	# Conectar la señal solo si no está ya conectada
+	if !DialogueManager.dialogue_ended.is_connected(disable_dialog_mode):
+		DialogueManager.dialogue_ended.connect(disable_dialog_mode)
+	
+	print_debug("title: ",title)
+	DialogueManager.show_dialogue_balloon(DIALOG, title)
+	dialog_mode = true
 
 
 
@@ -53,6 +58,10 @@ func update_level_index(next:bool=true):
 		level_index = 0
 
 
+func set_current_level_id(id:String):
+	current_level_id=id
+
+##
 func toggle_dev():
 	dev_mode= !dev_mode
 

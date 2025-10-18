@@ -2,6 +2,7 @@ extends Control
 
 
 @onready var label: Label = $Label
+@onready var volver_menu_btn: Button = $VBoxContainer/VolverMenu
 @onready var siguiente_nivel_btn: Button = $VBoxContainer/SiguienteNivel
 @onready var star_container: StarContainer = $CenterContainer/ResultContainer/StarContainer
 # Añadidos: referencias a los labels para animarlos
@@ -44,12 +45,10 @@ func _ready():
 		label.text = "¡Has completado Wizarding! Vuelve al menú principal"
 		siguiente_nivel_btn.visible = false
 		Global.update_level_index()
+	else:
+		Global.update_level_index()
 
 	var level_id = Global.last_level
-
-	# labels de movimientos y tiempo
-	var move_label = $CenterContainer/ResultContainer/StatContainer/cantMovimientos
-	var time_label = $CenterContainer/ResultContainer/StatContainer/cantTiempo
 
 	# Obtener datos del nivel pasado
 	var level_data = Global.get_level_data(level_id)
@@ -91,6 +90,9 @@ func _ready():
 		print("estrellas: ", estrellas)
 	else:
 		printerr("No se han encontrado datos del nivel")
+	
+	siguiente_nivel_btn.disabled = false
+	volver_menu_btn.disabled = false
 
 
 func format_time(time: float) -> String:
@@ -102,7 +104,7 @@ func format_time(time: float) -> String:
 
 
 func _on_siguiente_nivel_pressed():
-	Global.update_level_index()
+	
 	# Carga el siguiente nivel
 	Global.game_controller.change_to_level(Global.game_controller.getLevel(Global.level_index))
 	Global.game_controller.change_gui_scene(Global.game_controller.menus["GameUI"])

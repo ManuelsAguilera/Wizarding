@@ -29,9 +29,13 @@ size_flags_vertical = 4
 theme_override_constants/separation = 8
 alignment = 1
 
+[node name="Help" type="Button" parent="AspectContainer/BotonesNivel"]
+layout_mode = 2
+text = "Ayuda"
+
 [node name="Reset" type="Button" parent="AspectContainer/BotonesNivel"]
 layout_mode = 2
-text = "reset"
+text = "Reiniciar"
 
 [node name="Menu" type="Button" parent="AspectContainer/BotonesNivel"]
 layout_mode = 2
@@ -54,16 +58,12 @@ text = "NextLevel
 layout_mode = 2
 text = "LastLevel"
 
-[node name="HelpTest" type="Button" parent="AspectContainer/BotonesDev"]
-layout_mode = 2
-text = "Ayuda"
-
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 zoom = Vector2(0.91, 0.91)
 
+[connection signal="pressed" from="AspectContainer/BotonesNivel/Help" to="." method="_on_help_test_pressed"]
 [connection signal="pressed" from="AspectContainer/BotonesNivel/Reset" to="." method="_on_reset_pressed"]
 [connection signal="pressed" from="AspectContainer/BotonesNivel/Menu" to="." method="_on_menu_pressed"]
 [connection signal="pressed" from="AspectContainer/BotonesDev/NextLevel" to="." method="_on_next_level_pressed"]
 [connection signal="pressed" from="AspectContainer/BotonesDev/LastLevel" to="." method="_on_last_level_pressed"]
-[connection signal="pressed" from="AspectContainer/BotonesDev/HelpTest" to="." method="_on_help_test_pressed"]
