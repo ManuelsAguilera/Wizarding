@@ -4,7 +4,7 @@
 [ext_resource type="Shader" uid="uid://2ip1onjiwtri" path="res://Interfaces/LevelCompleted/LevelCompletedScreen.gdshader" id="2_q1cuu"]
 [ext_resource type="Texture2D" uid="uid://drr1bd18wv1u4" path="res://assets/backgrounds/Dungeon_brick_wall_grey.png" id="3_qq52e"]
 [ext_resource type="Texture2D" uid="uid://ds6fd1hj14rpi" path="res://icon.svg" id="4_q1cuu"]
-[ext_resource type="Script" uid="uid://0qj1xbhnh30w" path="res://Interfaces/LevelCompleted/star_container.gd" id="4_qq52e"]
+[ext_resource type="Script" path="res://Interfaces/LevelCompleted/star_container.gd" id="4_qq52e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ebigs"]
 shader = ExtResource("2_q1cuu")
@@ -128,10 +128,12 @@ grow_vertical = 2
 
 [node name="SiguienteNivel" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+disabled = true
 text = "Siguiente nivel"
 
 [node name="VolverMenu" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+disabled = true
 text = "Volver al menu"
 
 [connection signal="pressed" from="VBoxContainer/SiguienteNivel" to="." method="_on_siguiente_nivel_pressed"]

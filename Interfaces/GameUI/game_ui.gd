@@ -1,7 +1,7 @@
 extends Control
 
 
-const TEST_DIALOG:DialogueResource = preload("res://dialogos/test.dialogue")
+const TEST_DIALOG:DialogueResource = preload("res://dialogos/levels_help.dialogue")
 
 func _ready():
 
@@ -44,4 +44,4 @@ func _on_last_level_pressed() -> void:
 
 func _on_help_test_pressed() -> void:
 
-	Global.invoke_dialog(TEST_DIALOG)
+	Global.invoke_dialog(TEST_DIALOG,Global.current_level_id)

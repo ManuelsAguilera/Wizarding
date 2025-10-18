@@ -79,6 +79,9 @@ func _ready() -> void:
 	timer.reset_timer()
 	timer.unpauseTimer()
 
+
+	Global.set_current_level_id(id)
+
 ## Obtiene referencias a todos los componentes necesarios
 func _setup_component_references() -> void:
 	config = get_node("Config")
@@ -104,6 +107,18 @@ func _initialize_level_state() -> void:
 	level_complete = false
 	equations_solved = 0
 	
+# ============================================================================
+# Revision modo dialogo
+# ============================================================================
+
+func _process(delta: float) -> void:
+	if Global.dialog_mode:
+		timer.pauseTimer()
+	else:
+		if timer.is_paused:
+			timer.unpauseTimer()
+
+
 
 # ============================================================================
 # MÉTODOS DE CONFIGURACIÓN

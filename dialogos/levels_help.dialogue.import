@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bgipuyx20dguc"
+path="res://.godot/imported/levels_help.dialogue-deb21a6bc94f1c40f3a44a27bb5b4b94.tres"
+
+[deps]
+
+source_file="res://dialogos/levels_help.dialogue"
+dest_files=["res://.godot/imported/levels_help.dialogue-deb21a6bc94f1c40f3a44a27bb5b4b94.tres"]
+
+[params]
+
+defaults=true
