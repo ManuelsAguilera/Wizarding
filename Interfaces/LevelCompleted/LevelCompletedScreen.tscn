@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://hpfo8i8j8f2"]
+[gd_scene load_steps=7 format=3 uid="uid://hpfo8i8j8f2"]
 
 [ext_resource type="Script" uid="uid://cpsyfnuf8gvhk" path="res://Interfaces/LevelCompleted/level_completed_screen.gd" id="1_6pme7"]
 [ext_resource type="Shader" uid="uid://2ip1onjiwtri" path="res://Interfaces/LevelCompleted/LevelCompletedScreen.gdshader" id="2_q1cuu"]
 [ext_resource type="Texture2D" uid="uid://drr1bd18wv1u4" path="res://assets/backgrounds/Dungeon_brick_wall_grey.png" id="3_qq52e"]
 [ext_resource type="Texture2D" uid="uid://ds6fd1hj14rpi" path="res://icon.svg" id="4_q1cuu"]
+[ext_resource type="Script" uid="uid://0qj1xbhnh30w" path="res://Interfaces/LevelCompleted/star_container.gd" id="4_qq52e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ebigs"]
 shader = ExtResource("2_q1cuu")
@@ -71,7 +72,7 @@ text = "Tiempo:"
 
 [node name="cantTiempo" type="Label" parent="CenterContainer/ResultContainer/StatContainer"]
 layout_mode = 2
-text = "no hay datos"
+text = "0:00"
 horizontal_alignment = 1
 
 [node name="Movimientos" type="Label" parent="CenterContainer/ResultContainer/StatContainer"]
@@ -80,7 +81,7 @@ text = "Movimientos:"
 
 [node name="cantMovimientos" type="Label" parent="CenterContainer/ResultContainer/StatContainer"]
 layout_mode = 2
-text = "no hay datos"
+text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -91,6 +92,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 alignment = 1
+script = ExtResource("4_qq52e")
 
 [node name="TextureRect" type="TextureRect" parent="CenterContainer/ResultContainer/StarContainer"]
 visible = false

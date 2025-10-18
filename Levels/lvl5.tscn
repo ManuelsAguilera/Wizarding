@@ -14,7 +14,7 @@
 [node name="lvl2" instance=ExtResource("1_fwm2l")]
 
 [node name="LevelManager" parent="." index="0"]
-id = "level_3"
+id = "level_5"
 
 [node name="Config" parent="LevelManager" index="0" instance=ExtResource("2_8u7yy")]
 zoom = Vector2(0.769, 0.769)
