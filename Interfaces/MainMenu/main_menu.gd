@@ -13,8 +13,6 @@ func _ready():
 	#Modo dev
 	if Global.dev_mode:
 		var dev_btn = $CenterContainer/BotonesPrincipales/NivelTest
-		var save_btn = $CenterContainer/BotonesPrincipales/Save
-		save_btn.visible = true
 		dev_btn.visible = true
 
 func _on_jugar_pressed():
@@ -57,10 +55,6 @@ func _on_nivel_test_pressed():
 	Global.game_controller.change_gui_scene(Global.game_controller.menus["GameUI"])
 
 
-func _on_save_pressed() -> void:
-	Global.save_data()
-	Global.save_json()
-
 
 func _on_pantalla_completa_toggled(toggled_on: bool) -> void:
 	if (toggled_on):
@@ -83,3 +77,8 @@ func _on_volumen_sfx_value_changed(value: float):
 
 
 
+
+
+func _on_formulario_pressed() -> void:
+	print("Formulario")
+	Global.game_controller.change_gui_scene(Global.game_controller.menus["Form"])

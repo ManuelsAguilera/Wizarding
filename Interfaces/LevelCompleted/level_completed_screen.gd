@@ -57,6 +57,10 @@ func _ready():
 	move_label_original_color = move_label.modulate
 	time_label_original_color = time_label.modulate
 
+
+	##Guardar
+	Global.save_data()
+	
 	if level_data != null:
 		var moves = level_data["moves"]
 		var time = level_data["time"]
@@ -109,8 +113,6 @@ func _on_siguiente_nivel_pressed():
 	Global.game_controller.change_to_level(Global.game_controller.getLevel(Global.level_index))
 	Global.game_controller.change_gui_scene(Global.game_controller.menus["GameUI"])
 
-	if Global.dev_mode:
-		Global.save_data()
 
 
 func _on_volver_menu_pressed():

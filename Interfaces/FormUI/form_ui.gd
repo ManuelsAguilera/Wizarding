@@ -19,7 +19,7 @@ extends Control
 @onready var ventana_advertencia:AcceptDialog = $AcceptDialog
 
 
-#	Para AcceptDialog pueda saber si guardar o omitir
+#	Para AcceptDialog pueda saber si registrar o omitir
 
 var accion_actual: String = ""
 
@@ -124,7 +124,7 @@ func _on_registrar_pressed():
 		registrar_btn.disabled = false
 	else:
 		ventana_advertencia.dialog_text = "¿Estás seguro que usaste el mismo correo_registro que el formulario?"
-		accion_actual = "guardar" 
+		accion_actual = "registrar" 
 
 		ventana_advertencia.popup_centered()
 
@@ -138,22 +138,37 @@ func _on_omitir_pressed():
 
 func _on_ventana_confirmada():
 	match accion_actual:
-		"guardar":
-			_procesar_guardado()
+		"registrar":
+			_procesar_registro()
 		"omitir":
 			_procesar_omision()
 
 
 
-func _procesar_guardado() -> void:
+func _procesar_registro() -> void:
 	var datos = revisar_campos()
-	if not datos.is_empty():
-		print("Guardando datos:", datos)
-		# Aquí puedes agregar la lógica de guardado
-		limpiar_campos()
+	if datos.is_empty():
+		notificar_error("Datos vacios")
+		registrar_btn.disabled = false
+		return
 
+	# Si no están vacíos intentar registro
+	var result = Global.register_user(
+		datos["correo_registro"],
+		datos["nombre"],
+		datos["edad"]
+	)
+	
+	if result["success"]:
+		limpiar_campos()
+		Global.game_controller.change_gui_scene(Global.game_controller.menus["MainMenu"])
+	else:
+		notificar_error(result["message"])
+
+			
 func _procesar_omision() -> void:
 	limpiar_campos()
+	Global.game_controller.change_gui_scene(Global.game_controller.menus["MainMenu"])
 
 func limpiar_campos() -> void:
 	nombre.text = ""
@@ -165,4 +180,10 @@ func limpiar_campos() -> void:
 func _on_ingresar_pressed() -> void:
 	if not _es_correo_registro_valido(correo_ingreso.text):
 		notificar_error("El correo_registro electrónico no es válido")
-	pass # Replace with function body.
+
+	#Comprobar si el usuario existe
+	var result = Global.login_user(correo_ingreso.text)
+	if result["success"]:
+		Global.game_controller.change_gui_scene(Global.game_controller.menus["MainMenu"])
+	else:
+		notificar_error(result["message"])
