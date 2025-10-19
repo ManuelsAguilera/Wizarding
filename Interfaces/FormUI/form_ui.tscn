@@ -138,6 +138,7 @@ text_direction = 1
 structured_text_bidi_override = 3
 
 [node name="Ingresar" type="Button" parent="IngresoContainer"]
+layout_mode = 0
 offset_left = 184.0
 offset_top = 108.0
 offset_right = 257.0
@@ -162,6 +163,7 @@ offset_bottom = 521.0
 text = "Omitir"
 
 [node name="Cambiar" type="Button" parent="."]
+layout_mode = 0
 offset_left = 171.0
 offset_top = 490.0
 offset_right = 244.0
