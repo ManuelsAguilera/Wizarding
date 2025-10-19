@@ -28,15 +28,20 @@ text = "Wizarding"
 horizontal_alignment = 1
 
 [node name="Subtitulo" type="Label" parent="Titulo"]
+layout_mode = 0
 offset_left = -1.0
 offset_top = -28.0
 offset_right = 213.0
 offset_bottom = 42.0
 theme_override_font_sizes/font_size = 27
-text = "bienvenido a"
+text = "Bienvenido a"
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="RegistroContainer" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RegistroContainer"]
 layout_mode = 2
 offset_left = 94.0
 offset_top = 288.0
@@ -45,54 +50,135 @@ offset_bottom = 393.0
 theme_override_constants/separation = 17
 alignment = 1
 
-[node name="Nombre" type="Label" parent="VBoxContainer"]
+[node name="Nombre" type="Label" parent="RegistroContainer/VBoxContainer"]
 layout_mode = 2
 text = "Nombre"
 
-[node name="Edad" type="Label" parent="VBoxContainer"]
+[node name="Edad" type="Label" parent="RegistroContainer/VBoxContainer"]
 layout_mode = 2
 text = "Edad      "
 
-[node name="Correo" type="Label" parent="VBoxContainer"]
+[node name="Correo" type="Label" parent="RegistroContainer/VBoxContainer"]
 layout_mode = 2
 text = "Correo  "
 
-[node name="CampoNombre" type="LineEdit" parent="."]
+[node name="CampoNombre" type="LineEdit" parent="RegistroContainer"]
 layout_mode = 2
 offset_left = 191.0
 offset_top = 289.0
 offset_right = 551.0
 offset_bottom = 320.0
+max_length = 20
+text_direction = 1
 
-[node name="CampoEdad" type="LineEdit" parent="."]
-layout_mode = 0
+[node name="CampoEdad" type="LineEdit" parent="RegistroContainer"]
+layout_mode = 2
 offset_left = 190.0
 offset_top = 325.0
 offset_right = 552.0
 offset_bottom = 356.0
+max_length = 3
+text_direction = 1
 
-[node name="CampoCorreo" type="LineEdit" parent="."]
-layout_mode = 0
+[node name="CampoCorreo" type="LineEdit" parent="RegistroContainer"]
+layout_mode = 2
 offset_left = 190.0
 offset_top = 361.0
 offset_right = 552.0
 offset_bottom = 392.0
+text_direction = 1
+structured_text_bidi_override = 3
 
-[node name="Guardar" type="Button" parent="."]
-layout_mode = 0
+[node name="Registrar" type="Button" parent="RegistroContainer"]
+layout_mode = 2
 offset_left = 479.0
 offset_top = 409.0
-offset_right = 552.0
+offset_right = 558.0
 offset_bottom = 440.0
-text = "Guardar"
+text = "Registrar"
+
+[node name="IngresoContainer" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VFlowContainer" type="HSplitContainer" parent="IngresoContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -223.0
+offset_top = -20.0
+offset_right = 232.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 80
+
+[node name="Correo" type="Label" parent="IngresoContainer/VFlowContainer"]
+layout_mode = 2
+text = "Correo"
+
+[node name="CampoCorreo" type="LineEdit" parent="IngresoContainer/VFlowContainer"]
+layout_mode = 2
+expand_to_text_length = true
+text_direction = 1
+structured_text_bidi_override = 3
+
+[node name="Ingresar" type="Button" parent="IngresoContainer"]
+offset_left = 184.0
+offset_top = 108.0
+offset_right = 257.0
+offset_bottom = 139.0
+text = "Ingresar"
+
+[node name="Error" type="Label" parent="."]
+layout_mode = 2
+offset_left = 94.0
+offset_top = 408.0
+offset_right = 230.0
+offset_bottom = 431.0
+text = "
+"
 
 [node name="Omitir" type="Button" parent="."]
 layout_mode = 0
-offset_left = 401.0
-offset_top = 409.0
-offset_right = 474.0
-offset_bottom = 440.0
+offset_left = 91.0
+offset_top = 490.0
+offset_right = 164.0
+offset_bottom = 521.0
 text = "Omitir"
 
-[connection signal="pressed" from="Guardar" to="." method="_on_guardar_pressed"]
+[node name="Cambiar" type="Button" parent="."]
+offset_left = 171.0
+offset_top = 490.0
+offset_right = 244.0
+offset_bottom = 521.0
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+title = "¿Estas seguro?"
+size = Vector2i(500, 100)
+unresizable = true
+max_size = Vector2i(640, 320)
+ok_button_text = "Estoy seguro"
+dialog_autowrap = true
+
+[connection signal="text_changed" from="RegistroContainer/CampoEdad" to="." method="_on_campo_edad_text_changed"]
+[connection signal="text_changed" from="RegistroContainer/CampoCorreo" to="." method="_on_campo_correo_text_changed"]
+[connection signal="pressed" from="RegistroContainer/Registrar" to="." method="_on_registrar_pressed"]
+[connection signal="text_changed" from="IngresoContainer/VFlowContainer/CampoCorreo" to="." method="_on_campo_correo_text_changed"]
+[connection signal="pressed" from="IngresoContainer/Ingresar" to="." method="_on_ingresar_pressed"]
 [connection signal="pressed" from="Omitir" to="." method="_on_omitir_pressed"]
+[connection signal="pressed" from="Cambiar" to="." method="_on_cambiar_pressed"]
