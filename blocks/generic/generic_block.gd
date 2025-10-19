@@ -239,4 +239,3 @@ func set_in_chain(in_chain: bool) -> void:
 		sprite.modulate = Color(0.5, 0.5, 0.5) # Color opaco
 	
 	is_in_chain = in_chain
-
