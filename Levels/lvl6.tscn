@@ -169,4 +169,4 @@ solution = 13.0
 [node name="BarrierBlock2" parent="LevelManager/EquationManager/barrera3" index="1" instance=ExtResource("9_mpfly")]
 
 [node name="Player" parent="." index="1" instance=ExtResource("10_ofjav")]
-position = Vector2(8, 616)
+position = Vector2(12, 619)
