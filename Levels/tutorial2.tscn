@@ -51,6 +51,8 @@ equation = "x=1"
 solution = 1.0
 
 [node name="GoalBlock2" parent="LevelManager/EquationManager/puerta" index="1" instance=ExtResource("8_uwdfl")]
+position = Vector2(0, 3)
+scale = Vector2(0.9, 0.9)
 
 [node name="Player" parent="." index="1" instance=ExtResource("9_lle5p")]
 position = Vector2(276, 35)

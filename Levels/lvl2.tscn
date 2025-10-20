@@ -54,7 +54,7 @@ frame = 9
 [node name="EquationManager" parent="LevelManager" index="3" instance=ExtResource("6_gf6r3")]
 
 [node name="puerta" parent="LevelManager/EquationManager" index="0" instance=ExtResource("7_xyg57")]
-position = Vector2(414, 98)
+position = Vector2(416, 98)
 equation = "y+7=19"
 size = Vector2(0.7, 0.7)
 variableType = "y"
