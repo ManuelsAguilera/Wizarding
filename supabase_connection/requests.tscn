@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ch6b6pn61pw8n"]
+
+[ext_resource type="Script" uid="uid://cdg5qv64l5a42" path="res://supabase_connection/http_request.gd" id="1_aetkn"]
+
+[node name="Node" type="Node"]
+script = ExtResource("1_aetkn")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]

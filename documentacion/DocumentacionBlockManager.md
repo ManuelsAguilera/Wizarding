@@ -178,7 +178,7 @@ Ejemplos válidos (con dígitos simples):
   para evitar solapamientos. Esto es correcto, pero se detectaron un par de advertencias en `player.gd`:
   - `_process(delta)` declara `delta` y no lo usa — renombrarlo a `_delta` si se mantiene intencional.
   - Parámetros `direction` en `can_push_blocks` y `get_blocks_in_path` shadowean la variable
-    de instancia `direction` del `Player`. Se recomienda renombrarlos a `dir` o `_direction`.
+	de instancia `direction` del `Player`. Se recomienda renombrarlos a `dir` o `_direction`.
 
 ## Métodos de Debug y Visualización
 
@@ -204,11 +204,11 @@ Ejemplos válidos (con dígitos simples):
 
 ```
 LevelManager
-    ├── BlockManager (gestión de cadenas)
-    │   ├── GenericBlock (variables, números, operadores)
-    │   ├── GenericBlock
-    │   └── ...
-    └── Otros componentes del nivel
+	├── BlockManager (gestión de cadenas)
+	│   ├── GenericBlock (variables, números, operadores)
+	│   ├── GenericBlock
+	│   └── ...
+	└── Otros componentes del nivel
 ```
 
 
@@ -229,7 +229,7 @@ LevelManager
 
 2. Añadir tests básicos (si se desea):
   - Unit test/escena pequeña donde se simula push de 1-3 bloques y se verifica que
-    `notify_block_moved()` resulta en `equation_found()` cuando corresponde.
+	`notify_block_moved()` resulta en `equation_found()` cuando corresponde.
 
 3. Depurar advertencias de `player.gd` para mantener el proyecto limpio de warnings.
 
