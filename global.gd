@@ -19,6 +19,11 @@ const GENERIC_USER: String = "generic@user.com"
 const MIN_AGE: int = 0
 const MAX_AGE: int = 150
 
+#Conexion con base de datos remota
+
+const SupabaseLoader = preload("res://supabase_connection/supabase.tscn")
+@export var supabase:Supabase = null
+
 # Variables de sistema de usuarios
 var current_user: String = GENERIC_USER
 var users_data: Dictionary = {}
@@ -49,6 +54,14 @@ func _ready() -> void:
 			}
 	
 	level_data = users_data[GENERIC_USER]["levels"]
+
+	if SupabaseLoader:
+		print("instanciando")
+		supabase = SupabaseLoader.instantiate()
+		add_child(supabase)
+	else:
+		printerr("No se pudo instanciar nodo conexion remota.")
+
 
 ### Dialogos
 
