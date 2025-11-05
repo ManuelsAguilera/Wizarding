@@ -24,7 +24,7 @@ func _ready():
 	http = HTTPRequest.new()
 	add_child(http)
 	http.request_completed.connect(_on_request_completed)
-	get_data_test()
+
 
 ## ENVIROMENT VARIABLES
 
@@ -98,7 +98,7 @@ func _on_request_completed(result, response_code, _headers, body):
 
 
 # Método general para realizar peticiones a la API de Supabase
-func api_request(endpoint: String, method: int = HTTPClient.METHOD_GET, body: Dictionary =  {}, tag: String = "") -> void:
+func api_request(endpoint: String, method: int = HTTPClient.METHOD_GET, body: Dictionary =  {}, tag: String = "", additional_headers: Array = []) -> void:
 	# Construir URL base
 	var base_url = get_value("SUPABASE_URL", "")
 
@@ -113,13 +113,17 @@ func api_request(endpoint: String, method: int = HTTPClient.METHOD_GET, body: Di
 		"apikey: " + key,
 		"Authorization: Bearer " + key
 	]
+	# Añadir headers adicionales (por ejemplo Prefer para upsert)
+	if additional_headers and additional_headers.size() > 0:
+		for h in additional_headers:
+			headers.append(h)
 	# Si se envía cuerpo, indicar JSON
 	var body_data = null
 	# Si se proporciona un cuerpo, lo convertimos a JSON y añadimos el header adecuado
 	if not body.is_empty():
 		headers.append("Content-Type: application/json")
 		var body_text = JSON.stringify(body)
-		body_data = body_text.to_utf8()
+		body_data = body_text
 	
 	# Guardar tag para identificar la respuesta
 	last_request_tag = tag
@@ -153,25 +157,44 @@ func _printerr_limited(tag: String, msg: String) -> void:
 # Wrappers específicos
 
 func get_persona():
-
-	api_request("/rest/v1/persona", HTTPClient.METHOD_GET, {}, "get_persona")
+	# GET /rest/v1/persona?select=*
+	api_request("/rest/v1/persona?select=*", HTTPClient.METHOD_GET, {}, "get_persona")
 
 
 func get_jugador():
+	# GET /rest/v1/jugador?select=*
+	api_request("/rest/v1/jugador?select=*", HTTPClient.METHOD_GET, {}, "get_jugador")
 
-	api_request("/rest/v1/jugador", HTTPClient.METHOD_GET, {}, "get_jugador")
+
+func get_level():
+	# GET /rest/v1/level?select=*
+	api_request("/rest/v1/level?select=*", HTTPClient.METHOD_GET, {}, "get_level")
 
 func add_jugador(jugador_data:Dictionary):
-
+	# POST simple para insertar en jugador
 	var endpoint = "/rest/v1/jugador"
-
 	api_request(endpoint, HTTPClient.METHOD_POST, jugador_data, "add_jugador")
 
+
+func upsert_jugador(jugador_data: Dictionary):
+	# Upsert en tabla jugador usando Prefer: resolution=merge-duplicates
+	# Asegúrate de incluir el campo primary key (id) si quieres actualizar
+	var endpoint = "/rest/v1/jugador"
+	var prefer = ["Prefer: resolution=merge-duplicates", "Prefer: return=representation"]
+	api_request(endpoint, HTTPClient.METHOD_POST, jugador_data, "upsert_jugador", prefer)
+
 func add_level(level_data: Dictionary):
-
+	# POST simple para insertar en level
 	var endpoint = "/rest/v1/level"
-
 	api_request(endpoint, HTTPClient.METHOD_POST, level_data, "add_level")
+
+
+func upsert_level(level_data: Dictionary):
+	# Upsert en tabla level usando Prefer: resolution=merge-duplicates
+	# Incluir id para actualizar; Prefer devuelve la representación insertada/actualizada
+	var endpoint = "/rest/v1/level"
+	var prefer = ["Prefer: resolution=merge-duplicates", "Prefer: return=representation"]
+	api_request(endpoint, HTTPClient.METHOD_POST, level_data, "upsert_level", prefer)
 
 
 func get_data_test():

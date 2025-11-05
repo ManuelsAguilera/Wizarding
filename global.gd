@@ -24,6 +24,10 @@ const MAX_AGE: int = 150
 const SupabaseLoader = preload("res://supabase_connection/supabase.tscn")
 @export var supabase:Supabase = null
 
+# Mapas temporales para relacionar data remota
+var _persona_by_id: Dictionary = {}
+var _jugador_by_id: Dictionary = {}
+
 # Variables de sistema de usuarios
 var current_user: String = GENERIC_USER
 var users_data: Dictionary = {}
@@ -59,6 +63,9 @@ func _ready() -> void:
 		print("instanciando")
 		supabase = SupabaseLoader.instantiate()
 		add_child(supabase)
+		# Conectar señal para recibir respuestas asíncronas
+		supabase.connect("api_response", Callable(self, "_on_supabase_response"))
+
 	else:
 		printerr("No se pudo instanciar nodo conexion remota.")
 
@@ -123,7 +130,26 @@ func toggle_dev():
 #
 #
 
+
 # Sistema de manejo de usuarios
+func login_user(email: String) -> Dictionary:
+	# Intentar cargar datos desde remoto si está disponible
+	if supabase != null:
+		# Hacemos una búsqueda por correo exacto en la tabla persona
+		var q_email = _encode_query_value(email)
+		var endpoint = "/rest/v1/persona?correo=eq." + q_email + "&select=*"
+		# Tag: find_persona:<email> — manejado en _on_supabase_response
+		supabase.api_request(endpoint, HTTPClient.METHOD_GET, {}, "find_persona:" + email)
+		return {"success": true, "message": "Buscando usuario en remoto..."}
+	else:
+		# Si no hay conexión remota, usar datos locales si existen
+		if !users_data.has(email):
+			return {"success": false, "message": "Usuario no encontrado localmente y Supabase no disponible"}
+		set_user(email)
+		user_logged_in.emit(true, "Sesión iniciada (local)")
+		return {"success": true, "message": "Sesión iniciada localmente"}
+
+
 func register_user(email: String, name: String, age: int) -> Dictionary:
 	# Validar datos
 	if email.strip_edges().is_empty() or name.strip_edges().is_empty():
@@ -156,13 +182,7 @@ func register_user(email: String, name: String, age: int) -> Dictionary:
 	set_user(email)
 	return {"success": true, "message": "Usuario registrado correctamente"}
 
-func login_user(email: String) -> Dictionary:
-	if !users_data.has(email):
-		return {"success": false, "message": "Usuario no encontrado"}
-	
-	set_user(email)
-	user_logged_in.emit(true, "Sesión iniciada correctamente")
-	return {"success": true, "message": "Sesión iniciada correctamente"}
+
 
 func set_user(email: String) -> void:
 	if email.strip_edges().is_empty():
@@ -221,6 +241,10 @@ func save_data() -> void:
 	
 	if dev_mode:
 		save_json()
+	# Opcional: sincronizar con supabase si está disponible
+	if supabase != null:
+		# Solo sincronizar el usuario actual
+		sync_user_to_supabase(current_user)
 
 func check_data_file() -> bool:
 	var file := FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
@@ -237,6 +261,173 @@ func check_data_file() -> bool:
 		print("No se ha encontrado un archivo de guardado, se creará uno nuevo")
 		return false
 
+
+##############################################
+## Integración con Supabase
+##############################################
+
+
+
+
+func _on_supabase_response(tag: String, success: bool, data) -> void:
+	# Manejar respuestas de las distintas peticiones remotas
+	if !success:
+		printerr("Supabase returned error for tag:", tag, "->", data)
+		return
+
+	# Manejar búsquedas específicas por fragmento de correo
+	if tag.begins_with("find_persona:"):
+		# data esperado: array de personas que coinciden
+		if data is Array and data.size() > 0:
+			var persona = data[0]
+			var pid = str(persona.get("id", ""))
+			_persona_by_id[pid] = persona
+			var correo = persona.get("correo", "")
+			if correo != "":
+				# Primero comprobar si ya existe localmente y actualizar
+				var name = persona.get("nombre", "")
+				if name.strip_edges().is_empty():
+					name = correo.split("@")[0]
+				var age = int(persona.get("edad", 0))
+				if users_data.has(correo):
+					# Actualizar campos locales mínimos
+					users_data[correo]["info"]["name"] = name
+					users_data[correo]["info"]["email"] = correo
+					users_data[correo]["info"]["age"] = age
+				else:
+					# Registrar usuario localmente (esto guarda y establece el usuario)
+					register_user(correo, name, age)
+				# Asegurar que el usuario está activo
+				set_user(correo)
+				# Refrescar jugador y levels relacionados
+				if supabase != null:
+					supabase.get_jugador()
+					supabase.get_level()
+				user_logged_in.emit(true, "Usuario cargado y activado desde Supabase")
+		else:
+			printerr("No se encontró ninguna persona para el fragmento:", tag.replace("find_persona:", ""))
+		return
+
+	match tag:
+		"get_persona":
+			# Data esperado: Array de personas
+			_persona_by_id.clear()
+			if data is Array:
+				for persona in data:
+					var pid = str(persona.get("id", ""))
+					_persona_by_id[pid] = persona
+					# Crear/actualizar usuario local con correo como clave
+					var correo = persona.get("correo", "")
+					if correo != "":
+						users_data[correo] = users_data.get(correo, {
+							"info": {},
+							"levels": {}
+						})
+						users_data[correo]["info"]["name"] = persona.get("nombre", "")
+						users_data[correo]["info"]["email"] = correo
+						users_data[correo]["info"]["age"] = persona.get("edad", 0)
+			else:
+				printerr("Unexpected persona payload:", data)
+
+		"get_jugador":
+			# Data esperado: Array de jugadores
+			_jugador_by_id.clear()
+			if data is Array:
+				for jugador in data:
+					var jid = str(jugador.get("id", ""))
+					_jugador_by_id[jid] = jugador
+					# Relacionar con persona (persona_id -> correo)
+					var persona_id = str(jugador.get("persona_id", ""))
+					var correo = ""
+					if _persona_by_id.has(persona_id):
+						correo = _persona_by_id[persona_id].get("correo", "")
+					# Si no existe el usuario local, crear entrada mínima
+					if correo == "":
+						correo = "generic@user.com"
+					users_data[correo] = users_data.get(correo, {
+						"info": {},
+						"levels": {}
+					})
+					users_data[correo]["info"]["username"] = jugador.get("username", "")
+					users_data[correo]["info"]["level_index"] = jugador.get("level_index", 0)
+					users_data[correo]["info"]["jugador_id"] = jugador.get("id", null)
+			else:
+				printerr("Unexpected jugador payload:", data)
+
+		"get_level":
+			# Data esperado: Array de levels
+			if data is Array:
+				# Construir un mapa global de levels por id
+				var remote_levels := {}
+				for lvl in data:
+					var lid = str(lvl.get("id", ""))
+					remote_levels[lid] = {
+						"id": lid,
+						"moves": lvl.get("moves", 0),
+						"time": lvl.get("time", ""),
+						"level_name": lvl.get("level_name", "")
+					}
+				# Para simplicidad, si current_user está en users_data, asignar estos niveles a su nivel_data
+				# (si prefieres otro comportamiento, lo adaptamos)
+				if users_data.has(current_user):
+					users_data[current_user]["levels"] = remote_levels
+					if current_user == GENERIC_USER:
+						level_data = users_data[current_user]["levels"]
+				else:
+					# Si no existe, asignarlos a generic
+					users_data[GENERIC_USER] = users_data.get(GENERIC_USER, {"info": {}, "levels": remote_levels})
+					level_data = users_data[GENERIC_USER]["levels"]
+			else:
+				printerr("Unexpected level payload:", data)
+
+		_:
+			# Otros tags (upsert/add) — guardar respuesta en último registro
+			print("Supabase response (", tag, "):", data)
+
+
+func sync_user_to_supabase(email: String) -> void:
+	# Sincroniza el usuario dado con Supabase: upsert jugador y niveles
+	if supabase == null:
+		printerr("Supabase no inicializado, no se puede sincronizar")
+		return
+
+	if !users_data.has(email):
+		printerr("Usuario no encontrado para sincronizar:", email)
+		return
+
+	var info = users_data[email]["info"]
+	# Construir jugador payload
+	var jugador_payload := {}
+	# Si tenemos jugador_id, usarlo para upsert
+	if info.has("jugador_id"):
+		jugador_payload["id"] = info["jugador_id"]
+	jugador_payload["username"] = info.get("username", email.split("@")[0])
+	jugador_payload["level_index"] = info.get("level_index", 0)
+	# Si la persona existe localmente, intentar usar su id; si no, omitir persona_id
+	# Buscamos persona por correo en _persona_by_id
+	var persona_id = null
+	for pid in _persona_by_id.keys():
+		if _persona_by_id[pid].get("correo", "") == email:
+			persona_id = _persona_by_id[pid].get("id")
+			break
+	if persona_id != null:
+		jugador_payload["persona_id"] = persona_id
+
+	# Hacer upsert en jugador
+	supabase.upsert_jugador(jugador_payload)
+
+	# Subir niveles del usuario
+	var user_levels = users_data[email].get("levels", {})
+	for lid in user_levels.keys():
+		var lvl = user_levels[lid]
+		var level_payload := {}
+		# Mantener id numérico si es posible
+		level_payload["id"] = lvl.get("id", lid)
+		level_payload["moves"] = lvl.get("moves", 0)
+		level_payload["time"] = lvl.get("time", "")
+		level_payload["level_name"] = lvl.get("level_name", "")
+		supabase.upsert_level(level_payload)
+
 func save_json() -> void:
 	var file := FileAccess.open(JSON_FILE_PATH, FileAccess.WRITE)
 	if file:
@@ -246,3 +437,13 @@ func save_json() -> void:
 		print("Datos exportados a JSON correctamente")
 	else:
 		printerr("No se ha podido exportar los datos a JSON")
+
+
+func _encode_query_value(val: String) -> String:
+	# Codificación mínima para incluir en la query de Supabase (percent-encoding básico)
+	var s = val.replace("%", "%25")
+	s = s.replace(" ", "%20")
+	s = s.replace("@", "%40")
+	s = s.replace("+", "%2B")
+	s = s.replace("/", "%2F")
+	return s

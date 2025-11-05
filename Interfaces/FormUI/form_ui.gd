@@ -24,7 +24,7 @@ extends Control
 var accion_actual: String = ""
 
 #Modos son registrar, y ingresar
-var modo_formulario = "registrar"
+var modo_formulario = "ingresar"
 
 func _ready() -> void:
 	ventana_advertencia.confirmed.connect(_on_ventana_confirmada)
