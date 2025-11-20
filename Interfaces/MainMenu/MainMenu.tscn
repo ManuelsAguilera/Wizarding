@@ -50,6 +50,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = 5.0
+offset_right = -32.0
+offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -73,6 +77,11 @@ text = "Opciones"
 [node name="Formulario" type="Button" parent="CenterContainer/BotonesPrincipales"]
 layout_mode = 2
 text = "Formulario
+"
+
+[node name="Guardar" type="Button" parent="CenterContainer/BotonesPrincipales"]
+layout_mode = 2
+text = "Guardar
 "
 
 [node name="Creditos" type="Button" parent="CenterContainer/BotonesPrincipales"]
@@ -168,6 +177,7 @@ text = "Volver"
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/Continuar" to="." method="_on_continuar_pressed"]
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/Opciones" to="." method="_on_opciones_pressed"]
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/Formulario" to="." method="_on_formulario_pressed"]
+[connection signal="pressed" from="CenterContainer/BotonesPrincipales/Guardar" to="." method="_on_guardar_pressed"]
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/Creditos" to="." method="_on_creditos_pressed"]
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/NivelTest" to="." method="_on_nivel_test_pressed"]
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/Salir" to="." method="_on_salir_pressed"]

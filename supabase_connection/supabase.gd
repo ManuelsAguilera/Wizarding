@@ -4,9 +4,9 @@ class_name Supabase
 
 signal api_response(tag, success, data)
 
-@onready var http = $HTTPRequest
 var env = {}
 var last_request_tag : String = ""  # nueva variable para identificar la petición
+var dev_mode: bool = false
 
 # Contadores para limitar impresiones de error y evitar logs excesivos
 var _error_print_counts : Dictionary = {}
@@ -21,9 +21,19 @@ var last_request_methods : Dictionary = {}
 
 func _ready():
 	load_env()
-	http = HTTPRequest.new()
-	add_child(http)
-	http.request_completed.connect(_on_request_completed)
+	# No instanciamos un HTTPRequest global aquí.
+	# Ahora se crea un `HTTPRequest` por cada llamada para evitar reuse/concurrencia.
+
+func set_dev_mode(v: bool) -> void:
+	dev_mode = v
+
+func _dprint(... args) -> void:
+	if not dev_mode:
+		return
+	var out := ""
+	for a in args:
+		out += str(a) + " "
+	print(out.strip_edges())
 
 
 ## ENVIROMENT VARIABLES
@@ -49,56 +59,73 @@ func get_value(key: String, default: String = "") -> String:
 
 
 
-func _on_request_completed(result, response_code, _headers, body):
+func _on_request_completed(result, response_code, _headers, body, tag: String = "", req: HTTPRequest = null):
+	# `tag` y `req` se pasan como binds al conectar la señal.
+	var use_tag = tag if tag != "" else last_request_tag
+
 	# Manejo de error de conexión/resultado
 	if result != HTTPRequest.RESULT_SUCCESS:
-		_printerr_limited(last_request_tag, "Error en la petición HTTP: " + str(result) + " (tag: " + last_request_tag + ")")
-		# Emitir señal con información de error para que quien llame pueda manejarlo
-		emit_signal("api_response", last_request_tag, false, {"error": "http_result", "code": result})
-		# Guardar la última respuesta para consultas sincrónicas
-		last_responses[last_request_tag] = {"success": false, "error": "http_result", "code": result}
+		_printerr_limited(use_tag, "Error en la petición HTTP: " + str(result) + " (tag: " + use_tag + ")")
+		emit_signal("api_response", use_tag, false, {"error": "http_result", "code": result})
+		last_responses[use_tag] = {"success": false, "error": "http_result", "code": result}
+		if req and is_instance_valid(req):
+			req.queue_free()
 		return
-	
+
 	# Convertir el body a string y luego a JSON
 	var text = body.get_string_from_utf8()
-	# Intentamos parsear JSON (manteniendo compatibilidad con cómo se usaba antes)
-	var json = JSON.parse_string(text)
+	var parsed = JSON.parse_string(text)
 	var data = null
-	
-	# Mostrar etiqueta de la petición para saber qué respuesta llegó
-	print("Request tag:", last_request_tag, " HTTP code:", response_code)
-	
-	if json != null:
-		data = json
-		# Ver detalle de la respuesta sin saturar logs: si es array, imprimir resumen y hasta 3 registros
+	var parse_ok: bool = false
+
+	_dprint("Request tag:", use_tag, " HTTP code:", response_code)
+
+	# JSON.parse_string may return either a JSONParseResult object or the parsed value
+	# depending on engine/version/overloads. Handle both safely.
+	if typeof(parsed) == TYPE_ARRAY or typeof(parsed) == TYPE_DICTIONARY:
+		data = parsed
+		parse_ok = true
+	elif typeof(parsed) == TYPE_OBJECT and parsed.get_class() == "JSONParseResult":
+		if parsed.error == OK:
+			data = parsed.result
+			parse_ok = true
+		else:
+			_printerr_limited(use_tag, "JSON parse error code: " + str(parsed.error))
+			parse_ok = false
+	else:
+		_printerr_limited(use_tag, "Unexpected JSON.parse_string() return type: " + str(typeof(parsed)))
+		parse_ok = false
+
+	if parse_ok:
 		if data is Array:
-			print("Número de registros:", data.size())
+			_dprint("Número de registros:", data.size())
 			var max_preview = min(data.size(), 3)
 			for i in range(max_preview):
-				print("Registro[", i, "]:", data[i])
+				_dprint("Registro[", i, "]:", data[i])
 			if data.size() > max_preview:
-				print("(se omiten ", data.size() - max_preview, " registros en el log)")
+				_dprint("(se omiten ", data.size() - max_preview, " registros en el log)")
 		else:
-			print("Respuesta JSON:", data)
-		# Guardar y emitir la respuesta exitosa
-		last_responses[last_request_tag] = {"success": true, "code": response_code, "data": data}
-		# Si la petición fue un GET, imprimir la respuesta completa (útil para debug)
-		var method = last_request_methods.get(last_request_tag, HTTPClient.METHOD_GET)
+			_dprint("Respuesta JSON:", data)
+
+		last_responses[use_tag] = {"success": true, "code": response_code, "data": data}
+		var method = last_request_methods.get(use_tag, HTTPClient.METHOD_GET)
 		if method == HTTPClient.METHOD_GET:
-			print("Respuesta completa (tag:", last_request_tag, "):", data)
-		else:
-			# Para otros métodos dejamos el comportamiento resumido (preview) ya registrado
-			pass
-		emit_signal("api_response", last_request_tag, true, data)
-		
-	else:
-		_printerr_limited(last_request_tag, "Error parseando JSON. Texto recibido: " + text)
-		last_responses[last_request_tag] = {"success": false, "error": "json_parse", "text": text}
-		emit_signal("api_response", last_request_tag, false, {"error": "json_parse", "text": text})
+			_dprint("Respuesta completa (tag:", use_tag, "):", data)
+		emit_signal("api_response", use_tag, true, data)
+		if req and is_instance_valid(req):
+			req.queue_free()
+		return
+
+	# Si no se pudo parsear JSON correctamente
+	_printerr_limited(use_tag, "Error parseando JSON. Texto recibido: " + text)
+	last_responses[use_tag] = {"success": false, "error": "json_parse", "text": text}
+	emit_signal("api_response", use_tag, false, {"error": "json_parse", "text": text})
+	if req and is_instance_valid(req):
+		req.queue_free()
 
 
 # Método general para realizar peticiones a la API de Supabase
-func api_request(endpoint: String, method: int = HTTPClient.METHOD_GET, body: Dictionary =  {}, tag: String = "", additional_headers: Array = []) -> void:
+func api_request(endpoint: String, method, body: Dictionary =  {}, tag: String = "", additional_headers: Array = []) -> void:
 	# Construir URL base
 	var base_url = get_value("SUPABASE_URL", "")
 
@@ -129,12 +156,24 @@ func api_request(endpoint: String, method: int = HTTPClient.METHOD_GET, body: Di
 	last_request_tag = tag
 	# Registrar el método usado para esta etiqueta
 	last_request_methods[tag] = method
-	
-	# Realizar request (ssl_validate_domain = false para compatibilidad; ajustar según necesidad)
+	# Crear un HTTPRequest temporal para esta petición y conectarlo con binds (tag, req)
+	var req = HTTPRequest.new()
+	add_child(req)
+
+	# Usar Callable.bind evita problemas con la sobrecarga de `connect`.
+	req.request_completed.connect(Callable(self, "_on_request_completed").bind(tag, req))
+
+	# Convertir headers a PackedStringArray (requerido por Godot 4.x)
+	var pheaders: PackedStringArray = PackedStringArray()
+	for h in headers:
+		pheaders.append(str(h))
+
+	# Realizar request en la instancia creada usando la firma de HTTPRequest:
+	# request(url: String, custom_headers: PackedStringArray = PackedStringArray(), method: Method = 0, request_data: String = "")
 	if body_data != null:
-		http.request(url, headers, method, false, body_data)
+		req.request(url, pheaders, method, str(body_data))
 	else:
-		http.request(url, headers, method)
+		req.request(url, pheaders, method)
 
 
 # Devuelve la última respuesta conocida para una etiqueta dada (útil para comprobaciones sincrónicas)
@@ -183,6 +222,12 @@ func upsert_jugador(jugador_data: Dictionary):
 	var prefer = ["Prefer: resolution=merge-duplicates", "Prefer: return=representation"]
 	api_request(endpoint, HTTPClient.METHOD_POST, jugador_data, "upsert_jugador", prefer)
 
+
+func upsert_jugador_with_tag(jugador_data: Dictionary, tag: String = "upsert_jugador"):
+	var endpoint = "/rest/v1/jugador"
+	var prefer = ["Prefer: resolution=merge-duplicates", "Prefer: return=representation"]
+	api_request(endpoint, HTTPClient.METHOD_POST, jugador_data, tag, prefer)
+
 func add_level(level_data: Dictionary):
 	# POST simple para insertar en level
 	var endpoint = "/rest/v1/level"
@@ -195,6 +240,19 @@ func upsert_level(level_data: Dictionary):
 	var endpoint = "/rest/v1/level"
 	var prefer = ["Prefer: resolution=merge-duplicates", "Prefer: return=representation"]
 	api_request(endpoint, HTTPClient.METHOD_POST, level_data, "upsert_level", prefer)
+
+
+func upsert_level_with_tag(level_data: Dictionary, tag: String = "upsert_level"):
+	var endpoint = "/rest/v1/level"
+	var prefer = ["Prefer: resolution=merge-duplicates", "Prefer: return=representation"]
+	api_request(endpoint, HTTPClient.METHOD_POST, level_data, tag, prefer)
+
+
+func add_persona(persona_data: Dictionary, tag: String = "add_persona"):
+	# Insertar persona y pedir representación para obtener el id
+	var endpoint = "/rest/v1/persona"
+	var prefer = ["Prefer: return=representation"]
+	api_request(endpoint, HTTPClient.METHOD_POST, persona_data, tag, prefer)
 
 
 func get_data_test():
