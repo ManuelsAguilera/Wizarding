@@ -32,6 +32,7 @@ var _jugador_by_id: Dictionary = {}
 var current_user: String = GENERIC_USER
 var users_data: Dictionary = {}
 var level_data: Dictionary = {}
+var _sync_lock: bool = false
 
 signal user_registered(success: bool, message: String)
 signal user_logged_in(success: bool, message: String)
@@ -191,6 +192,7 @@ func set_user(email: String) -> void:
 	current_user = email
 	if users_data.has(current_user):
 		level_data = users_data[current_user]["levels"]
+		print("level_index:", users_data[current_user]["info"]["level_index"])
 		level_index = users_data[current_user]["info"]["level_index"] 
 	else:
 		printerr("Intentando establecer un usuario que no existe: ", email)
@@ -208,7 +210,8 @@ func get_all_users() -> Array:
 	return users_data.keys()
 
 # Sistema de guardado de niveles
-func record_level_data(level: String, moves: int, time: float) -> void:
+func record_level_data(level: String, moves: int, time: float, level_name: String = "") -> void:
+	# Registra los datos del nivel en memoria; ahora guarda también level_name
 	if level_data == null:
 		level_data = {}
 
@@ -216,6 +219,7 @@ func record_level_data(level: String, moves: int, time: float) -> void:
 		"id": level,
 		"moves": moves,
 		"time": time,
+		"level_name": level_name,
 		"completion_date": Time.get_datetime_string_from_system()
 	}
 	
@@ -235,6 +239,7 @@ func save_data() -> void:
 	if save_game:
 		save_game.store_var(users_data)
 		save_game.close()
+		print("datos de usuario: ",users_data)
 		print("Datos de usuarios guardados correctamente")
 	else:
 		printerr("No se ha podido guardar los datos de usuarios")
@@ -388,32 +393,44 @@ func _on_supabase_response(tag: String, success: bool, data) -> void:
 
 
 func sync_user_to_supabase(email: String) -> void:
-	# Sincroniza el usuario dado con Supabase: upsert jugador y niveles
+	# Evitar reentradas concurrentes
+	if _sync_lock:
+		print("sync_user_to_supabase: ya en progreso, ignorando llamada duplicada")
+		return
+	_sync_lock = true
+
 	if supabase == null:
 		printerr("Supabase no inicializado, no se puede sincronizar")
+		_sync_lock = false
 		return
 
 	if !users_data.has(email):
 		printerr("Usuario no encontrado para sincronizar:", email)
+		_sync_lock = false
 		return
 
 	var info = users_data[email]["info"]
 	# Construir jugador payload
 	var jugador_payload := {}
-	# Si tenemos jugador_id, usarlo para upsert
 	if info.has("jugador_id"):
-		jugador_payload["id"] = info["jugador_id"]
+		var jid = _to_int_id(info["jugador_id"])
+		if jid != null:
+			jugador_payload["id"] = jid
 	jugador_payload["username"] = info.get("username", email.split("@")[0])
 	jugador_payload["level_index"] = info.get("level_index", 0)
-	# Si la persona existe localmente, intentar usar su id; si no, omitir persona_id
-	# Buscamos persona por correo en _persona_by_id
+
+	# Intentar obtener persona_id existente
 	var persona_id = null
 	for pid in _persona_by_id.keys():
 		if _persona_by_id[pid].get("correo", "") == email:
 			persona_id = _persona_by_id[pid].get("id")
 			break
 	if persona_id != null:
-		jugador_payload["persona_id"] = persona_id
+		var pid_int = _to_int_id(persona_id)
+		if pid_int != null:
+			jugador_payload["persona_id"] = pid_int
+		else:
+			jugador_payload["persona_id"] = persona_id
 
 	# Hacer upsert en jugador
 	supabase.upsert_jugador(jugador_payload)
@@ -423,13 +440,25 @@ func sync_user_to_supabase(email: String) -> void:
 	for lid in user_levels.keys():
 		var lvl = user_levels[lid]
 		var level_payload := {}
-		# Mantener id numérico si es posible
-		level_payload["id"] = lvl.get("id", lid)
-		level_payload["moves"] = lvl.get("moves", 0)
-		level_payload["time"] = lvl.get("time", "")
+		# Mantener id numérico si es posible (convertir o eliminar si no es válido)
+		var raw_id = lvl.get("id", lid)
+		var id_int = _to_int_id(raw_id)
+		if id_int != null:
+			level_payload["id"] = id_int
+		# Asegurar que moves sea entero
+		level_payload["moves"] = int(lvl.get("moves", 0))
+		# FORMATEAR el tiempo para que sea compatible con el tipo time de Postgres (HH:MM:SS[.ms])
+		level_payload["time"] = _format_time_for_supabase(lvl.get("time", ""))
+		# Enviar level_name exactamente como está (no forzar un fallback con str(lid))
 		level_payload["level_name"] = lvl.get("level_name", "")
+		# NO enviar jugador_id si la tabla no lo tiene (evita PGRST204)
+		# Si necesitas relacionarlo, implementa un mapeo id_local -> id_remoto o define una constraint única en la BD
+		# Debug: imprimir payload antes del upsert
+		print("DEBUG supabase.upsert_level payload:", level_payload)
+		# Llamada al upsert de level
 		supabase.upsert_level(level_payload)
 
+	_sync_lock = false
 func save_json() -> void:
 	var file := FileAccess.open(JSON_FILE_PATH, FileAccess.WRITE)
 	if file:
@@ -449,3 +478,64 @@ func _encode_query_value(val: String) -> String:
 	s = s.replace("+", "%2B")
 	s = s.replace("/", "%2F")
 	return s
+
+# Nueva función auxiliar para sanitizar ids (int/real/string -> int o null)
+func _to_int_id(val) -> Variant:
+	# Devuelve un int si puede convertir, o null si no es convertible
+	if val == null:
+		return null
+	var t := typeof(val)
+	if t == TYPE_INT:
+		return val
+	elif t == TYPE_FLOAT:
+		return int(val)
+	elif t == TYPE_STRING:
+		var s: String = String(val).strip_edges()
+		# "1" -> entero, "1.0" -> float -> int, otros -> null
+		if s.is_valid_int():
+			return int(s)
+		elif s.is_valid_float():
+			return int(s.to_float())
+		else:
+			return null
+	else:
+		return null
+
+# Convierte un valor numérico/str de segundos a "HH:MM:SS[.ms]" aceptable por Postgres time.
+func _format_time_for_supabase(val) -> String:
+	# val puede ser float (segundos), int (segundos) o string ("HH:MM:SS" o numérico)
+	if val == null:
+		return ""
+	var total_seconds: float = 0.0
+	var t := typeof(val)
+	if t == TYPE_FLOAT or t == TYPE_INT:
+		total_seconds = float(val)
+	elif t == TYPE_STRING:
+		var s: String = String(val).strip_edges()
+		# Si ya tiene ":", asumimos formato válido y lo devolvemos tal cual
+		if s.find(":") != -1:
+			return s
+		if s.is_valid_float():
+			total_seconds = s.to_float()
+		else:
+			# no es numérico ni formato con ":", devolver cadena tal cual
+			return s
+	else:
+		return String(val)
+
+	var hours = int(total_seconds / 3600.0)
+	var minutes = int(fmod(total_seconds, 3600.0) / 60.0)
+	var seconds_f = fmod(total_seconds, 60.0)
+	var secs = int(seconds_f)
+	var frac = seconds_f - secs
+	var ms3 = int(round(frac * 1000)) # milisegundos (3 decimales)
+	var frac_str = ""
+	if ms3 > 0:
+		frac_str = "." + ("%03d" % [ms3])
+		# quitar ceros finales si los hubiera
+		while frac_str.ends_with("0"):
+			frac_str = frac_str.substr(0, frac_str.length() - 1)
+		if frac_str == ".":
+			frac_str = ""
+
+	return "%02d:%02d:%02d%s" % [hours, minutes, secs, frac_str]
