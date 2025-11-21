@@ -134,18 +134,8 @@ func toggle_dev():
 # Sistema de manejo de usuarios
 func login_user(email: String) -> Dictionary:
 	# Intentar cargar datos desde remoto si está disponible
-	# Primero intentar cargar localmente si existe
-	if users_data.has(email):
-		set_user(email)
-		# Lanzar sincronización en segundo plano si hay Supabase (no bloquear el login local)
-		if supabase != null:
-			# Iniciar sync asíncrono (no esperamos resultado)
-			sync_user_to_supabase(email)
-		user_logged_in.emit(true, "Sesión iniciada localmente")
-		return {"success": true, "message": "Sesión iniciada localmente"}
-
-	# Si no hay datos locales, y Supabase está disponible, buscar en remoto
 	if supabase != null:
+		# Hacemos una búsqueda por correo exacto en la tabla persona
 		var q_email = _encode_query_value(email)
 		var endpoint = "/rest/v1/persona?correo=eq." + q_email + "&select=*"
 		# Tag: find_persona:<email> — manejado en _on_supabase_response
@@ -249,7 +239,8 @@ func save_data() -> void:
 	else:
 		printerr("No se ha podido guardar los datos de usuarios")
 	
-	save_json()
+	if dev_mode:
+		save_json()
 	# Opcional: sincronizar con supabase si está disponible
 	if supabase != null:
 		# Solo sincronizar el usuario actual
@@ -303,11 +294,11 @@ func _on_supabase_response(tag: String, success: bool, data) -> void:
 					users_data[correo]["info"]["name"] = name
 					users_data[correo]["info"]["email"] = correo
 					users_data[correo]["info"]["age"] = age
-
-
 				else:
 					# Registrar usuario localmente (esto guarda y establece el usuario)
 					register_user(correo, name, age)
+
+
 				# Asegurar que el usuario está activo
 				set_user(correo)
 				# Refrescar jugador y levels relacionados
@@ -317,53 +308,6 @@ func _on_supabase_response(tag: String, success: bool, data) -> void:
 				user_logged_in.emit(true, "Usuario cargado y activado desde Supabase")
 		else:
 			printerr("No se encontró ninguna persona para el fragmento:", tag.replace("find_persona:", ""))
-		return
-
-	# Flujo de sincronización: búsqueda de persona para sync
-	if tag.begins_with("find_persona_for_sync:"):
-		var email_sync = tag.replace("find_persona_for_sync:", "")
-		if data is Array and data.size() > 0:
-			var persona = data[0]
-			var pid = str(persona.get("id", ""))
-			_persona_by_id[pid] = persona
-			# Continuar: persona encontrada, subir jugador y niveles
-			# Reusar sync flow
-			sync_user_to_supabase(email_sync)
-		else:
-			printerr("No habia un persona valido")
-		return
-
-	# Persona creada — obtener id del registro insertado y continuar
-	if tag.begins_with("create_persona_for_sync:"):
-		var email_sync = tag.replace("create_persona_for_sync:", "")
-		if data is Array and data.size() > 0:
-			var persona = data[0]
-			var pid = str(persona.get("id", ""))
-			_persona_by_id[pid] = persona
-			# Continuar flujo
-			sync_user_to_supabase(email_sync)
-		else:
-			printerr("No se pudo crear persona para:", email_sync, "respuesta:", data)
-		return
-
-	# Respuesta de upsert_jugador en flujo de sync
-	if tag.begins_with("upsert_jugador_for_sync:"):
-		var email_sync = tag.replace("upsert_jugador_for_sync:", "")
-		# Supabase when returning representation usually returns an array with the object
-		if data is Array and data.size() > 0:
-			var j = data[0]
-			# Guardar jugador_id localmente
-			users_data[email_sync]["info"]["jugador_id"] = j.get("id", null)
-			save_data()
-			print("Jugador sincronizado para", email_sync, "id:", users_data[email_sync]["info"]["jugador_id"])
-		else:
-			printerr("Upsert jugador no devolvió representación para:", email_sync, "->", data)
-		return
-
-	# Respuesta de upsert_level en flujo de sync — solo loguear
-	if tag.begins_with("upsert_level_for_sync:"):
-		# tag formato: upsert_level_for_sync:email:lid
-		print("Level upsert response (sync):", tag, data)
 		return
 
 	match tag:
@@ -461,38 +405,30 @@ func sync_user_to_supabase(email: String) -> void:
 		jugador_payload["id"] = info["jugador_id"]
 	jugador_payload["username"] = info.get("username", email.split("@")[0])
 	jugador_payload["level_index"] = info.get("level_index", 0)
-	# Nota: la resolución de persona (persona_fk) se realiza más abajo en el flujo asíncrono
-
-	# Si ya tenemos persona_id local, usarlo; si no, lanzamos una búsqueda asíncrona
+	# Si la persona existe localmente, intentar usar su id; si no, omitir persona_id
+	# Buscamos persona por correo en _persona_by_id
 	var persona_id = null
 	for pid in _persona_by_id.keys():
 		if _persona_by_id[pid].get("correo", "") == email:
 			persona_id = _persona_by_id[pid].get("id")
 			break
-
 	if persona_id != null:
-		# Hacer upsert en jugador incluyendo persona_fk
-		if info.has("jugador_id"):
-			jugador_payload["id"] = info["jugador_id"]
-		jugador_payload["persona_fk"] = persona_id
-		supabase.upsert_jugador_with_tag(jugador_payload, "upsert_jugador_for_sync:" + email)
+		jugador_payload["persona_id"] = persona_id
 
-		# Subir niveles del usuario
-		var user_levels = users_data[email].get("levels", {})
-		for lid in user_levels.keys():
-			var lvl = user_levels[lid]
-			var level_payload := {}
-			# Mantener id numérico si es posible
-			level_payload["moves"] = lvl.get("moves", 0)
-			level_payload["time"] = lvl.get("time", "")
-			level_payload["level_name"] = lvl.get("id", "")
-			supabase.upsert_level_with_tag(level_payload, "upsert_level_for_sync:" + email + ":" + str(lid))
+	# Hacer upsert en jugador
+	supabase.upsert_jugador(jugador_payload)
 
-	else:
-		# Buscar persona por correo en remoto y continuar el flujo en _on_supabase_response
-		var q_email = _encode_query_value(email)
-		var endpoint = "/rest/v1/persona?correo=eq." + q_email + "&select=*"
-		supabase.api_request(endpoint, HTTPClient.METHOD_GET, {}, "find_persona_for_sync:" + email)
+	# Subir niveles del usuario
+	var user_levels = users_data[email].get("levels", {})
+	for lid in user_levels.keys():
+		var lvl = user_levels[lid]
+		var level_payload := {}
+		# Mantener id numérico si es posible
+		level_payload["id"] = lvl.get("id", lid)
+		level_payload["moves"] = lvl.get("moves", 0)
+		level_payload["time"] = lvl.get("time", "")
+		level_payload["level_name"] = lvl.get("level_name", "")
+		supabase.upsert_level(level_payload)
 
 func save_json() -> void:
 	var file := FileAccess.open(JSON_FILE_PATH, FileAccess.WRITE)

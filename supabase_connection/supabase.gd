@@ -27,7 +27,7 @@ func _ready():
 func set_dev_mode(v: bool) -> void:
 	dev_mode = v
 
-func _dprint(... args) -> void:
+func _dprint(args) -> void:
 	if not dev_mode:
 		return
 	var out := ""
@@ -78,7 +78,7 @@ func _on_request_completed(result, response_code, _headers, body, tag: String = 
 	var data = null
 	var parse_ok: bool = false
 
-	_dprint("Request tag:", use_tag, " HTTP code:", response_code)
+	_dprint(["Request tag:", use_tag, " HTTP code:", response_code])
 
 	# JSON.parse_string may return either a JSONParseResult object or the parsed value
 	# depending on engine/version/overloads. Handle both safely.
@@ -98,19 +98,19 @@ func _on_request_completed(result, response_code, _headers, body, tag: String = 
 
 	if parse_ok:
 		if data is Array:
-			_dprint("Número de registros:", data.size())
+			_dprint(["Número de registros:", data.size()])
 			var max_preview = min(data.size(), 3)
 			for i in range(max_preview):
-				_dprint("Registro[", i, "]:", data[i])
+				_dprint(["Registro[", i, "]:", data[i]])
 			if data.size() > max_preview:
-				_dprint("(se omiten ", data.size() - max_preview, " registros en el log)")
+				_dprint(["(se omiten ", data.size() - max_preview, " registros en el log)"])
 		else:
-			_dprint("Respuesta JSON:", data)
+			_dprint(["Respuesta JSON:", data])
 
 		last_responses[use_tag] = {"success": true, "code": response_code, "data": data}
 		var method = last_request_methods.get(use_tag, HTTPClient.METHOD_GET)
 		if method == HTTPClient.METHOD_GET:
-			_dprint("Respuesta completa (tag:", use_tag, "):", data)
+			_dprint(["Respuesta completa (tag:", use_tag, "):", data])
 		emit_signal("api_response", use_tag, true, data)
 		if req and is_instance_valid(req):
 			req.queue_free()
