@@ -9,6 +9,10 @@ const base_shadow_offset = Vector2(-10,0)
 const shadow_speed: float = 1.5 # Velocidad de la animación
 
 func _ready():
+
+	if OS.get_name() == "Web":
+		title.label_settings.font_size=60
+
 	# Asegurar que el título tenga configuraciones de fuente
 	if title.label_settings == null:
 		title.label_settings = LabelSettings.new()

@@ -41,7 +41,11 @@ func _ready():
 
 	base_position = position
 
-	label.text = "Jugador: "+Global.users_data[Global.current_user]["info"]["username"]
+	var username_current = Global.users_data[Global.current_user]["info"].get("username")
+	if username_current != null:
+		label.text = "Jugador: "+username_current
+	else:
+		label.text = "Cargado correo " + Global.current_user
 	self.scale = base_scale
 	base_position = self.position
 
