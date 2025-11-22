@@ -98,7 +98,6 @@ offset_bottom = 440.0
 text = "Registrar"
 
 [node name="IngresoContainer" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -163,6 +162,7 @@ offset_bottom = 521.0
 text = "Omitir"
 
 [node name="Cambiar" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 171.0
 offset_top = 490.0
