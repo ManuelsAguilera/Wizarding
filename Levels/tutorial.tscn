@@ -46,12 +46,13 @@ position = Vector2(8, 16)
 script = ExtResource("6_bsk3x")
 
 [node name="puerta" parent="LevelManager/EquationManager" index="0" instance=ExtResource("7_dl7dh")]
-position = Vector2(279, 467)
+position = Vector2(280, 400)
 equation = "x=1"
 solution = 1.0
+metadata/_edit_lock_ = true
 
 [node name="GoalBlock2" parent="LevelManager/EquationManager/puerta" index="1" instance=ExtResource("8_r4o0u")]
-scale = Vector2(0.9, 0.9)
+position = Vector2(0, 64)
 
 [node name="Player" parent="." index="1" instance=ExtResource("9_k08xv")]
 position = Vector2(276, 35)

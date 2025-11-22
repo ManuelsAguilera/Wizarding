@@ -61,8 +61,7 @@ variableType = "y"
 solution = 12.0
 
 [node name="GoalBlock2" parent="LevelManager/EquationManager/puerta" index="1" instance=ExtResource("8_mw7wc")]
-position = Vector2(0, 64)
-scale = Vector2(0.9, 0.9)
+position = Vector2(0, 62)
 
 [node name="barrera" parent="LevelManager/EquationManager" index="1" instance=ExtResource("7_xyg57")]
 position = Vector2(288, 417)

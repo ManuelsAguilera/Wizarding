@@ -96,7 +96,6 @@ solution = 9.0
 
 [node name="GoalBlock2" parent="LevelManager/EquationManager/puerta" index="1" instance=ExtResource("8_u0j5m")]
 position = Vector2(0, 64)
-scale = Vector2(0.9, 0.9)
 
 [node name="barrera1" parent="LevelManager/EquationManager" index="1" instance=ExtResource("7_44a1g")]
 position = Vector2(152, 273)

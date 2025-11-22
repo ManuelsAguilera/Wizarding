@@ -140,7 +140,6 @@ solution = -5.0
 
 [node name="GoalBlock2" parent="LevelManager/EquationManager/puerta" index="1" instance=ExtResource("8_rlt0i")]
 position = Vector2(0, 64)
-scale = Vector2(0.9, 0.9)
 
 [node name="barrera1" parent="LevelManager/EquationManager" index="1" instance=ExtResource("7_pxhig")]
 position = Vector2(664, 401)

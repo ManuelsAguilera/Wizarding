@@ -38,7 +38,7 @@ position = Vector2(152, 293)
 spriteName = "x"
 
 [node name="y" parent="LevelManager/BlockManager" index="2" instance=ExtResource("5_il3c7")]
-position = Vector2(148, 487)
+position = Vector2(136, 488)
 spriteName = "y"
 
 [node name="=" parent="LevelManager/BlockManager" index="3" instance=ExtResource("5_il3c7")]
@@ -46,7 +46,7 @@ position = Vector2(282, 228)
 spriteName = "="
 
 [node name="=2" parent="LevelManager/BlockManager" index="4" instance=ExtResource("5_il3c7")]
-position = Vector2(343, 489)
+position = Vector2(328, 488)
 spriteName = "="
 
 [node name="+" parent="LevelManager/BlockManager" index="5" instance=ExtResource("5_il3c7")]
@@ -82,15 +82,14 @@ position = Vector2(8, 16)
 script = ExtResource("6_xopmn")
 
 [node name="puerta" parent="LevelManager/EquationManager" index="0" instance=ExtResource("7_5ni3j")]
-position = Vector2(600, 494)
+position = Vector2(600, 464)
 equation = "24y-72=96"
 size = Vector2(0.6, 0.6)
 variableType = "y"
 solution = 7.0
 
 [node name="GoalBlock2" parent="LevelManager/EquationManager/puerta" index="1" instance=ExtResource("8_esg4i")]
-position = Vector2(0, 35)
-scale = Vector2(0.9, 0.9)
+position = Vector2(0, 64)
 
 [node name="barrera1" parent="LevelManager/EquationManager" index="1" instance=ExtResource("7_5ni3j")]
 position = Vector2(407, 490)
@@ -106,7 +105,7 @@ position = Vector2(0, 39)
 
 [node name="barrera2" parent="LevelManager/EquationManager" index="2" instance=ExtResource("7_5ni3j")]
 position = Vector2(218, 492)
-equation = "5x+5=20"
+equation = "5x-5=20"
 size = Vector2(0.6, 0.6)
 solution = 5.0
 

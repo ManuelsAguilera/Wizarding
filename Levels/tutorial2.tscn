@@ -29,15 +29,15 @@ tile_set = ExtResource("3_ehhca")
 map_size = Vector2(14, 14)
 
 [node name="x" parent="LevelManager/BlockManager" index="0" instance=ExtResource("5_u033s")]
-position = Vector2(280, 160)
+position = Vector2(264, 104)
 spriteName = "x"
 
 [node name="=" parent="LevelManager/BlockManager" index="1" instance=ExtResource("5_u033s")]
-position = Vector2(280, 228)
+position = Vector2(264, 232)
 spriteName = "="
 
 [node name="1" parent="LevelManager/BlockManager" index="2" instance=ExtResource("5_u033s")]
-position = Vector2(280, 352)
+position = Vector2(264, 360)
 spriteName = "num"
 frame = 1
 
@@ -46,13 +46,12 @@ position = Vector2(8, 16)
 script = ExtResource("6_bhi23")
 
 [node name="puerta" parent="LevelManager/EquationManager" index="0" instance=ExtResource("7_qqw3w")]
-position = Vector2(280, 464)
+position = Vector2(280, 400)
 equation = "x=1"
 solution = 1.0
 
 [node name="GoalBlock2" parent="LevelManager/EquationManager/puerta" index="1" instance=ExtResource("8_uwdfl")]
-position = Vector2(0, 3)
-scale = Vector2(0.9, 0.9)
+position = Vector2(0, 64)
 
 [node name="Player" parent="." index="1" instance=ExtResource("9_lle5p")]
-position = Vector2(276, 35)
+position = Vector2(264, 40)

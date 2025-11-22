@@ -6,7 +6,7 @@ signal api_response(tag, success, data)
 
 var env = {}
 var last_request_tag : String = ""  # nueva variable para identificar la petición
-var dev_mode: bool = false
+
 
 # Contadores para limitar impresiones de error y evitar logs excesivos
 var _error_print_counts : Dictionary = {}
@@ -21,14 +21,13 @@ var last_request_methods : Dictionary = {}
 
 func _ready():
 	load_env()
+
 	# No instanciamos un HTTPRequest global aquí.
 	# Ahora se crea un `HTTPRequest` por cada llamada para evitar reuse/concurrencia.
 
-func set_dev_mode(v: bool) -> void:
-	dev_mode = v
 
 func _dprint(args) -> void:
-	if not dev_mode:
+	if not Global.dev_mode:
 		return
 	var out := ""
 	for a in args:
@@ -158,6 +157,8 @@ func api_request(endpoint: String, method, body: Dictionary =  {}, tag: String =
 	last_request_methods[tag] = method
 	# Crear un HTTPRequest temporal para esta petición y conectarlo con binds (tag, req)
 	var req = HTTPRequest.new()
+	if OS.get_name() == "Web":
+		req.accept_gzip = false
 	add_child(req)
 
 	# Usar Callable.bind evita problemas con la sobrecarga de `connect`.

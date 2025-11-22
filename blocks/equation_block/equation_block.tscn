@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://db61rgphxf650" path="res://blocks/equation_block/equation.gd" id="3_k5518"]
 
 [sub_resource type="SystemFont" id="SystemFont_msofc"]
-font_names = PackedStringArray("Fantasy")
+font_names = PackedStringArray("Fantasy", "Cursive", "Serif", "Arial")
 subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_vm3h4"]
