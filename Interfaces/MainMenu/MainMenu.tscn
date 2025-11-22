@@ -1,8 +1,37 @@
-[gd_scene load_steps=5 format=3 uid="uid://b6jjvsltw4pbb"]
+[gd_scene load_steps=11 format=3 uid="uid://b6jjvsltw4pbb"]
 
 [ext_resource type="Script" uid="uid://b1uidrfcxruw" path="res://Interfaces/MainMenu/main_menu.gd" id="1_lit4x"]
 [ext_resource type="Shader" uid="uid://cm4n3eug76odr" path="res://Interfaces/MainMenu/MenuBackground.gdshader" id="2_e482f"]
+[ext_resource type="Script" uid="uid://dbf38xtgr2ygg" path="res://Interfaces/MainMenu/titleholder.gd" id="2_hwh3k"]
 [ext_resource type="Texture2D" uid="uid://drr1bd18wv1u4" path="res://assets/backgrounds/Dungeon_brick_wall_grey.png" id="3_hwh3k"]
+[ext_resource type="Script" uid="uid://bmv8b74uxv0gk" path="res://Interfaces/MainMenu/user.gd" id="4_e482f"]
+
+[sub_resource type="SystemFont" id="SystemFont_e482f"]
+font_names = PackedStringArray("Fantasy", "Sans-Serif")
+font_weight = 100
+
+[sub_resource type="LabelSettings" id="LabelSettings_hwh3k"]
+font = SubResource("SystemFont_e482f")
+font_size = 70
+outline_size = 12
+outline_color = Color(0.45098, 0.156863, 0.619608, 1)
+shadow_size = 20
+shadow_color = Color(0.45098, 0.156863, 0.619608, 0.552941)
+shadow_offset = Vector2(-10, 10)
+
+[sub_resource type="SystemFont" id="SystemFont_mmgr3"]
+font_names = PackedStringArray("Fantasy", "Cursive", "Serif", "Arial")
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_e482f"]
+line_spacing = 5.0
+font = SubResource("SystemFont_mmgr3")
+font_size = 30
+outline_size = 4
+outline_color = Color(0.45098, 0.156863, 0.619608, 1)
+shadow_size = 5
+shadow_color = Color(0.501961, 0.231373, 0.654902, 0.721569)
+shadow_offset = Vector2(2, 2)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iwfq2"]
 shader = ExtResource("2_e482f")
@@ -16,6 +45,66 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_lit4x")
 
+[node name="Titleholder" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -290.0
+offset_bottom = -73.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_hwh3k")
+
+[node name="titlelabel" type="Label" parent="Titleholder"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -168.0
+offset_top = -48.0
+offset_right = 168.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 70
+text = "Wizarding"
+label_settings = SubResource("LabelSettings_hwh3k")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="displayname" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 31.0
+offset_right = -19.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_e482f")
+
+[node name="username" type="Label" parent="displayname"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -65.0
+offset_right = 100.0
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 3.0
+text = "jugador"
+label_settings = SubResource("LabelSettings_e482f")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="TextureRect" type="TextureRect" parent="."]
 z_index = -4096
 texture_repeat = 2
@@ -24,26 +113,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -640.0
-offset_top = -220.0
-offset_right = 640.0
-offset_bottom = 220.0
+offset_left = -642.0
+offset_top = -214.0
+offset_right = 638.0
+offset_bottom = 226.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_hwh3k")
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -167.5
-offset_top = 67.0
-offset_right = 168.5
-offset_bottom = 163.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 70
-text = "Wizarding"
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1

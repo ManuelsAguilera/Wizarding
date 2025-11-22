@@ -26,6 +26,8 @@ var accion_actual: String = ""
 #Modos son registrar, y ingresar
 var modo_formulario = "ingresar"
 
+var timeout_timer: Timer
+
 func _ready() -> void:
 	ventana_advertencia.confirmed.connect(_on_ventana_confirmada)
 
@@ -33,6 +35,16 @@ func _ready() -> void:
 
 	set_cambiar_btn()
 
+
+	#Timer para timeout de peticion
+	timeout_timer = Timer.new()
+	timeout_timer.wait_time = 10  # 5 segundos de timeout
+	timeout_timer.one_shot = true
+	timeout_timer.timeout.connect(_on_busqueda_timeout)
+	add_child(timeout_timer)
+
+	
+	Global.user_logged_in.connect(_on_usuario_logueado)
 
 #Para cambiar visibilidad segun tipo
 func set_formulario():
@@ -180,10 +192,28 @@ func limpiar_campos() -> void:
 func _on_ingresar_pressed() -> void:
 	if not _es_correo_registro_valido(correo_ingreso.text):
 		notificar_error("El correo_registro electrónico no es válido")
+		return
 
 	#Comprobar si el usuario existe
 	var result = Global.login_user(correo_ingreso.text)
 	if result["success"]:
-		Global.game_controller.change_gui_scene(Global.game_controller.menus["MainMenu"])
+		#Solo significa que si existe conexion a supabase
+		notificar_error("Esperando respuesta de servidor..")
+		timeout_timer.start()
 	else:
 		notificar_error(result["message"])
+
+
+func _on_usuario_logueado(success:bool,message:String):
+
+	
+	if timeout_timer.time_left > 0:
+		timeout_timer.stop()
+	print("logeado lol")
+
+	Global.game_controller.change_gui_scene(Global.game_controller.menus["MainMenu"])
+
+	
+func _on_busqueda_timeout():
+	print("timeout")
+	notificar_error("Tiempo de espera agotado.\nVerifica tu conexión a internet o direccion de correo.")

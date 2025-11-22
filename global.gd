@@ -145,12 +145,10 @@ func login_user(email: String) -> Dictionary:
 		supabase.api_request(endpoint, HTTPClient.METHOD_GET, {}, "find_persona:" + email)
 		return {"success": true, "message": "Buscando usuario en remoto..."}
 	else:
-		# Si no hay conexión remota, usar datos locales si existen
-		if !users_data.has(email):
-			return {"success": false, "message": "Usuario no encontrado localmente y Supabase no disponible"}
+		# Solo usar datos remotos
+		return {"success": false, "message": "Usuario no encontrado localmente y Supabase no disponible"}
 	
-		user_logged_in.emit(true, "Sesión iniciada (local)")
-		return {"success": true, "message": "Sesión iniciada localmente"}
+		
 
 
 func register_user(email: String, name: String, age: int) -> Dictionary:
@@ -196,6 +194,8 @@ func set_user(email: String,persona_id:int) -> void:
 		level_index = users_data[current_user]["info"]["level_index"] 
 	else:
 		printerr("Intentando establecer un usuario que no existe: ", email)
+		notificar_no_existe_user()
+
 
 func get_current_user() -> String:
 	return current_user
@@ -300,7 +300,8 @@ func _on_supabase_response(tag: String, success: bool, data) -> void:
 					users_data[correo]["info"]["age"] = age
 				else:
 					# Registrar usuario localmente (esto guarda y establece el usuario)
-					register_user(correo, name, age)
+					printerr("No registramos estos usuarios porque da errores")
+					
 
 
 				# Asegurar que el usuario está activo
@@ -310,6 +311,7 @@ func _on_supabase_response(tag: String, success: bool, data) -> void:
 					supabase.get_jugador()
 					supabase.get_level()
 				user_logged_in.emit(true, "Usuario cargado y activado desde Supabase")
+				print("emited")
 		else:
 			printerr("No se encontró ninguna persona para el fragmento:", tag.replace("find_persona:", ""))
 		return
@@ -346,7 +348,7 @@ func _on_supabase_response(tag: String, success: bool, data) -> void:
 					if current_persona_id == jugador.get("persona_id",0):
 						current_jugador_id = jid.to_int()
 						level_index = jugador.get("level_index",0)
-						print("[Aviso, aqui es donde se actualiza level_index en get_jugador lol] ", level_index)
+						
 					
 					
 					# Relacionar con persona (persona_id -> correo)
@@ -570,3 +572,28 @@ func _format_time_for_supabase(val) -> String:
 			frac_str = ""
 
 	return "%02d:%02d:%02d%s" % [hours, minutes, secs, frac_str]
+
+
+
+func notificar_no_existe_user():
+	print("NOTIFICANDO")
+	var dialog = AcceptDialog.new()
+	dialog.dialog_text = "Hola y bienvenido a wizarding, si ves esto es porque completaste el pretest."
+	dialog.title = "Bienvenido Jugador"
+	dialog.add_theme_constant_override("margin_left", 20)
+	dialog.add_theme_constant_override("margin_right", 20)
+	dialog.add_theme_constant_override("margin_top", 10)
+	dialog.add_theme_constant_override("margin_bottom", 10)
+	
+	# Añadir el diálogo a la escena actual
+	get_tree().current_scene.add_child(dialog)
+	
+	# Mostrar el diálogo
+	dialog.popup_centered()
+	
+	# Opcionalmente, eliminar el diálogo cuando se cierre
+	dialog.connect("confirmed", Callable(self, "_on_alert_closed").bind(dialog))
+	dialog.connect("close_requested", Callable(self, "_on_alert_closed").bind(dialog))
+
+func _on_alert_closed(dialog: AcceptDialog):
+	dialog.queue_free()

@@ -146,10 +146,10 @@ text = "Ingresar"
 
 [node name="Error" type="Label" parent="."]
 layout_mode = 2
-offset_left = 94.0
-offset_top = 408.0
-offset_right = 230.0
-offset_bottom = 431.0
+offset_left = 92.0
+offset_top = 439.0
+offset_right = 228.0
+offset_bottom = 488.0
 text = "
 "
 

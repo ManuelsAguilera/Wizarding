@@ -3,13 +3,13 @@
 [ext_resource type="Script" uid="uid://c1jqxuv7jxikd" path="res://blocks/equation_block/equation_block.gd" id="1_tqoe7"]
 [ext_resource type="Script" uid="uid://db61rgphxf650" path="res://blocks/equation_block/equation.gd" id="3_k5518"]
 
-[sub_resource type="SystemFont" id="SystemFont_msofc"]
+[sub_resource type="SystemFont" id="SystemFont_mmgr3"]
 font_names = PackedStringArray("Fantasy", "Cursive", "Serif", "Arial")
 subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_vm3h4"]
 line_spacing = 5.0
-font = SubResource("SystemFont_msofc")
+font = SubResource("SystemFont_mmgr3")
 font_size = 64
 outline_size = 4
 outline_color = Color(0.45098, 0.156863, 0.619608, 1)
