@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://de68i8ru2mfh0"]
 
 [ext_resource type="Script" uid="uid://bn61s8uqq7dqv" path="res://Interfaces/GameController/GameController.gd" id="1_h5uab"]
-[ext_resource type="AudioStream" uid="uid://oxu0i0y0wf2f" path="res://assets/Audio/Medieval-Music-Wild-Boar_s-Inn.wav" id="2_j0mr0"]
+[ext_resource type="AudioStream" uid="uid://oxu0i0y0wf2f" path="res://assets/audio/Medieval-Music-Wild-Boar_s-Inn.wav" id="2_j0mr0"]
 
 [node name="GameController" type="Node" node_paths=PackedStringArray("world_2d", "gui")]
 script = ExtResource("1_h5uab")
@@ -23,4 +23,7 @@ grow_vertical = 2
 
 [node name="Musica" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_j0mr0")
+volume_db = -25.0
+pitch_scale = 1.1
 autoplay = true
+bus = &"Musica"

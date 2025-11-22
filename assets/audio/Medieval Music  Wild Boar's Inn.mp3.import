@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cdrpckjy3na2y"
+path="res://.godot/imported/Medieval Music  Wild Boar's Inn.mp3-9039a40fe41568a83f90e64c930c4fb2.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/Medieval Music  Wild Boar's Inn.mp3"
+dest_files=["res://.godot/imported/Medieval Music  Wild Boar's Inn.mp3-9039a40fe41568a83f90e64c930c4fb2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
