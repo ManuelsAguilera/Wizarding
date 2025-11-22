@@ -63,10 +63,9 @@ theme_override_constants/separation = 8
 
 [node name="Jugar" type="Button" parent="CenterContainer/BotonesPrincipales"]
 layout_mode = 2
-text = "Jugar"
+text = "Nuevo juego"
 
 [node name="Continuar" type="Button" parent="CenterContainer/BotonesPrincipales"]
-visible = false
 layout_mode = 2
 text = "Continuar"
 

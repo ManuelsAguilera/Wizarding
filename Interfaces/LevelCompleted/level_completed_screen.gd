@@ -57,9 +57,6 @@ func _ready():
 	move_label_original_color = move_label.modulate
 	time_label_original_color = time_label.modulate
 
-
-	##Guardar
-	Global.save_data()
 	
 	if level_data != null:
 		var moves = level_data["moves"]

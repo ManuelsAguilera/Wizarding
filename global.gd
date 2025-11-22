@@ -30,6 +30,8 @@ var _jugador_by_id: Dictionary = {}
 
 # Variables de sistema de usuarios
 var current_user: String = GENERIC_USER
+var current_jugador_id: int = -1
+var current_persona_id: int = 4
 var users_data: Dictionary = {}
 var level_data: Dictionary = {}
 var _sync_lock: bool = false
@@ -146,7 +148,7 @@ func login_user(email: String) -> Dictionary:
 		# Si no hay conexión remota, usar datos locales si existen
 		if !users_data.has(email):
 			return {"success": false, "message": "Usuario no encontrado localmente y Supabase no disponible"}
-		set_user(email)
+	
 		user_logged_in.emit(true, "Sesión iniciada (local)")
 		return {"success": true, "message": "Sesión iniciada localmente"}
 
@@ -179,17 +181,16 @@ func register_user(email: String, name: String, age: int) -> Dictionary:
 	save_data()
 	user_registered.emit(true, "Usuario registrado correctamente")
 
-	#Activar usuario registrado
-	set_user(email)
 	return {"success": true, "message": "Usuario registrado correctamente"}
 
 
 
-func set_user(email: String) -> void:
+func set_user(email: String,persona_id:int) -> void:
 	if email.strip_edges().is_empty():
 		return
 	
 	current_user = email
+	current_persona_id = persona_id
 	if users_data.has(current_user):
 		level_data = users_data[current_user]["levels"]
 		print("level_index:", users_data[current_user]["info"]["level_index"])
@@ -244,12 +245,11 @@ func save_data() -> void:
 	else:
 		printerr("No se ha podido guardar los datos de usuarios")
 	
-	if dev_mode:
-		save_json()
+	save_json()
 	# Opcional: sincronizar con supabase si está disponible
 	if supabase != null:
 		# Solo sincronizar el usuario actual
-		sync_user_to_supabase(current_user)
+		sync_user_to_supabase(current_user, true)
 
 func check_data_file() -> bool:
 	var file := FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
@@ -305,7 +305,7 @@ func _on_supabase_response(tag: String, success: bool, data) -> void:
 
 
 				# Asegurar que el usuario está activo
-				set_user(correo)
+				set_user(correo,pid.to_int())
 				# Refrescar jugador y levels relacionados
 				if supabase != null:
 					supabase.get_jugador()
@@ -341,8 +341,15 @@ func _on_supabase_response(tag: String, success: bool, data) -> void:
 			_jugador_by_id.clear()
 			if data is Array:
 				for jugador in data:
-					var jid = str(jugador.get("id", ""))
+					var jid = str(jugador.get("id", ""))				
+					
 					_jugador_by_id[jid] = jugador
+					if current_persona_id == jugador.get("persona_id",0):
+						current_jugador_id = jid.to_int()
+						level_index = jugador.get("level_index",0)
+						print("[Aviso, aqui es donde se actualiza level_index en get_jugador lol] ", level_index)
+					
+					
 					# Relacionar con persona (persona_id -> correo)
 					var persona_id = str(jugador.get("persona_id", ""))
 					var correo = ""
@@ -392,7 +399,7 @@ func _on_supabase_response(tag: String, success: bool, data) -> void:
 			print("Supabase response (", tag, "):", data)
 
 
-func sync_user_to_supabase(email: String) -> void:
+func sync_user_to_supabase(email: String, only_last: bool = true) -> void:
 	# Evitar reentradas concurrentes
 	if _sync_lock:
 		print("sync_user_to_supabase: ya en progreso, ignorando llamada duplicada")
@@ -409,6 +416,8 @@ func sync_user_to_supabase(email: String) -> void:
 		_sync_lock = false
 		return
 
+	print("[AVISO] sync_user_to_supabase llamado para:", email, "only_last=", only_last)
+
 	var info = users_data[email]["info"]
 	# Construir jugador payload
 	var jugador_payload := {}
@@ -420,11 +429,8 @@ func sync_user_to_supabase(email: String) -> void:
 	jugador_payload["level_index"] = info.get("level_index", 0)
 
 	# Intentar obtener persona_id existente
-	var persona_id = null
-	for pid in _persona_by_id.keys():
-		if _persona_by_id[pid].get("correo", "") == email:
-			persona_id = _persona_by_id[pid].get("id")
-			break
+	var persona_id = current_persona_id
+	
 	if persona_id != null:
 		var pid_int = _to_int_id(persona_id)
 		if pid_int != null:
@@ -433,11 +439,30 @@ func sync_user_to_supabase(email: String) -> void:
 			jugador_payload["persona_id"] = persona_id
 
 	# Hacer upsert en jugador
+	print("[AVISO] supabase.upsert_jugador payload:", jugador_payload)
 	supabase.upsert_jugador(jugador_payload)
 
 	# Subir niveles del usuario
 	var user_levels = users_data[email].get("levels", {})
-	for lid in user_levels.keys():
+	var lids_to_sync := []
+	only_last = true
+	if only_last:
+		if last_level != "" and user_levels.has(last_level):
+			lids_to_sync = [last_level]
+		else:
+			print("[AVISO] sync_user_to_supabase: no hay ultimo nivel para sincronizar")
+			_sync_lock=false
+			return
+	else:
+		lids_to_sync = user_levels.keys()
+
+	print("[AVISO] lids_to_sync:", lids_to_sync)
+	for lid in lids_to_sync:
+		# imprimir informacion de cada elemento en user level
+		print("#---------------#")
+		print("Level ID:", lid)
+		print("Level Data:", user_levels[lid])
+		print("#---------------#")
 		var lvl = user_levels[lid]
 		var level_payload := {}
 		# Mantener id numérico si es posible (convertir o eliminar si no es válido)
@@ -450,13 +475,20 @@ func sync_user_to_supabase(email: String) -> void:
 		# FORMATEAR el tiempo para que sea compatible con el tipo time de Postgres (HH:MM:SS[.ms])
 		level_payload["time"] = _format_time_for_supabase(lvl.get("time", ""))
 		# Enviar level_name exactamente como está (no forzar un fallback con str(lid))
-		level_payload["level_name"] = lvl.get("level_name", "")
-		# NO enviar jugador_id si la tabla no lo tiene (evita PGRST204)
-		# Si necesitas relacionarlo, implementa un mapeo id_local -> id_remoto o define una constraint única en la BD
+		level_payload["level_name"] = lvl.get("id", "")
+		#Enviar fk de jugador
+		
+		print("[AVISO] Current user: ",current_user)
+		print("[AVISO] Current user id: ",current_jugador_id)
+		if current_jugador_id < 0:
+			level_payload["jugador_id"] = 0
+		else:
+			level_payload["jugador_id"] = current_jugador_id
 		# Debug: imprimir payload antes del upsert
 		print("DEBUG supabase.upsert_level payload:", level_payload)
 		# Llamada al upsert de level
 		supabase.upsert_level(level_payload)
+		print("[AVISO MOSTRAR LIDS_TO_SYNC] ",lids_to_sync)
 
 	_sync_lock = false
 func save_json() -> void:
