@@ -177,8 +177,7 @@ func register_user(email: String, name: String, age: int) -> Dictionary:
 		"levels": {}
 	}
 	
-	# Guardar datos y emitir señal
-	save_data()
+	login_user(email)
 	user_registered.emit(true, "Usuario registrado correctamente")
 
 	return {"success": true, "message": "Usuario registrado correctamente"}
