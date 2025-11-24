@@ -6,10 +6,20 @@ func _ready():
 	$CenterContainer/MenuOpciones/VolumenMusica.value = db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Musica")))
 	$CenterContainer/MenuOpciones/VolumenSFX.value = db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("SFX")))
 
+	# Desactivar botones de juego
+	var jugar_btn  = $CenterContainer/BotonesPrincipales/Jugar
+	var continuar_btn = $CenterContainer/BotonesPrincipales/Continuar
+
 	if Global.level_index != 0:
-		var continuar_btn = $CenterContainer/BotonesPrincipales/Continuar
-		continuar_btn.visible  = true
 		
+		jugar_btn.visible  = false
+
+	print("continuar",continuar_btn)
+	if Global.current_user == "generic@user.com":
+		continuar_btn.disabled = true
+		jugar_btn.disabled = true
+
+
 	#Modo dev
 	if Global.dev_mode:
 		var dev_btn = $CenterContainer/BotonesPrincipales/NivelTest

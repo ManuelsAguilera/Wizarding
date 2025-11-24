@@ -1,6 +1,27 @@
-[gd_scene load_steps=2 format=3 uid="uid://dowkj7lifbfvv"]
+[gd_scene load_steps=8 format=3 uid="uid://dowkj7lifbfvv"]
 
 [ext_resource type="Script" uid="uid://b72762bhmfs18" path="res://Interfaces/GameUI/game_ui.gd" id="1_1dfbg"]
+[ext_resource type="Texture2D" uid="uid://bidiicvvanfh6" path="res://assets/TouchButtons.png" id="2_re3ht"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1qgfd"]
+atlas = ExtResource("2_re3ht")
+region = Rect2(0, 0, 64, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xvwgp"]
+atlas = ExtResource("2_re3ht")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cam5t"]
+atlas = ExtResource("2_re3ht")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u0ic0"]
+atlas = ExtResource("2_re3ht")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c377e"]
+atlas = ExtResource("2_re3ht")
+region = Rect2(256, 0, 64, 64)
 
 [node name="GameUi" type="Control"]
 layout_mode = 3
@@ -21,6 +42,86 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch_mode = 3
+
+[node name="Touch" type="Control" parent="AspectContainer"]
+modulate = Color(1, 1, 1, 0.392157)
+layout_mode = 2
+size_flags_vertical = 12
+
+[node name="HSplitContainer" type="HSplitContainer" parent="AspectContainer/Touch"]
+z_index = 99
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.5
+anchor_right = 0.95
+anchor_bottom = 0.5
+offset_top = -192.0
+offset_bottom = -68.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="AspectContainer/Touch/HSplitContainer"]
+custom_minimum_size = Vector2(192, 128)
+layout_mode = 2
+size_flags_horizontal = 2
+columns = 3
+
+[node name="relleno2" type="Control" parent="AspectContainer/Touch/HSplitContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="u" type="Control" parent="AspectContainer/Touch/HSplitContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="up" type="TouchScreenButton" parent="AspectContainer/Touch/HSplitContainer/GridContainer/u"]
+texture_normal = SubResource("AtlasTexture_1qgfd")
+action = "up"
+visibility_mode = 1
+
+[node name="relleno" type="Control" parent="AspectContainer/Touch/HSplitContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="l" type="Control" parent="AspectContainer/Touch/HSplitContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="left" type="TouchScreenButton" parent="AspectContainer/Touch/HSplitContainer/GridContainer/l"]
+texture_normal = SubResource("AtlasTexture_xvwgp")
+action = "left"
+visibility_mode = 1
+
+[node name="d" type="Control" parent="AspectContainer/Touch/HSplitContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="down" type="TouchScreenButton" parent="AspectContainer/Touch/HSplitContainer/GridContainer/d"]
+texture_normal = SubResource("AtlasTexture_cam5t")
+action = "down"
+visibility_mode = 1
+
+[node name="r" type="Control" parent="AspectContainer/Touch/HSplitContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="right" type="TouchScreenButton" parent="AspectContainer/Touch/HSplitContainer/GridContainer/r"]
+texture_normal = SubResource("AtlasTexture_u0ic0")
+action = "right"
+visibility_mode = 1
+
+[node name="Control" type="Control" parent="AspectContainer/Touch/HSplitContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="primary" type="TouchScreenButton" parent="AspectContainer/Touch/HSplitContainer/Control"]
+position = Vector2(-12, 0)
+texture_normal = SubResource("AtlasTexture_c377e")
+action = "primary"
+visibility_mode = 1
 
 [node name="BotonesNivel" type="VBoxContainer" parent="AspectContainer"]
 layout_mode = 2

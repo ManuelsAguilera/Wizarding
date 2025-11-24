@@ -101,7 +101,7 @@ script = ExtResource("2_a461f")
 shape = SubResource("RectangleShape2D_a461f")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GoalBody"]
-z_index = 99
+z_index = 50
 position = Vector2(0, -14)
 scale = Vector2(0.95, 0.95)
 sprite_frames = SubResource("SpriteFrames_3hgkq")

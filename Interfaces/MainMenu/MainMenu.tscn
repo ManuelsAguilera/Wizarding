@@ -20,7 +20,7 @@ shadow_color = Color(0.45098, 0.156863, 0.619608, 0.552941)
 shadow_offset = Vector2(-10, 10)
 
 [sub_resource type="SystemFont" id="SystemFont_mmgr3"]
-font_names = PackedStringArray("Fantasy", "Cursive", "Serif", "Arial")
+font_names = PackedStringArray("Fantasy", "Serif", "Cursive", "Arial")
 subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_e482f"]

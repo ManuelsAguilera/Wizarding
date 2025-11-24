@@ -27,28 +27,37 @@ const position_speed: float = 1.0 # Ajusta la velocidad de la animación
 
 func _ready():
 	# Initialize label reference
-	visible = false
-	if Global.current_user != "generic@user.com":
-		visible = true
-
+	visible = true
+	
 	primary_color=Color("White")
 	
-
 	modulation_color = Color(1,1,0.2)
 	modulation= 1.5
 
 	self.scale=base_scale
-
 	base_position = position
 
-	var username_current = Global.users_data[Global.current_user]["info"].get("username")
-	if username_current != null:
-		label.text = "Jugador: "+username_current
+	# Verificación segura del usuario y sus datos
+	var username_current = null
+	if Global.users_data.has(Global.current_user) and Global.users_data[Global.current_user].has("info"):
+		username_current = Global.users_data[Global.current_user]["info"].get("username")
+
+	if Global.current_user == "generic@user.com":
+		label.text = "Porfavor carga un correo en formulario"
+		primary_color=Color("Red")
 	else:
-		label.text = "Cargado correo " + Global.current_user
+		if username_current != null:
+			label.text = "Jugador: "+username_current
+		else:
+			label.text = "Cargado correo " + Global.current_user
+
+
 	self.scale = base_scale
 	base_position = self.position
 
+
+	if OS.get_name() == "Web":
+		label.label_settings.font_size=20
 
 	#Conectar con logged in
 
