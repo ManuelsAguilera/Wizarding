@@ -24,6 +24,6 @@ grow_vertical = 2
 [node name="Musica" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_j0mr0")
 volume_db = -25.0
-pitch_scale = 1.1
+pitch_scale = 1.06
 autoplay = true
 bus = &"Musica"
