@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ch6b6pn61pw8n"]
 
-[ext_resource type="Script" uid="uid://cdg5qv64l5a42" path="res://supabase_connection/supabase.gd" id="1_aetkn"]
+[ext_resource type="Script" path="res://supabase_connection/supabase.gd" id="1_aetkn"]
 
 [node name="Supabase" type="Node"]
 script = ExtResource("1_aetkn")

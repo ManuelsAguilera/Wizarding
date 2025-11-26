@@ -22,6 +22,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Musica" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(2, 1)
 stream = ExtResource("2_j0mr0")
 volume_db = -25.0
 pitch_scale = 1.06
