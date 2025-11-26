@@ -175,6 +175,14 @@ func push(player_direction: Vector2) -> void:
 	percent_moved = 0.0
 	initial_position = global_position
 
+func pull(player_direction: Vector2) -> void:
+
+	_activate_particles()
+	direction = -player_direction
+	is_moving = true
+	percent_moved = 0.0
+	initial_position = global_position
+
 ## Activa el efecto de partículas
 func _activate_particles() -> void:
 	particleEffect.emitting = false
