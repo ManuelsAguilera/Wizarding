@@ -16,8 +16,9 @@ func _ready():
 
 	print("continuar",continuar_btn)
 	if Global.current_user == "generic@user.com":
-		continuar_btn.disabled = true
-		jugar_btn.disabled = true
+		#continuar_btn.disabled = true
+		#jugar_btn.disabled = true
+		pass
 
 
 	#Modo dev

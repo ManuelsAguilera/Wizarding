@@ -49,6 +49,7 @@ layout_mode = 2
 size_flags_vertical = 12
 
 [node name="HSplitContainer" type="HSplitContainer" parent="AspectContainer/Touch"]
+modulate = Color(0.873635, 0.858271, 0, 0.392157)
 z_index = 99
 layout_mode = 1
 anchors_preset = -1
