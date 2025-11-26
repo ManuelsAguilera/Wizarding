@@ -18,38 +18,38 @@ id = "test"
 [node name="BlockManager" parent="LevelManager" index="2" instance=ExtResource("2_h3vwv")]
 
 [node name="x" parent="LevelManager/BlockManager" index="0" instance=ExtResource("3_1jsee")]
-position = Vector2(96, 352)
+position = Vector2(8, 360)
 spriteName = "x"
 
 [node name="=" parent="LevelManager/BlockManager" index="1" instance=ExtResource("3_1jsee")]
-position = Vector2(160, 352)
+position = Vector2(72, 360)
 spriteName = "="
 
 [node name="1\'" parent="LevelManager/BlockManager" index="2" instance=ExtResource("3_1jsee")]
-position = Vector2(224, 352)
+position = Vector2(296, 360)
 spriteName = "num"
 frame = 1
 
 [node name="y" parent="LevelManager/BlockManager" index="3" instance=ExtResource("3_1jsee")]
-position = Vector2(160, 288)
+position = Vector2(136, 360)
 spriteName = "y"
 
 [node name="1" parent="LevelManager/BlockManager" index="4" instance=ExtResource("3_1jsee")]
-position = Vector2(160, 416)
+position = Vector2(424, 360)
 spriteName = "num"
 frame = 1
 
 [node name="+" parent="LevelManager/BlockManager" index="5" instance=ExtResource("3_1jsee")]
-position = Vector2(160, 480)
+position = Vector2(200, 232)
 spriteName = "-"
 
-[node name="2" parent="LevelManager/BlockManager" index="6" instance=ExtResource("3_1jsee")]
-position = Vector2(160, 544)
-spriteName = "num"
-frame = 2
+[node name="=2" parent="LevelManager/BlockManager" index="6" instance=ExtResource("3_1jsee")]
+position = Vector2(200, 360)
+spriteName = "="
 
 [node name="extra" parent="LevelManager/BlockManager" index="7" instance=ExtResource("3_1jsee")]
-position = Vector2(427, 192)
+position = Vector2(360, 264)
+spriteName = "+"
 
 [node name="EquationManager" parent="LevelManager" index="3" instance=ExtResource("3_cg1w3")]
 

@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://tiwwfxxv34ao"]
+
+[ext_resource type="Script" uid="uid://0qj1xbhnh30w" path="res://Interfaces/stars/star_container.gd" id="1_q062y"]
+[ext_resource type="Texture2D" uid="uid://ds6fd1hj14rpi" path="res://icon.svg" id="2_dn00q"]
+
+[node name="Stars" type="HBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+alignment = 1
+script = ExtResource("1_q062y")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+layout_mode = 2
+texture = ExtResource("2_dn00q")
+expand_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+visible = false
+layout_mode = 2
+texture = ExtResource("2_dn00q")
+expand_mode = 3
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+visible = false
+layout_mode = 2
+texture = ExtResource("2_dn00q")
+expand_mode = 3

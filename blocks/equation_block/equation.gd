@@ -35,6 +35,10 @@ func _ready():
 		primary_color = Color(0.8,0.8,0.95)
 	else:
 		primary_color = Color(color)
+
+	#Corrigiendo para web
+	if OS.get_name() == "Web":
+		label.add_theme_font_size_override("font_size", 12)
 	
 
 	modulation_color = Color(1,1,0.2)

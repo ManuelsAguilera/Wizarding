@@ -183,7 +183,6 @@ func search() -> void:
 
 func revisar_sintaxis(cadena: Array[GenericBlock]) -> String:
 	# La cadena debe tener al menos 3 bloques (variable, operador, número/variable)
-
 	if cadena.size() < 3:
 		return "invalid"
 	
@@ -206,25 +205,41 @@ func revisar_sintaxis(cadena: Array[GenericBlock]) -> String:
 	
 	# Variables para rastrear el estado esperado
 	var expecting_number = true
+	var is_first_number = true  # Para permitir signo solo al primer número
 	
 	# Iterar desde el índice 2 en adelante
 	for i in range(2, cadena.size()):
 		var block = cadena[i]
 		var block_type = block.getTypeBlock()
 		
+
+		printerr("Block, ",block_type," indice ",i)
+
 		if expecting_number:
 			if block_type == "num":
-				expecting_number = false
+				# Número encontrado
 				final_string += str(block.getTypeNumber())
+				expecting_number = false
+				is_first_number = false
+			elif block_type == "operator" and is_first_number:
+				# Solo permitir signo + o - al primer número
+				var operation = block.getTypeOperation()
+				if operation == "+" or operation == "-":
+					final_string += operation
+					# Seguimos esperando el número después del signo
+				else:
+					return "invalid"
 			else:
 				return "invalid"
 		else:
+			# Esperando operador
 			if block_type == "operator":
-				expecting_number = true
 				final_string += block.getTypeOperation()
+				expecting_number = true
 			else:
 				return "invalid"
 	
+	print("final string block_manager: ", final_string)
 	# La cadena no debe terminar esperando un número
 	return final_string if not expecting_number else "invalid"
 
