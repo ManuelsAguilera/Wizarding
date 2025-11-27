@@ -3,6 +3,8 @@ extends CharacterBody2D
 
 class_name Player
 
+@export var is_non_pullable: bool = false
+
 @onready var sprite:AnimatedSprite2D = $PlayerSprite
 @onready var magicParticlePush:CPUParticles2D = $MagicParticlePush
 @onready var magicParticlePull:CPUParticles2D = $MagicParticlePull
@@ -169,6 +171,11 @@ func _process(delta):
 # Empujar bloques
 func pull():
 
+
+	if is_non_pullable:
+		print("cannot pull: is non pullable")
+		return
+	
 	print("[INFO] Empezo pull()")
 	var block_to_pull = detected_block
 
@@ -242,12 +249,13 @@ func can_push_blocks(blocks: Array, direction: Vector2) -> bool:
 		return false
 
 func can_pull_block(block: GenericBlock) -> bool:
-	
+	print("[INFO] bloque:",block)
 	if block == null:
 		return false
 	if block.is_block_moving():
 		return false
-	
+	if not block.is_pullable():
+		return false
 
 	var space_state = get_world_2d().direct_space_state
 	

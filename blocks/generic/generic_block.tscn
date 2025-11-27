@@ -280,3 +280,12 @@ color = Color(0.593134, 0.593134, 0.593134, 1)
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_o76bf")
+
+[node name="NonPullableParticles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 20
+lifetime = 0.8
+spread = 90.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 40.0
