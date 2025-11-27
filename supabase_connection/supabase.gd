@@ -256,6 +256,16 @@ func add_persona(persona_data: Dictionary, tag: String = "add_persona"):
 	api_request(endpoint, HTTPClient.METHOD_POST, persona_data, tag, prefer)
 
 
+func get_players_by_level(level_name: String, limite: int = 15, tag: String = "get_players_by_level"):
+	#Obtiene leadervoard para cada level_name
+	var endpoint = "/rest/v1/rpc/get_players_by_level"
+	var parametros = {
+		"p_level_name": level_name,
+		"p_limit": limite
+	}
+	api_request(endpoint, HTTPClient.METHOD_POST, parametros, tag)
+
+
 func get_data_test():
 	# Ahora usa el wrapper
 	get_persona()

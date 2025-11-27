@@ -11,7 +11,6 @@ offset_bottom = -617.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qpr43")
-text_content = "xdfsfd"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -20,8 +19,6 @@ layout_mode = 2
 clip_contents = false
 layout_mode = 2
 bbcode_enabled = true
-text = "
-asdasdsda"
 fit_content = true
 drag_and_drop_selection_enabled = false
 

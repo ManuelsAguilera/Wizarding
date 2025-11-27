@@ -91,10 +91,12 @@ func _on_volumen_sfx_value_changed(value: float):
 
 
 func _on_formulario_pressed() -> void:
-	print("Formulario")
 	Global.game_controller.change_gui_scene(Global.game_controller.menus["Form"])
 
 
 func _on_guardar_pressed():
-	print("Formulario")
 	Global.save_data()
+
+
+func _on_clasificatoria_pressed() -> void:
+	Global.game_controller.change_gui_scene(Global.game_controller.menus["Leaderboard"])

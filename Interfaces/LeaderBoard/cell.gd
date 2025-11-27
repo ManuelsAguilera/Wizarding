@@ -13,38 +13,44 @@ class_name Cell
 
 var styles = {
 	"header" = {
-		"fondo": Color.PURPLE,
-		"texto": Color.WHITE,
+		"fondo": Color("#572491"),
+		"texto": Color("#e6d0a1"),
 		"bold": true,
 		"tamaño": 14
 	},
 	"normal" = {
-		"fondo": Color.LIGHT_PINK,
-		"texto": Color.BLACK,
+		"fondo": Color("#e6d0a1"),
+		"texto": Color("#230f40"),
+		"bold": false,
+		"tamaño": 11
+	},
+	"label" = {
+		"fondo": Color.WHITE,
+		"texto": Color("#230f40"),
 		"bold": false,
 		"tamaño": 11
 	},
 # Estilo para posición #1
 	"first_place"= {
 		"fondo": Color.GOLD,
-		"texto": Color.BLACK,
-		"bold": false,
+		"texto": Color("#241326"),
+		"bold": true,
 		"tamaño": 14
 	},
 
 	# Estilo para posición #2
 	"second_place"= {
 		"fondo": Color.SILVER,
-		"texto": Color.BLACK,
-		"bold": false,
+		"texto": Color("#230f40"),
+		"bold": true,
 		"tamaño": 13
 	},
 
 
 	"third_place" = {
 		"fondo": Color(0.8, 0.5, 0.2),  # Bronce
-		"texto": Color.WHITE,
-		"bold": false,
+		"texto": Color("#e6d0a1"),
+		"bold": true,
 		"tamaño": 12
 	}
 }

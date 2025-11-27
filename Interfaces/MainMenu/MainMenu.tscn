@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://b1uidrfcxruw" path="res://Interfaces/MainMenu/main_menu.gd" id="1_lit4x"]
 [ext_resource type="Shader" uid="uid://cm4n3eug76odr" path="res://Interfaces/MainMenu/MenuBackground.gdshader" id="2_e482f"]
-[ext_resource type="Script" path="res://Interfaces/MainMenu/titleholder.gd" id="2_hwh3k"]
+[ext_resource type="Script" uid="uid://dbf38xtgr2ygg" path="res://Interfaces/MainMenu/titleholder.gd" id="2_hwh3k"]
 [ext_resource type="Texture2D" uid="uid://drr1bd18wv1u4" path="res://assets/backgrounds/Dungeon_brick_wall_grey.png" id="3_hwh3k"]
-[ext_resource type="Script" path="res://Interfaces/MainMenu/user.gd" id="4_e482f"]
+[ext_resource type="Script" uid="uid://bmv8b74uxv0gk" path="res://Interfaces/MainMenu/user.gd" id="4_e482f"]
 
 [sub_resource type="SystemFont" id="SystemFont_e482f"]
 font_names = PackedStringArray("Fantasy", "Sans-Serif")
@@ -167,6 +167,10 @@ text = "Guardar
 layout_mode = 2
 text = "Creditos"
 
+[node name="Clasificatoria" type="Button" parent="CenterContainer/BotonesPrincipales"]
+layout_mode = 2
+text = "Clasificatoria"
+
 [node name="NivelTest" type="Button" parent="CenterContainer/BotonesPrincipales"]
 visible = false
 layout_mode = 2
@@ -258,6 +262,7 @@ text = "Volver"
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/Formulario" to="." method="_on_formulario_pressed"]
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/Guardar" to="." method="_on_guardar_pressed"]
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/Creditos" to="." method="_on_creditos_pressed"]
+[connection signal="pressed" from="CenterContainer/BotonesPrincipales/Clasificatoria" to="." method="_on_clasificatoria_pressed"]
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/NivelTest" to="." method="_on_nivel_test_pressed"]
 [connection signal="pressed" from="CenterContainer/BotonesPrincipales/Salir" to="." method="_on_salir_pressed"]
 [connection signal="toggled" from="CenterContainer/MenuOpciones/PantallaCompleta" to="." method="_on_pantalla_completa_toggled"]
