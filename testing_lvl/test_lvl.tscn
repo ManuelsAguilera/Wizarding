@@ -15,6 +15,9 @@
 [node name="LevelManager" parent="." index="0"]
 id = "test"
 
+[node name="Scenary" parent="LevelManager/TileMaps" index="0"]
+position = Vector2(1, 0)
+
 [node name="BlockManager" parent="LevelManager" index="2" instance=ExtResource("2_h3vwv")]
 
 [node name="x" parent="LevelManager/BlockManager" index="0" instance=ExtResource("3_1jsee")]
@@ -50,6 +53,7 @@ spriteName = "="
 [node name="extra" parent="LevelManager/BlockManager" index="7" instance=ExtResource("3_1jsee")]
 position = Vector2(360, 264)
 spriteName = "+"
+is_non_pullable = true
 
 [node name="EquationManager" parent="LevelManager" index="3" instance=ExtResource("3_cg1w3")]
 
@@ -71,6 +75,6 @@ solution = 1.0
 position = Vector2(-64, 192)
 
 [node name="Player" parent="LevelManager" index="4" instance=ExtResource("4_1jsee")]
-position = Vector2(288, 160)
+position = Vector2(354, 86)
 
 [node name="Config" parent="LevelManager" index="5" instance=ExtResource("5_603kl")]

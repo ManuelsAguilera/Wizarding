@@ -22,6 +22,10 @@ const ANIMATION_SPEED: float = 8.0
 ## Frame específico del sprite (importante para números 0-9)
 @export var frame: int = 0
 
+
+## Es un bloque especial que no puede ser jalado
+@export var is_non_pullable: bool = false
+
 # ============================================================================
 # REFERENCIAS DE NODOS
 # ============================================================================
@@ -29,9 +33,11 @@ const ANIMATION_SPEED: float = 8.0
 ## Referencia al sprite animado del bloque
 @onready var sprite: AnimatedSprite2D = $sprite
 
-
 ## Efecto de partículas al mover el bloque
 @onready var particleEffect: CPUParticles2D = $DustParticles
+
+## Efecto de partículas para bloques no jalables
+@onready var nonPullableEffect: CPUParticles2D = $NonPullableParticles
 
 # ============================================================================
 # VARIABLES DE ESTADO
@@ -58,8 +64,6 @@ var direction: Vector2 = Vector2()
 ## Indica si el bloque está en una cadena
 var is_in_chain: bool = false
 
-
-
 # ============================================================================
 # MÉTODOS DE INICIALIZACIÓN
 # ============================================================================
@@ -73,6 +77,8 @@ func _ready() -> void:
 
 	#Inicializar modulación
 	set_in_chain(false)
+
+	set_is_non_pullable(is_non_pullable)
 
 ## Configura el sprite inicial del bloque
 func _setup_sprite() -> void:
@@ -247,3 +253,18 @@ func set_in_chain(in_chain: bool) -> void:
 		sprite.modulate = Color(0.5, 0.5, 0.5) # Color opaco
 	
 	is_in_chain = in_chain
+
+# ============================================================================	
+# METODOS DE INTERACCIÓN
+# ============================================================================
+
+func is_pullable() -> bool:
+	return not is_non_pullable
+
+func set_is_non_pullable(value: bool) -> void:
+	is_non_pullable = value
+	
+	if nonPullableEffect:
+		nonPullableEffect.one_shot = false
+		nonPullableEffect.emitting = value
+		nonPullableEffect.visible = value
