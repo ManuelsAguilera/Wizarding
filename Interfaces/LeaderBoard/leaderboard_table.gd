@@ -103,7 +103,7 @@ func insert_data():
 
 func crear_celda(contenido: String, tipo: String = "normal") -> Cell:
 	"""Crea una nueva celda con el contenido y tipo especificados"""
-	var celda_scene = preload("res://Interfaces/LeaderBoard/cell.tscn")
+	var celda_scene = preload("res://Interfaces/LeaderBoard/Cell.tscn")
 	var nueva_celda: Cell = celda_scene.instantiate()
 	
 	# Configurar la celda
