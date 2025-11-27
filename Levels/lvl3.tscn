@@ -66,9 +66,9 @@ script = ExtResource("6_xsxlx")
 
 [node name="puerta" parent="LevelManager/EquationManager" index="0" instance=ExtResource("7_y3eed")]
 position = Vector2(536, 464)
-equation = "17=2x+5"
+equation = "2x+17=11 "
 size = Vector2(0.6, 0.6)
-solution = 6.0
+solution = -3.0
 metadata/_edit_lock_ = true
 
 [node name="GoalBlock2" parent="LevelManager/EquationManager/puerta" index="1" instance=ExtResource("8_nsrt8")]
