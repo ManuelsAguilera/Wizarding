@@ -1,0 +1,163 @@
+[gd_scene load_steps=8 format=3 uid="uid://kre10saog023"]
+
+[ext_resource type="Script" uid="uid://dhdy8tq2sqp4o" path="res://Interfaces/LeaderBoard/leaderboard.gd" id="1_a8hgl"]
+[ext_resource type="Shader" uid="uid://2ip1onjiwtri" path="res://Interfaces/LevelCompleted/LevelCompletedScreen.gdshader" id="2_igeqe"]
+[ext_resource type="Texture2D" uid="uid://drr1bd18wv1u4" path="res://assets/backgrounds/Dungeon_brick_wall_grey.png" id="3_l4bjl"]
+[ext_resource type="Script" uid="uid://cbqn462ywxhnr" path="res://Interfaces/LeaderBoard/leaderboard_table.gd" id="4_onxhw"]
+[ext_resource type="PackedScene" uid="uid://b6c5yf8n042tj" path="res://Interfaces/LeaderBoard/Cell.tscn" id="5_igeqe"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jcesl"]
+shader = ExtResource("2_igeqe")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8hgl"]
+bg_color = Color(0.341176, 0.141176, 0.568627, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 8
+border_color = Color(0.141176, 0.0745098, 0.14902, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[node name="Leaderboard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+script = ExtResource("1_a8hgl")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_jcesl")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_l4bjl")
+metadata/_edit_lock_ = true
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="AspectRatioContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="AspectRatioContainer/CenterContainer"]
+custom_minimum_size = Vector2(560, 560)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectRatioContainer/CenterContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Table" type="ScrollContainer" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("4_onxhw")
+
+[node name="CenterContainer" type="CenterContainer" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Table"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GridContainer" type="GridContainer" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Table/CenterContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 213)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a8hgl")
+
+[node name="VBoxContainer" type="VSplitContainer" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 107
+dragging_enabled = false
+
+[node name="MarginContainer" type="MarginContainer" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Niveles" type="Label" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Niveles: "
+
+[node name="level_1" type="Button" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "1"
+
+[node name="level_2" type="Button" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "2"
+
+[node name="level_3" type="Button" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "3"
+
+[node name="level_4" type="Button" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "4"
+
+[node name="level_5" type="Button" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "5"
+
+[node name="level_6" type="Button" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "6"
+
+[node name="Margin" type="MarginContainer" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 64
+
+[node name="Mostrar" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer/Margin" instance=ExtResource("5_igeqe")]
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 80
+
+[node name="GridContainer" type="GridContainer" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/Margin"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/Margin/GridContainer"]
+layout_mode = 2
+text = "Volver al menu
+"
+
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer/level_1" to="." method="_on_level_selector_pressed" binds= ["level_1"]]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer/level_2" to="." method="_on_level_selector_pressed" binds= ["level_2"]]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer/level_3" to="." method="_on_level_selector_pressed" binds= ["level_3"]]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer/level_4" to="." method="_on_level_selector_pressed" binds= ["level_4"]]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer/level_5" to="." method="_on_level_selector_pressed" binds= ["level_5"]]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer/level_6" to="." method="_on_level_selector_pressed" binds= ["level_6"]]
+[connection signal="pressed" from="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Panel/VBoxContainer/Margin/GridContainer/Button" to="." method="_on_volver_pressed"]

@@ -18,7 +18,8 @@ var menus:Dictionary = {
 	"MainMenu":"res://Interfaces/MainMenu/MainMenu.tscn",
 	"GameUI":"res://Interfaces/GameUI/GameUI.tscn",
 	"LevelCompleted":"res://Interfaces/LevelCompleted/LevelCompletedScreen.tscn",
-	"Form":"res://Interfaces/FormUI/form_ui.tscn"
+	"Form":"res://Interfaces/FormUI/form_ui.tscn",
+	"Leaderboard":"res://Interfaces/LeaderBoard/Leaderboard.tscn"
 }
 
 
