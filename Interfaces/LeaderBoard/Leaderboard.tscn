@@ -1,0 +1,69 @@
+[gd_scene load_steps=6 format=3 uid="uid://kre10saog023"]
+
+[ext_resource type="Script" uid="uid://dhdy8tq2sqp4o" path="res://Interfaces/LeaderBoard/leaderboard.gd" id="1_a8hgl"]
+[ext_resource type="Shader" uid="uid://2ip1onjiwtri" path="res://Interfaces/LevelCompleted/LevelCompletedScreen.gdshader" id="2_igeqe"]
+[ext_resource type="Texture2D" uid="uid://drr1bd18wv1u4" path="res://assets/backgrounds/Dungeon_brick_wall_grey.png" id="3_l4bjl"]
+[ext_resource type="Script" uid="uid://cbqn462ywxhnr" path="res://Interfaces/LeaderBoard/leaderboard_table.gd" id="4_onxhw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jcesl"]
+shader = ExtResource("2_igeqe")
+
+[node name="Leaderboard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a8hgl")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_jcesl")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_l4bjl")
+metadata/_edit_lock_ = true
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="AspectRatioContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="AspectRatioContainer/CenterContainer"]
+custom_minimum_size = Vector2(560, 560)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectRatioContainer/CenterContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Table" type="ScrollContainer" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("4_onxhw")
+
+[node name="CenterContainer" type="CenterContainer" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Table"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GridContainer" type="GridContainer" parent="AspectRatioContainer/CenterContainer/Panel/VBoxContainer/Table/CenterContainer"]
+layout_mode = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
