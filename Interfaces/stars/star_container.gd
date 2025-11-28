@@ -14,8 +14,8 @@ class_name StarContainer
 
 # Referencias por nivel
 var time_reference: Dictionary = {
-	"tuto_1": 20,
-	"tuto_2": 20,
+	"tuto_1": 65,
+	"tuto_2": 65,
 	"level_1":65,
 	"level_2":77,
 	"level_3":105,
@@ -26,8 +26,8 @@ var time_reference: Dictionary = {
 }
 
 var moves_reference: Dictionary = {
-	"tuto_1": 1,
-	"tuto_2": 4,
+	"tuto_1": 20,
+	"tuto_2": 20,
 	"level_1":20,
 	"level_2":26,
 	"level_3":39,

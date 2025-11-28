@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b2wjk65rfcib1"
+path="res://.godot/imported/level_popup.dialogue-316fd6661ee31ec81dabb8f4038c0e81.tres"
+
+[deps]
+
+source_file="res://dialogos/level_popup.dialogue"
+dest_files=["res://.godot/imported/level_popup.dialogue-316fd6661ee31ec81dabb8f4038c0e81.tres"]
+
+[params]
+
+defaults=true
