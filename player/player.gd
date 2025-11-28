@@ -24,7 +24,7 @@ var detected_block:GenericBlock=null
 var percent_moved = 0.0
 var direction:Vector2 = Vector2()
 var facedDirection:Vector2 = Vector2(0,1)
-
+var last_direction:Vector2 = facedDirection
 var is_pulling: bool = false
 
 func snap_to_grid():
@@ -153,6 +153,10 @@ func move(delta):
 func _process(delta):
 	# Movimiento de los bloques
 	if (Input.is_action_just_pressed("primary") and is_moving==false and Global.dialog_mode==false):
+
+		print(facedDirection)
+		magicParticlePush.position = facedDirection * Tile_Size
+		print(magicParticlePush.position)
 		magicParticlePush.emitting=false
 		magicParticlePush.emitting=true
 		
