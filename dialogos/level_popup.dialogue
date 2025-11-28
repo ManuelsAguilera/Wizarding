@@ -1,19 +1,24 @@
 ~ tuto_1_Bienvenida
 Mago: [speed=3] Hola bienvenido a Wizarding [wait=1]
 Mago: Este es un mundo donde las ecuaciones tienen magia
-Mago: Completa la ecuacion con tu boton primario (Z o espacio).
+Mago: Acercate al bloque "=" y presiona tu boton primario ("Z" o "espacio").
 Mago: Si tienes dudas presiona el boton de Ayuda.
 => END
 
 ~ tuto_1_eq
-Mago: ¡Lo lograste! Para avanzar camina hasta la puerta.
+Mago: ¡Lo lograste! :D
+Mago: Como te podras haber dado cuenta, al juntar bloques formas ecuaciones
+Mago: Si la ecuacion que formaste cumple con el valor de la puerta
+Mago: Esta se [color=green]abrira[/color]
+Mago: Por lo tanto tu objetivo juntar bloques que cumplan la igualdad de las puertas
+Mago: Para avanzar al siguiente nivel camina hasta la puerta.
 => END
 
 
 ~ tuto_2_inicio
 Mago: Lograste superar el primer nivel.
-Mago: Este nivel tiene truco, usa tu boton secundario (x).
-Mago: Para sacar el bloque atrapado.
+Mago: Este nivel tiene truco, acercate a un bloque y usa tu boton secundario (x).
+Mago: Eso te permitira sacar el bloque atrapado.
 => END
 ~ level_1_inicio
 Mago: Ya superaste el tutorial, desde ahora pideme ayuda con el boton ayuda.
