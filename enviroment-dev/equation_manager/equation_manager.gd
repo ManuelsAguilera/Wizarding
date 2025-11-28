@@ -81,6 +81,15 @@ func compare_solutions(eq_found: String, solution: EquationBlock) -> bool:
 	# Extraer la parte derecha de la ecuación (después del '=')
 	var right_side: String = eq_found.substr(2)
 	
+	#Filtrar si el signo inicial es positivo
+
+	print("dsfsdfsdfAAAA  ",right_side)
+
+	
+	if right_side[0] == "+":
+		right_side = right_side.substr(1)
+	
+
 	# Calcular el valor de la expresión
 	var calculated_result: Variant = calculate_from_string(right_side)
 	if calculated_result == null:
