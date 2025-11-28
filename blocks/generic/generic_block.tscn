@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://duty7jtc6tl0j"]
+[gd_scene load_steps=28 format=3 uid="uid://duty7jtc6tl0j"]
 
 [ext_resource type="Script" uid="uid://cmscmmlu7f87e" path="res://blocks/generic/generic_block.gd" id="1_llfvp"]
 [ext_resource type="Texture2D" uid="uid://cl6mu6e7u62de" path="res://assets/MathTiles.png" id="2_m0sw6"]
@@ -6,6 +6,8 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4m5sl"]
 size = Vector2(64, 64)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_yevfx"]
 
 [sub_resource type="Curve" id="Curve_5yqyq"]
 _data = [Vector2(0.207865, 1), 0.0, 0.0, 0, 0, Vector2(0.44382, 0.747253), -2.79435, -2.79435, 0, 0, Vector2(0.966292, 0), 1.17087, 0.0, 0, 0]
@@ -251,6 +253,11 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Curve" id="Curve_gk6yd"]
+_limits = [-200.0, 200.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.45977, 41.1576), -602.23, 0.0, 0, 0]
+point_count = 2
+
 [node name="GenericBlock" type="CharacterBody2D"]
 scale = Vector2(0.9, 0.9)
 collision_layer = 2
@@ -263,18 +270,19 @@ shape = SubResource("RectangleShape2D_4m5sl")
 [node name="DustParticles" type="CPUParticles2D" parent="."]
 show_behind_parent = true
 emitting = false
-amount = 10
-lifetime = 2.0
+amount = 30
+texture = SubResource("CanvasTexture_yevfx")
+lifetime = 2.5
 one_shot = true
 preprocess = 1.0
 explosiveness = 0.9
 randomness = 1.0
+lifetime_randomness = 0.35
 emission_shape = 1
 emission_sphere_radius = 16.0
 gravity = Vector2(0, 0)
 angular_velocity_max = 5.0
 damping_max = 5.0
-scale_amount_min = 2.0
 scale_amount_max = 3.0
 scale_amount_curve = SubResource("Curve_5yqyq")
 color = Color(0.593134, 0.593134, 0.593134, 1)
@@ -283,19 +291,23 @@ color = Color(0.593134, 0.593134, 0.593134, 1)
 sprite_frames = SubResource("SpriteFrames_o76bf")
 
 [node name="NonPullableParticles" type="CPUParticles2D" parent="."]
-position = Vector2(27.7778, -27.7778)
 emitting = false
-amount = 20
+amount = 10
 texture = ExtResource("3_lm4hf")
-lifetime = 0.6
+lifetime = 3.0
 randomness = 1.0
 lifetime_randomness = 0.6
 emission_shape = 1
-emission_sphere_radius = 2.5
+emission_sphere_radius = 32.0
 direction = Vector2(0, 0)
 spread = 180.0
 gravity = Vector2(0, 0)
 initial_velocity_min = 15.0
 initial_velocity_max = 20.0
-scale_amount_min = 0.04
-scale_amount_max = 0.08
+angular_velocity_min = 0.1
+angular_velocity_max = 0.1
+radial_accel_max = 0.3
+radial_accel_curve = SubResource("Curve_gk6yd")
+scale_amount_min = 0.1
+scale_amount_max = 0.1
+color = Color(1, 1, 0, 1)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ls0o0fycav6i"]
+[gd_scene load_steps=14 format=3 uid="uid://ls0o0fycav6i"]
 
 [ext_resource type="Script" uid="uid://b56kbrqcs5g53" path="res://player/player.gd" id="1_08wn2"]
 [ext_resource type="Texture2D" uid="uid://dgiy2joykr4h2" path="res://assets/char/main/WizardCharAnim(BackWalk) _0001.png" id="2_vffo5"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bglpmpe12w3u5" path="res://assets/char/main/WizardCharAnim(FrontWalk) _0002.png" id="5_ruho7"]
 [ext_resource type="Texture2D" uid="uid://b487si87xotpj" path="res://assets/char/main/WizardCharAnim(SideWalk) _0001.png" id="6_hnmhd"]
 [ext_resource type="Texture2D" uid="uid://ceh8qkcpxhnbq" path="res://assets/char/main/WizardCharAnim(SideWalk) _0002.png" id="7_wnera"]
+[ext_resource type="Texture2D" uid="uid://d3k3u3eer2e34" path="res://assets/Particles/shape_star_3.png" id="8_rgyib"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_y1xfu"]
 animations = [{
@@ -78,11 +79,14 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ls8ch"]
 size = Vector2(39, 41)
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_d65h5"]
+[sub_resource type="Curve" id="Curve_rgyib"]
+_limits = [-500.0, 500.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.367816, 437.299), 0.0, 0.0, 0, 0, Vector2(0.701149, -450.965), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
 
 [sub_resource type="Curve" id="Curve_urea7"]
-_data = [Vector2(0.0280899, 0.120879), 0.0, 0.0, 0, 0, Vector2(0.252809, 0.681319), -7.04176, -7.04176, 0, 0, Vector2(0.887641, 1), 0.0, 0.0, 0, 0]
-point_count = 3
+_data = [Vector2(0.0280899, 0.120879), 0.0, 0.0, 0, 0, Vector2(0.203065, 1), -7.04176, -7.04176, 0, 0, Vector2(0.356322, 0.602894), 0.0, 0.0, 0, 0, Vector2(0.808429, 1), 0.0, 0.0, 0, 0, Vector2(0.977012, 0), 0.0, 0.0, 0, 0]
+point_count = 5
 
 [sub_resource type="Curve" id="Curve_jo8bk"]
 _limits = [-1.0, 1.0, 0.0, 1.0]
@@ -109,37 +113,43 @@ collision_mask = 6
 target_position = Vector2(0, 146)
 collision_mask = 6
 
-[node name="MagicParticlePush" type="CPUParticles2D" parent="."]
-emitting = false
-amount = 25
-texture = SubResource("CanvasTexture_d65h5")
-one_shot = true
-preprocess = 0.2
-explosiveness = 1.0
-randomness = 0.4
-lifetime_randomness = 0.6
-emission_shape = 3
-emission_rect_extents = Vector2(20, 32)
-gravity = Vector2(0, 0)
-initial_velocity_min = 1.0
-initial_velocity_max = 1.0
-radial_accel_min = -2.0
-radial_accel_max = 2.0
-scale_amount_max = 3.0
-scale_amount_curve = SubResource("Curve_urea7")
-color = Color(0.301961, 0.537255, 1, 1)
-hue_variation_max = 0.8
-hue_variation_curve = SubResource("Curve_jo8bk")
-
 [node name="MagicParticlePull" type="CPUParticles2D" parent="."]
 emitting = false
 amount = 25
-texture = SubResource("CanvasTexture_d65h5")
+texture = ExtResource("8_rgyib")
+lifetime = 0.6
 one_shot = true
 preprocess = 0.2
 explosiveness = 1.0
 randomness = 0.4
 lifetime_randomness = 0.6
+emission_shape = 1
+emission_sphere_radius = 32.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 1.0
+orbit_velocity_min = -1.0
+orbit_velocity_max = 1.0
+orbit_velocity_curve = SubResource("Curve_rgyib")
+radial_accel_min = -2.0
+radial_accel_max = 2.0
+scale_amount_min = 0.01
+scale_amount_max = 0.05
+scale_amount_curve = SubResource("Curve_urea7")
+color = Color(1, 1, 0, 1)
+hue_variation_max = 0.8
+hue_variation_curve = SubResource("Curve_jo8bk")
+
+[node name="MagicParticlePush" type="CPUParticles2D" parent="."]
+position = Vector2(0, 32)
+emitting = false
+amount = 25
+texture = ExtResource("8_rgyib")
+lifetime = 0.6
+one_shot = true
+preprocess = 0.2
+explosiveness = 1.0
+randomness = 0.4
+lifetime_randomness = 0.4
 emission_shape = 3
 emission_rect_extents = Vector2(20, 32)
 gravity = Vector2(0, 0)
@@ -147,8 +157,9 @@ initial_velocity_min = 1.0
 initial_velocity_max = 1.0
 radial_accel_min = -2.0
 radial_accel_max = 2.0
-scale_amount_max = 3.0
+scale_amount_min = 0.05
+scale_amount_max = 0.1
 scale_amount_curve = SubResource("Curve_urea7")
-color = Color(1, 1, 0, 1)
+color = Color(0.301961, 0.537255, 1, 1)
 hue_variation_max = 0.8
 hue_variation_curve = SubResource("Curve_jo8bk")
