@@ -1,12 +1,11 @@
 ~ tuto_1
+Mago: Usa el boton primario z o espacio para empujar.
+Mago: Luego atraviesa la puerta y pasa al siguiente nivel.
 ~ tuto_2
-Mago: Hola, ¿necesitas ayuda con este nivel?
-Mago: ¡Estoy aqui para ayudarte!
-- No entiendo la ecuación.
-	Mago: Tranquilo, solo tienes que recordar que x=1, o sea, que la incógnita "X" tiene como valor 1.
-	Mago: Suena sencillo, pero intenta conectar los bloques para obtener ese valor.
-- No entiendo el puzzle.
-	Mago: Solo debes completar la asignación "x=1" ¡Bienvenido al tutorial!
+Mago: Hola, ¿de nuevo me necesitas?
+Mago: Usa el boton secundario, x para arrastrar bloques.
+Mago: Empuja el bloque y completa la ecuacion.
+Mago: ¿Necesitas algo mas?
 - No entiendo los bloques.
 	Mago: Tranquilo, sé que es difícil al principio. Intenta empujar tanto los operadores como números e incógnitas con la tecla "Espacio".
 	Mago: ¿Quiéres un repaso de los tipos de bloques?
@@ -19,10 +18,6 @@ Mago: ¡Estoy aqui para ayudarte!
 		Mago: Los bloques numéricos simplemente representan un numero del 1-9, con los cuales puedes operar para obtener un valor.
 	- Ya entendí.
 		=> END
-- No entiendo por qué no se encadenan mis bloques.
-	Mago: Te repasaré las reglas de encadenación. Tienes que siempre seguir la estructura incógnita = valor.
-	Mago: El valor se puede componer de varios números siendo operados. No se puede tener solamente un número y operación.
-	Mago: Y la incógnita no debe tener ni números ni operadores a su lado.
 - No pasa nada, entiendo todo.
 	Mago: Perfecto!
 
@@ -33,12 +28,20 @@ Mago: ¡Estoy aqui para ayudarte!
 ~ level_1
 Mago: Hola, ¿necesitas ayuda con este nivel?
 Mago: ¡Estoy aqui para ayudarte!
-- No entiendo la ecuación.
-	Mago: ¡No te preocupes! Empecemos despejando la ecuación 12=x+5 de la puerta.
-	Mago: Queremos saber qué número es "X", por lo que podemos restar 5 en ambos lados para dejar la incógnita sola y revelar el valor 7=x.
-	Mago: ¡Intenta conectar los bloques para obtener ese valor!
-- No entiendo el puzzle.
-	Mago: ¡El operador "+" está atrapado! Navega con cuidado por alrededor y una vez lo liberes el nivel estárá casi listo.
+- ¡Tengo problemas matematicos!
+	- ¿Como se resuelve una ecuacion?
+		Mago: Una ecuacion consiste en mantener una igualdad.
+		Mago: Si de un lado hay un numero sumando, puedes restar y obtener un resultado.
+		Mago: Por ejemplo la ecuacion x-2=1 puedes sumar a ambos lados x-2+2=1+2
+		Mago: Y como resultado obtendremos x=3 de esta manera mantenemos la igualdad..
+		Mago: mientras obtenemos el valor desconocido de x.
+		Mago: Tambien puedes hacer lo mismo cuando un numero esta multiplicando
+		Mago: Si tengo 2x=6 puedo dividir por 2[wait=0.2] 2x/2 = 6/2[wait=0.2] -> x=6/2[wait=0.2] -> x=2
+		Mago: Espero que se haya entendido, prueba practicando con este nivel.
+	- No entiendo la ecuación.
+		Mago: ¡No te preocupes! Empecemos despejando la ecuación 12=x+5 de la puerta.
+		Mago: Queremos saber qué número es "X", por lo que podemos restar 5 en ambos lados para dejar la incógnita sola y revelar el valor 7=x.
+		Mago: ¡Intenta conectar los bloques para obtener ese valor!
 - No entiendo los bloques.
 	Mago: Tranquilo, sé que es difícil al principio. Intenta empujar tanto los operadores como números e incógnitas con la tecla "Espacio".
 	Mago: ¿Quiéres un repaso de los tipos de bloques?
@@ -63,14 +66,24 @@ Mago: ¡Estoy aqui para ayudarte!
 ~ level_2
 Mago: Hola, ¿necesitas ayuda con este nivel?
 Mago: ¡Estoy aqui para ayudarte!
-- No entiendo la ecuación.
-	Mago: ¿Cuál?
-	- La ecuación de la barrera "17=y+8".
-		Mago: Queremos saber qué número es "Y", por lo que podemos restar 8 en ambos lados para dejar la incógnita sola y revelar el valor 9=y.
-		Mago: ¡Intenta conectar los bloques para obtener ese valor!
-	- La ecuación de la puerta "y+7=19".
-		Mago: Queremos saber qué número es "Y", por lo que podemos restar 7 en ambos lados para dejar la incógnita sola y revelar el valor y=12.
-		Mago: ¡Intenta conectar los bloques para obtener ese valor!
+- ¡Tengo problemas matematicos!
+	- ¿Como se resuelve una ecuacion?
+		Mago: Una ecuacion consiste en mantener una igualdad.
+		Mago: Si de un lado hay un numero sumando, puedes restar y obtener un resultado.
+		Mago: Por ejemplo la ecuacion x-2=1 puedes sumar a ambos lados x-2+2=1+2
+		Mago: Y como resultado obtendremos x=3 de esta manera mantenemos la igualdad..
+		Mago: mientras obtenemos el valor desconocido de x.
+		Mago: Tambien puedes hacer lo mismo cuando un numero esta multiplicando
+		Mago: Si tengo 2x=6 puedo dividir por 2[wait=0.2] 2x/2 = 6/2[wait=0.2] -> x=6/2[wait=0.2] -> x=2
+		Mago: Espero que se haya entendido, prueba practicando con este nivel.
+	- No entiendo la ecuación.
+		Mago: ¿Cuál?
+		- La ecuación de la barrera "17=y+8".
+			Mago: Queremos saber qué número es "Y", por lo que podemos restar 8 en ambos lados para dejar la incógnita sola y revelar el valor 9=y.
+			Mago: ¡Intenta conectar los bloques para obtener ese valor!
+		- La ecuación de la puerta "y+7=19".
+			Mago: Queremos saber qué número es "Y", por lo que podemos restar 7 en ambos lados para dejar la incógnita sola y revelar el valor y=12.
+			Mago: ¡Intenta conectar los bloques para obtener ese valor!
 - No entiendo el puzzle.
 	Mago: ¡Hay algo detrás de la barrera!
 	Mago: Como puedes ver, no es posible abrir la puerta sin el bloque que se encuentra detrás de la barrera.
@@ -100,8 +113,13 @@ Mago: ¡Estoy aqui para ayudarte!
 => END
 
 ~ level_3
-Mago: Hola, ¿necesitas ayuda con este nivel?
+Mago: ¿Problemas con la magia negra?
 Mago: ¡Estoy aqui para ayudarte!
+Mago: Recuerda que un numero puede ser negativo si restas un numero mayor.
+Mago: Por ejemplo si me compro una escoba y tengo 3 wizardolars.
+Mago: Pero la escoba cuesta 5 wizardolars.
+Mago: Al comprarla le deberia 2 wizardolars a el [shake rate=20 level=10]wizardvendedor[/shake].
+Mago: Entonces tendria -2 wizardolars.
 - No entiendo la ecuación.
 	Mago: ¿Cuál?
 	- La ecuación de la barrera "4x-2=-6".
@@ -112,29 +130,31 @@ Mago: ¡Estoy aqui para ayudarte!
 		Mago: Queremos saber qué número es "X", por lo que podemos restar 5 en ambos lados para dejar la incógnita sola y quedar con 12=2x.
 		Mago: Una vez tenemos 12=2x, lo último que queda es dividir ambos lados con el número 2 que acompaña a la incógnita, y revelar el valor 6=x. 
 		Mago: ¡Intenta conectar los bloques para obtener ese valor!
-- No entiendo el puzzle.
-	Mago: ¡Hay algo detrás de la barrera!
-	Mago: Como puedes ver, no es posible abrir la puerta sin el bloque que se encuentra detrás de la barrera.
-	Mago: Completa la asignación de la barrera para pasar a través de ella y liberar el bloque atrapado.
-- No entiendo los bloques.
-	Mago: Tranquilo, sé que es difícil al principio. Intenta empujar tanto los operadores como números e incógnitas con la tecla "Espacio".
-	Mago: ¿Quiéres un repaso de los tipos de bloques?
-	- ¿Qué era la incógnita?
-		Mago: Tanto los bloques X, Y y Z son incognitas, que al ser asignadas correctamente te dejan avanzar de habitación.
-		Mago: Recuerda que estos bloques se pueden mover, y deben quedar de la forma x="valor".
-	- ¿Qué es un operador?
-		Mago: Los operadores son del tipo +, -, *, %. Estos bloques siempre son blancos y sirven para juntar números.
-	- ¿Qué son los números?
-		Mago: Los bloques numéricos simplemente representan un numero del 1-9, con los cuales puedes operar para obtener un valor.
+- No entiendo el juego.
+	- No entiendo los bloques.
+		Mago: Tranquilo, sé que es difícil al principio. Intenta empujar tanto los operadores como números e incógnitas con la tecla "Espacio".
+		Mago: ¿Quiéres un repaso de los tipos de bloques?
+		- ¿Qué era la incógnita?
+			Mago: Tanto los bloques X, Y y Z son incognitas, que al ser asignadas correctamente te dejan avanzar de habitación.
+			Mago: Recuerda que estos bloques se pueden mover, y deben quedar de la forma x="valor".
+		- ¿Qué es un operador?
+			Mago: Los operadores son del tipo +, -, *, %. Estos bloques siempre son blancos y sirven para juntar números.
+		- ¿Qué son los números?
+			Mago: Los bloques numéricos simplemente representan un numero del 1-9, con los cuales puedes operar para obtener un valor.
+	- No entiendo el puzzle.
+		Mago: ¡Hay algo detrás de la barrera!
+		Mago: Como puedes ver, no es posible abrir la puerta sin el bloque que se encuentra detrás de la barrera.
+		Mago: Completa la asignación de la barrera para pasar a través de ella y liberar el bloque atrapado.
+
 	- Ya entendí.
 		=> END
-- No entiendo cómo funciona la barrera.
-	Mago: Tal como la puerta que te lleva a la siguiente habitación, esta barrera te pide resolver una ecuación para poder pasar a través de ella.
-	Mago: ¡Pero cuidado con quedarte atrapado! Una vez deshagas la solución esta volverá a hacerse sólida y no te dejará pasar.
-- No entiendo por qué no se encadenan mis bloques.
-	Mago: Te repasaré las reglas de encadenación. Tienes que siempre seguir la estructura incógnita = valor.
-	Mago: El valor se puede componer de varios números siendo operados. No se puede tener solamente un número y operación.
-	Mago: Y la incógnita no debe tener ni números ni operadores a su lado.
+	- No entiendo cómo funciona la barrera.
+		Mago: Tal como la puerta que te lleva a la siguiente habitación, esta barrera te pide resolver una ecuación para poder pasar a través de ella.
+		Mago: ¡Pero cuidado con quedarte atrapado! Una vez deshagas la solución esta volverá a hacerse sólida y no te dejará pasar.
+	- No entiendo por qué no se encadenan mis bloques.
+		Mago: Te repasaré las reglas de encadenación. Tienes que siempre seguir la estructura incógnita = valor.
+		Mago: El valor se puede componer de varios números siendo operados. No se puede tener solamente un número y operación.
+		Mago: Y la incógnita no debe tener ni números ni operadores a su lado.
 - No pasa nada, entiendo todo.
 	Mago: Perfecto!
 => END
@@ -156,29 +176,30 @@ Mago: ¡Estoy aqui para ayudarte!
 		Mago: Queremos saber qué número es "Y", por lo que podemos sumar 72 en ambos lados para dejar la incógnita sola y quedar con 24y=168.
 		Mago: Una vez tenemos 24y=168, lo último que queda es dividir ambos lados con el número 24 que acompaña a la incógnita, y revelar el valor y=7. 
 		Mago: ¡Intenta conectar los bloques para obtener ese valor!
-- No entiendo el puzzle.
-	Mago: Esta vez hay bloques atrapados detrás de más de una barrera.
-	Mago: Para poder sacar el bloque más lejano tendrás que mantener abiertas ambas barreras a la vez.
-	Mago: Completa ambas asignaciones de las barreras para liberar el bloque atrapado y abrir la puerta.
-- No entiendo los bloques.
-	Mago: Tranquilo, sé que es difícil al principio. Intenta empujar tanto los operadores como números e incógnitas con la tecla "Espacio".
-	Mago: ¿Quiéres un repaso de los tipos de bloques?
-	- ¿Qué era la incógnita?
-		Mago: Tanto los bloques X, Y y Z son incognitas, que al ser asignadas correctamente te dejan avanzar de habitación.
-		Mago: Recuerda que estos bloques se pueden mover, y deben quedar de la forma x="valor".
-	- ¿Qué es un operador?
-		Mago: Los operadores son del tipo +, -, *, %. Estos bloques siempre son blancos y sirven para juntar números.
-	- ¿Qué son los números?
-		Mago: Los bloques numéricos simplemente representan un numero del 1-9, con los cuales puedes operar para obtener un valor.
-	- Ya entendí.
-		=> END
-- No entiendo cómo funciona la barrera.
-	Mago: Tal como la puerta que te lleva a la siguiente habitación, esta barrera te pide resolver una ecuación para poder pasar a través de ella.
-	Mago: ¡Pero cuidado con quedarte atrapado! Una vez deshagas la solución esta volverá a hacerse sólida y no te dejará pasar.
-- No entiendo por qué no se encadenan mis bloques.
-	Mago: Te repasaré las reglas de encadenación. Tienes que siempre seguir la estructura incógnita = valor.
-	Mago: El valor se puede componer de varios números siendo operados. No se puede tener solamente un número y operación.
-	Mago: Y la incógnita no debe tener ni números ni operadores a su lado.
+- No entiendo el juego
+	- No entiendo el puzzle.
+		Mago: Esta vez hay bloques atrapados detrás de más de una barrera.
+		Mago: Para poder sacar el bloque más lejano tendrás que mantener abiertas ambas barreras a la vez.
+		Mago: Completa ambas asignaciones de las barreras para liberar el bloque atrapado y abrir la puerta.
+	- No entiendo los bloques.
+		Mago: Tranquilo, sé que es difícil al principio. Intenta empujar tanto los operadores como números e incógnitas con la tecla "Espacio".
+		Mago: ¿Quiéres un repaso de los tipos de bloques?
+		- ¿Qué era la incógnita?
+			Mago: Tanto los bloques X, Y y Z son incognitas, que al ser asignadas correctamente te dejan avanzar de habitación.
+			Mago: Recuerda que estos bloques se pueden mover, y deben quedar de la forma x="valor".
+		- ¿Qué es un operador?
+			Mago: Los operadores son del tipo +, -, *, %. Estos bloques siempre son blancos y sirven para juntar números.
+		- ¿Qué son los números?
+			Mago: Los bloques numéricos simplemente representan un numero del 1-9, con los cuales puedes operar para obtener un valor.
+		- Ya entendí.
+			=> END
+	- No entiendo cómo funciona la barrera.
+		Mago: Tal como la puerta que te lleva a la siguiente habitación, esta barrera te pide resolver una ecuación para poder pasar a través de ella.
+		Mago: ¡Pero cuidado con quedarte atrapado! Una vez deshagas la solución esta volverá a hacerse sólida y no te dejará pasar.
+	- No entiendo por qué no se encadenan mis bloques.
+		Mago: Te repasaré las reglas de encadenación. Tienes que siempre seguir la estructura incógnita = valor.
+		Mago: El valor se puede componer de varios números siendo operados. No se puede tener solamente un número y operación.
+		Mago: Y la incógnita no debe tener ni números ni operadores a su lado.
 - No pasa nada, entiendo todo.
 	Mago: Perfecto!
 
@@ -208,29 +229,30 @@ Mago: ¡Estoy aqui para ayudarte!
 		Mago: Una vez tenemos 3y-40=-13, seguimos con sumar 40 a ambos lados para dejar la incógnita sola y quedar con 3y=27.
 		Mago: Y por último queda dividir ambos lados de 3y=27 con el número 3 que acompaña a la incógnita, y revelar el valor y=9. 
 		Mago: ¡Intenta conectar los bloques para obtener ese valor!
-- No entiendo el puzzle.
-	Mago: Esta vez hay múltiples bloques detrás de múltiples barreras.
-	Mago: Vas a necesitar resolver cada barrera para liberar los bloques atrapados de a poco.
-	Mago: Además, pasar por la puerta requerirá abrir la última barrera y la puerta a la vez, ¡pero ten cuidado! solo hay un bloque de asignación "=" para ambas ecuaciones.
-- No entiendo los bloques.
-	Mago: Tranquilo, sé que es difícil al principio. Intenta empujar tanto los operadores como números e incógnitas con la tecla "Espacio".
-	Mago: ¿Quiéres un repaso de los tipos de bloques?
-	- ¿Qué era la incógnita?
-		Mago: Tanto los bloques X, Y y Z son incognitas, que al ser asignadas correctamente te dejan avanzar de habitación.
-		Mago: Recuerda que estos bloques se pueden mover, y deben quedar de la forma x="valor".
-	- ¿Qué es un operador?
-		Mago: Los operadores son del tipo +, -, *, %. Estos bloques siempre son blancos y sirven para juntar números.
-	- ¿Qué son los números?
-		Mago: Los bloques numéricos simplemente representan un numero del 1-9, con los cuales puedes operar para obtener un valor.
-	- Ya entendí.
+- No entiendo el juego
+	- No entiendo el puzzle.
+		Mago: Esta vez hay múltiples bloques detrás de múltiples barreras.
+		Mago: Vas a necesitar resolver cada barrera para liberar los bloques atrapados de a poco.
+		Mago: Además, pasar por la puerta requerirá abrir la última barrera y la puerta a la vez, ¡pero ten cuidado! solo hay un bloque de asignación "=" para ambas ecuaciones.
+	- No entiendo los bloques.
+		Mago: Tranquilo, sé que es difícil al principio. Intenta empujar tanto los operadores como números e incógnitas con la tecla "Espacio".
+		Mago: ¿Quiéres un repaso de los tipos de bloques?
+		- ¿Qué era la incógnita?
+			Mago: Tanto los bloques X, Y y Z son incognitas, que al ser asignadas correctamente te dejan avanzar de habitación.
+			Mago: Recuerda que estos bloques se pueden mover, y deben quedar de la forma x="valor".
+		- ¿Qué es un operador?
+			Mago: Los operadores son del tipo +, -, *, %. Estos bloques siempre son blancos y sirven para juntar números.
+		- ¿Qué son los números?
+			Mago: Los bloques numéricos simplemente representan un numero del 1-9, con los cuales puedes operar para obtener un valor.
+		- Ya entendí.
 		=> END
-- No entiendo cómo funciona la barrera.
-	Mago: Tal como la puerta que te lleva a la siguiente habitación, esta barrera te pide resolver una ecuación para poder pasar a través de ella.
-	Mago: ¡Pero cuidado con quedarte atrapado! Una vez deshagas la solución esta volverá a hacerse sólida y no te dejará pasar.
-- No entiendo por qué no se encadenan mis bloques.
-	Mago: Te repasaré las reglas de encadenación. Tienes que siempre seguir la estructura incógnita = valor.
-	Mago: El valor se puede componer de varios números siendo operados. No se puede tener solamente un número y operación.
-	Mago: Y la incógnita no debe tener ni números ni operadores a su lado.
+	- No entiendo cómo funciona la barrera.
+		Mago: Tal como la puerta que te lleva a la siguiente habitación, esta barrera te pide resolver una ecuación para poder pasar a través de ella.
+		Mago: ¡Pero cuidado con quedarte atrapado! Una vez deshagas la solución esta volverá a hacerse sólida y no te dejará pasar.
+	- No entiendo por qué no se encadenan mis bloques.
+		Mago: Te repasaré las reglas de encadenación. Tienes que siempre seguir la estructura incógnita = valor.
+		Mago: El valor se puede componer de varios números siendo operados. No se puede tener solamente un número y operación.
+		Mago: Y la incógnita no debe tener ni números ni operadores a su lado.
 - No pasa nada, entiendo todo.
 	Mago: Perfecto!
 
@@ -262,28 +284,29 @@ Mago: ¡Estoy aqui para ayudarte!
 		Mago: Una vez tenemos 5y-13=-38, seguimos con sumar 13 a ambos lados para dejar la incógnita sola y quedar con 5y=-25.
 		Mago: Y por último queda dividir ambos lados de 5y=-25 con el número 5 que acompaña a la incógnita, y revelar el valor y=-5. 
 		Mago: ¡Intenta conectar los bloques para obtener ese valor!
-- No entiendo el puzzle.
-	Mago: ¡La puerta se encuentra extra protegida!
-	Mago: Vas a necesitar resolver de forma simultánea las tres barreras y la puerta para poder salir de la habitación.
-- No entiendo los bloques.
-	Mago: Tranquilo, sé que es difícil al principio. Intenta empujar tanto los operadores como números e incógnitas con la tecla "Espacio".
-	Mago: ¿Quiéres un repaso de los tipos de bloques?
-	- ¿Qué era la incógnita?
-		Mago: Tanto los bloques X, Y y Z son incognitas, que al ser asignadas correctamente te dejan avanzar de habitación.
-		Mago: Recuerda que estos bloques se pueden mover, y deben quedar de la forma x="valor".
-	- ¿Qué es un operador?
-		Mago: Los operadores son del tipo +, -, *, %. Estos bloques siempre son blancos y sirven para juntar números.
-	- ¿Qué son los números?
-		Mago: Los bloques numéricos simplemente representan un numero del 1-9, con los cuales puedes operar para obtener un valor.
-	- Ya entendí.
-		=> END
-- No entiendo cómo funciona la barrera.
-	Mago: Tal como la puerta que te lleva a la siguiente habitación, esta barrera te pide resolver una ecuación para poder pasar a través de ella.
-	Mago: ¡Pero cuidado con quedarte atrapado! Una vez deshagas la solución esta volverá a hacerse sólida y no te dejará pasar.
-- No entiendo por qué no se encadenan mis bloques.
-	Mago: Te repasaré las reglas de encadenación. Tienes que siempre seguir la estructura incógnita = valor.
-	Mago: El valor se puede componer de varios números siendo operados. No se puede tener solamente un número y operación.
-	Mago: Y la incógnita no debe tener ni números ni operadores a su lado.
+- No entiendo el juego
+	- No entiendo el puzzle.
+		Mago: ¡La puerta se encuentra extra protegida!
+		Mago: Vas a necesitar resolver de forma simultánea las tres barreras y la puerta para poder salir de la habitación.
+	- No entiendo los bloques.
+		Mago: Tranquilo, sé que es difícil al principio. Intenta empujar tanto los operadores como números e incógnitas con la tecla "Espacio".
+		Mago: ¿Quiéres un repaso de los tipos de bloques?
+		- ¿Qué era la incógnita?
+			Mago: Tanto los bloques X, Y y Z son incognitas, que al ser asignadas correctamente te dejan avanzar de habitación.
+			Mago: Recuerda que estos bloques se pueden mover, y deben quedar de la forma x="valor".
+		- ¿Qué es un operador?
+			Mago: Los operadores son del tipo +, -, *, %. Estos bloques siempre son blancos y sirven para juntar números.
+		- ¿Qué son los números?
+			Mago: Los bloques numéricos simplemente representan un numero del 1-9, con los cuales puedes operar para obtener un valor.
+		- Ya entendí.
+			=> END
+	- No entiendo cómo funciona la barrera.
+		Mago: Tal como la puerta que te lleva a la siguiente habitación, esta barrera te pide resolver una ecuación para poder pasar a través de ella.
+		Mago: ¡Pero cuidado con quedarte atrapado! Una vez deshagas la solución esta volverá a hacerse sólida y no te dejará pasar.
+	- No entiendo por qué no se encadenan mis bloques.
+		Mago: Te repasaré las reglas de encadenación. Tienes que siempre seguir la estructura incógnita = valor.
+		Mago: El valor se puede componer de varios números siendo operados. No se puede tener solamente un número y operación.
+		Mago: Y la incógnita no debe tener ni números ni operadores a su lado.
 - No pasa nada, entiendo todo.
 	Mago: Perfecto!
 

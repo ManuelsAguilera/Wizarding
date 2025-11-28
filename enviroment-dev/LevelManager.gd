@@ -50,6 +50,13 @@ var equations_solved: int = 0
 
 var moves:int=0
 
+## Dialogos
+signal nivel_inicio()
+signal jugador_en_posicion(posicion: Vector2)
+signal primera_ecuacion_resuelta()
+signal nivel_completado()
+
+
 # ============================================================================
 # MÉTODOS DE INICIALIZACIÓN
 # ============================================================================
@@ -74,6 +81,14 @@ func _ready() -> void:
 	_apply_level_configuration()
 	_initialize_level_state()
 
+	Global.set_current_level_id(id)
+
+	# Esperar un frame para asegurar que todos los nodos hijos estén listos
+	await get_tree().process_frame
+	
+	# Ahora emitir la señal cuando todos los componentes estén configurados
+	nivel_inicio.emit()
+
 	#Esperar un tiempo para iniciar el timer
 	await get_tree().create_timer(0.5).timeout
 	timer.reset_timer()
@@ -81,6 +96,8 @@ func _ready() -> void:
 
 
 	Global.set_current_level_id(id)
+
+	nivel_inicio.emit()
 
 ## Obtiene referencias a todos los componentes necesarios
 func _setup_component_references() -> void:
@@ -178,10 +195,13 @@ func equation_found(equation: String) -> void:
 		return
 	
 	var is_correct: bool = eqManager.verify_equation(equation)
+	if is_correct:
+		primera_ecuacion_resuelta.emit()
 	
 	if debug_mode:
 			
 		if is_correct:
+			
 			print("LevelManager: Equation solved correctly! Total solved: ", equations_solved)
 
 		else:

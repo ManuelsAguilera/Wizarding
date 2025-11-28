@@ -1,13 +1,17 @@
 extends Control
 
 
-@onready var label: Label = $Label
-@onready var volver_menu_btn: Button = $VBoxContainer/VolverMenu
-@onready var siguiente_nivel_btn: Button = $VBoxContainer/SiguienteNivel
-@onready var estrellas: StarContainer = $CenterContainer/ResultContainer/Stars
+@onready var label: Label = $VBoxContainer/MarginContainer/Label
+
+@onready var volver_menu_btn: Button = $VBoxContainer/VBoxContainer/MarginContainer/VolverMenu
+@onready var clasificatoria_btn: Button = $VBoxContainer/VBoxContainer/MarginContainer3/Clasificatorias
+@onready var siguiente_nivel_btn: Button = $VBoxContainer/VBoxContainer/MarginContainer2/SiguienteNivel
+@onready var estrellas: StarContainer = $VBoxContainer/CenterContainer/ResultContainer/Stars
 # Añadidos: referencias a los labels para animarlos
-@onready var move_label: Label = $CenterContainer/ResultContainer/StatContainer/cantMovimientos
-@onready var time_label: Label = $CenterContainer/ResultContainer/StatContainer/cantTiempo
+@onready var move_label: Label = $VBoxContainer/CenterContainer/ResultContainer/StatContainer/cantMovimientos
+@onready var time_label: Label = $VBoxContainer/CenterContainer/ResultContainer/StatContainer/cantTiempo
+
+@onready var explicacion:Label = $VBoxContainer/CenterContainer/ResultContainer/Explicacion
 
 # Guardar colores originales para restaurar si es necesario
 var move_label_original_color: Color
@@ -17,9 +21,9 @@ var time_label_original_color: Color
 func _ready():
 	# Llegaste al final
 	if Global.level_index >= Global.game_controller.levels.size() - 1:
-		label.text = "¡Has completado Wizarding! Vuelve al menú principal"
+		label.text = "Felicidades, eres el wizarding\nAqui esta tu diploma"
 		siguiente_nivel_btn.visible = false
-		Global.update_level_index()
+		clasificatoria_btn.visible = true
 	else:
 		Global.update_level_index()
 
@@ -41,6 +45,7 @@ func _ready():
 		await animate_time(float(time), 0.5)
 		await animate_moves(int(moves), 0.8)
 
+		explicacion.visible = true
 		# **NUEVO FLUJO REFACTORIZADO**
 		# 1. Cargar nivel y calcular estrellas usando StarContainer
 		var stats_result = estrellas.load_and_show_level_stats(float(time), int(moves), level_id)
@@ -117,3 +122,7 @@ func animate_time(target_seconds: float, duration: float = 1.0) -> void:
 		time_label.text = format_time(current)
 		if i < steps:
 			await get_tree().create_timer(duration / steps).timeout
+
+
+func _on_clasificatorias_pressed() -> void:
+	Global.game_controller.change_gui_scene(Global.game_controller.menus["Leaderboard"])

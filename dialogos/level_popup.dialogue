@@ -1,0 +1,56 @@
+~ tuto_1_Bienvenida
+Mago: [speed=3] Hola bienvenido a Wizarding [wait=1]
+Mago: Este es un mundo donde las ecuaciones tienen magia
+Mago: Completa la ecuacion con tu boton primario (Z o espacio).
+Mago: Si tienes dudas presiona el boton de Ayuda.
+=> END
+
+~ tuto_1_eq
+Mago: ¡Lo lograste! Para avanzar camina hasta la puerta.
+=> END
+
+
+~ tuto_2_inicio
+Mago: Lograste superar el primer nivel.
+Mago: Este nivel tiene truco, usa tu boton secundario (x).
+Mago: Para sacar el bloque atrapado.
+=> END
+~ level_1_inicio
+Mago: Ya superaste el tutorial, desde ahora pideme ayuda con el boton ayuda.
+Mago: De vez en cuando te hablare para ayudarte.
+=> END
+
+~ level_2_inicio
+Mago: Observa esos bloques rojos.
+Mago: En el mundo de wizarding las ecuaciones son magicas.
+Mago: Si resuelves la ecuacion que aparece, seguro que algo ocurre.
+=> END
+~ level_2_tip
+Mago: ¡La barrera se abrio! [wait=0.2] Epico.
+=> END
+~ level_3_tip
+Mago: Parece que ya le agarraste la mano.
+Mago: ¿Pero que tanto sabes sobre la magia negra?
+Mago: [shake rate=20 level=10]Con eso quiero decir, negativa, magia negativa.[/shake]
+Mago: [shake rate=20 level=10]JAJAJAJAJA JA JA..[/shake] [wait=1] Perdon.
+Mago: Solo queria recordarte que una ecuacion puede tener un numero negativo.
+Mago: Y que los numeros negativos pueden obtenerse restando.
+=> END
+
+~ level_3_tip2
+Mago: Parece que entendiste mi chistesito [wait=0.5] jeje..
+Mago: Hay mas de una forma de obtener numeros negativos.
+Mago: Quizas te sirva probar otras formas.
+=> END
+~ level_4_non_pull
+Mago: Wow, me sorprendes, tienes mucha habilidad.
+Mago: Pero te encontraras con un nuevo desafio.
+Mago: Ese bloque Y, tiene un hechizo, y no podras arrastrarlo.
+Mago: Solo se puede empujar, no arrastrar
+Mago: Recuerda que las ecuaciones pueden hacerse vertical y horizontalmente.
+=> END
+~ level_6_inicio
+Mago: Lo lograste, llegaste al estrecho final..
+Mago: Pocos han logrado superar este nivel de magia.
+Mago: Si logras superar esto de verdad seras el [wait=0.1] [speed=0.2] Wizarding
+=> END
