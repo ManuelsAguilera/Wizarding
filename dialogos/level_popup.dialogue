@@ -1,7 +1,7 @@
 ~ tuto_1_Bienvenida
 Mago: [speed=3] Hola bienvenido a Wizarding [wait=1]
 Mago: Este es un mundo donde las ecuaciones tienen magia
-Mago: Acercate al bloque "=" y presiona tu boton primario ("Z" o "espacio").
+Mago: Acercate al bloque "=" y presiona tu boton primario ("Z" o "ESPACIO").
 Mago: Si tienes dudas presiona el boton de Ayuda.
 => END
 
@@ -17,7 +17,7 @@ Mago: Para avanzar al siguiente nivel camina hasta la puerta.
 
 ~ tuto_2_inicio
 Mago: Lograste superar el primer nivel.
-Mago: Este nivel tiene truco, acercate a un bloque y usa tu boton secundario (x).
+Mago: Este nivel tiene truco, acercate a un bloque y usa tu boton secundario ("C" o "V").
 Mago: Eso te permitira sacar el bloque atrapado.
 => END
 ~ level_1_inicio
@@ -57,5 +57,5 @@ Mago: Recuerda que las ecuaciones pueden hacerse vertical y horizontalmente.
 ~ level_6_inicio
 Mago: Lo lograste, llegaste al estrecho final..
 Mago: Pocos han logrado superar este nivel de magia.
-Mago: Si logras superar esto de verdad seras el [wait=0.1] [speed=0.2] Wizarding
+Mago: Si logras superar esto de verdad seras el [wait=0.1] [speed=0.2] [shake rate = 20 level 10] Wizarding [/shake]
 => END
