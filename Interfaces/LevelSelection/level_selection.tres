@@ -1,0 +1,46 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://c0f3og88kp7xb"]
+
+[ext_resource type="FontFile" uid="uid://cndg40t4c33k5" path="res://assets/font/alagard.ttf" id="1_pokos"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1fpav"]
+bg_color = Color(0.83, 0.70052, 0.6308, 0.792157)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.32549, 0.196078, 0.337255, 1)
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5f3bx"]
+bg_color = Color(0.762936, 0.609623, 0.521914, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 10
+border_color = Color(0.141176, 0.0745098, 0.14902, 1)
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+expand_margin_right = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_daxmp"]
+bg_color = Color(0.996078, 1, 0.85098, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 6
+border_color = Color(0.141176, 0.0745098, 0.14902, 1)
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+
+[resource]
+Button/colors/font_color = Color(0.141176, 0.0745098, 0.14902, 1)
+Button/colors/font_disabled_color = Color(0.324282, 0.197504, 0.339156, 1)
+Button/font_sizes/hover = 8
+Button/fonts/font = ExtResource("1_pokos")
+Button/styles/disabled = SubResource("StyleBoxFlat_1fpav")
+Button/styles/focus = null
+Button/styles/hover = SubResource("StyleBoxFlat_5f3bx")
+Button/styles/normal = SubResource("StyleBoxFlat_daxmp")

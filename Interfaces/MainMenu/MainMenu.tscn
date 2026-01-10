@@ -1,40 +1,21 @@
-[gd_scene load_steps=11 format=3 uid="uid://b6jjvsltw4pbb"]
+[gd_scene load_steps=7 format=3 uid="uid://b6jjvsltw4pbb"]
 
+[ext_resource type="Theme" uid="uid://cls00qus7lehp" path="res://Interfaces/Themes/main_theme.tres" id="1_hwh3k"]
 [ext_resource type="Script" uid="uid://b1uidrfcxruw" path="res://Interfaces/MainMenu/main_menu.gd" id="1_lit4x"]
-[ext_resource type="Shader" uid="uid://cm4n3eug76odr" path="res://Interfaces/MainMenu/MenuBackground.gdshader" id="2_e482f"]
 [ext_resource type="Script" uid="uid://dbf38xtgr2ygg" path="res://Interfaces/MainMenu/titleholder.gd" id="2_hwh3k"]
-[ext_resource type="Texture2D" uid="uid://drr1bd18wv1u4" path="res://assets/backgrounds/Dungeon_brick_wall_grey.png" id="3_hwh3k"]
-[ext_resource type="Script" uid="uid://bmv8b74uxv0gk" path="res://Interfaces/MainMenu/user.gd" id="4_e482f"]
-
-[sub_resource type="SystemFont" id="SystemFont_e482f"]
-font_names = PackedStringArray("Fantasy", "Sans-Serif")
-font_weight = 100
+[ext_resource type="FontFile" uid="uid://cdmrvqucu2u8u" path="res://assets/font/GCursive.ttf" id="4_n6npl"]
+[ext_resource type="PackedScene" uid="uid://dsjbp2tgx624k" path="res://bg_menu.tscn" id="5_hwh3k"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_hwh3k"]
-font = SubResource("SystemFont_e482f")
-font_size = 70
+line_spacing = 0.0
+font = ExtResource("4_n6npl")
+font_size = 120
+font_color = Color(0.996078, 1, 0.85098, 1)
 outline_size = 12
 outline_color = Color(0.45098, 0.156863, 0.619608, 1)
 shadow_size = 20
 shadow_color = Color(0.45098, 0.156863, 0.619608, 0.552941)
 shadow_offset = Vector2(-10, 10)
-
-[sub_resource type="SystemFont" id="SystemFont_mmgr3"]
-font_names = PackedStringArray("Fantasy", "Serif", "Cursive", "Arial")
-subpixel_positioning = 0
-
-[sub_resource type="LabelSettings" id="LabelSettings_e482f"]
-line_spacing = 5.0
-font = SubResource("SystemFont_mmgr3")
-font_size = 30
-outline_size = 4
-outline_color = Color(0.45098, 0.156863, 0.619608, 1)
-shadow_size = 5
-shadow_color = Color(0.501961, 0.231373, 0.654902, 0.721569)
-shadow_offset = Vector2(2, 2)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_iwfq2"]
-shader = ExtResource("2_e482f")
 
 [node name="MenuPrincipal" type="Control"]
 layout_mode = 3
@@ -43,21 +24,31 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_hwh3k")
 script = ExtResource("1_lit4x")
 
-[node name="Titleholder" type="Control" parent="."]
+[node name="TextureRect" parent="." instance=ExtResource("5_hwh3k")]
 layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="VSplitContainer" type="VSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -290.0
-offset_bottom = -73.0
+anchor_bottom = 1.0
+offset_top = 5.0
+offset_bottom = -75.0
 grow_horizontal = 2
 grow_vertical = 2
+split_offset = 280
+dragging_enabled = false
+
+[node name="Titleholder" type="Control" parent="VSplitContainer"]
+layout_mode = 2
 script = ExtResource("2_hwh3k")
 
-[node name="titlelabel" type="Label" parent="Titleholder"]
+[node name="titlelabel" type="Label" parent="VSplitContainer/Titleholder"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -74,171 +65,113 @@ theme_override_font_sizes/font_size = 70
 text = "Wizarding"
 label_settings = SubResource("LabelSettings_hwh3k")
 horizontal_alignment = 1
-autowrap_mode = 3
 
-[node name="displayname" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 31.0
-offset_right = -19.0
-offset_bottom = -11.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("4_e482f")
-
-[node name="username" type="Label" parent="displayname"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -65.0
-offset_right = 100.0
-grow_vertical = 0
-size_flags_horizontal = 3
-size_flags_vertical = 1
-size_flags_stretch_ratio = 3.0
-text = "jugador"
-label_settings = SubResource("LabelSettings_e482f")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="."]
-z_index = -4096
-texture_repeat = 2
-material = SubResource("ShaderMaterial_iwfq2")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -642.0
-offset_top = -214.0
-offset_right = 638.0
-offset_bottom = 226.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_hwh3k")
-
-[node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -52.5
-offset_top = -132.5
-offset_right = 52.5
-offset_bottom = 132.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="BotonesPrincipales" type="VBoxContainer" parent="CenterContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="VSplitContainer"]
 layout_mode = 2
-theme_override_constants/separation = 8
+
+[node name="BotonesPrincipales" type="VBoxContainer" parent="VSplitContainer/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
 alignment = 1
 
-[node name="Jugar" type="Button" parent="CenterContainer/BotonesPrincipales"]
+[node name="Jugar" type="Button" parent="VSplitContainer/CenterContainer/BotonesPrincipales"]
 layout_mode = 2
-text = "Nuevo juego"
+text = "Jugar
+"
 
-[node name="Continuar" type="Button" parent="CenterContainer/BotonesPrincipales"]
-layout_mode = 2
-text = "Continuar"
-
-[node name="Opciones" type="Button" parent="CenterContainer/BotonesPrincipales"]
+[node name="Opciones" type="Button" parent="VSplitContainer/CenterContainer/BotonesPrincipales"]
 layout_mode = 2
 text = "Opciones"
 
-[node name="Formulario" type="Button" parent="CenterContainer/BotonesPrincipales"]
+[node name="Formulario" type="Button" parent="VSplitContainer/CenterContainer/BotonesPrincipales"]
+visible = false
 layout_mode = 2
 text = "Formulario
 "
 
-[node name="Guardar" type="Button" parent="CenterContainer/BotonesPrincipales"]
+[node name="Guardar" type="Button" parent="VSplitContainer/CenterContainer/BotonesPrincipales"]
 visible = false
 layout_mode = 2
 text = "Guardar
 "
 
-[node name="Creditos" type="Button" parent="CenterContainer/BotonesPrincipales"]
+[node name="Creditos" type="Button" parent="VSplitContainer/CenterContainer/BotonesPrincipales"]
 layout_mode = 2
 text = "Creditos"
 
-[node name="Clasificatoria" type="Button" parent="CenterContainer/BotonesPrincipales"]
+[node name="Clasificatoria" type="Button" parent="VSplitContainer/CenterContainer/BotonesPrincipales"]
+visible = false
 layout_mode = 2
 text = "Clasificatoria"
 
-[node name="NivelTest" type="Button" parent="CenterContainer/BotonesPrincipales"]
+[node name="NivelTest" type="Button" parent="VSplitContainer/CenterContainer/BotonesPrincipales"]
 visible = false
 layout_mode = 2
 text = "NivelTest
 "
 
-[node name="Salir" type="Button" parent="CenterContainer/BotonesPrincipales"]
+[node name="Salir" type="Button" parent="VSplitContainer/CenterContainer/BotonesPrincipales"]
 layout_mode = 2
 text = "Salir"
 
-[node name="MenuOpciones" type="VBoxContainer" parent="CenterContainer"]
+[node name="MenuOpciones" type="VBoxContainer" parent="VSplitContainer/CenterContainer"]
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="PantallaCompleta" type="CheckBox" parent="CenterContainer/MenuOpciones"]
-layout_mode = 2
-text = "Pantalla completa"
-alignment = 1
-
-[node name="VolumenGeneral" type="HSlider" parent="CenterContainer/MenuOpciones"]
+[node name="VolumenGeneral" type="HSlider" parent="VSplitContainer/CenterContainer/MenuOpciones"]
 custom_minimum_size = Vector2(0, 65)
 layout_mode = 2
 max_value = 1.0
 step = 0.001
 
-[node name="Label" type="Label" parent="CenterContainer/MenuOpciones/VolumenGeneral"]
+[node name="Label" type="Label" parent="VSplitContainer/CenterContainer/MenuOpciones/VolumenGeneral"]
 layout_mode = 0
 offset_right = 168.0
 offset_bottom = 23.0
 text = "Volumen General"
 horizontal_alignment = 1
 
-[node name="VolumenMusica" type="HSlider" parent="CenterContainer/MenuOpciones"]
+[node name="VolumenMusica" type="HSlider" parent="VSplitContainer/CenterContainer/MenuOpciones"]
 custom_minimum_size = Vector2(0, 65)
 layout_mode = 2
 max_value = 1.0
 step = 0.001
 
-[node name="Label" type="Label" parent="CenterContainer/MenuOpciones/VolumenMusica"]
+[node name="Label" type="Label" parent="VSplitContainer/CenterContainer/MenuOpciones/VolumenMusica"]
 layout_mode = 0
 offset_right = 167.0
 offset_bottom = 23.0
 text = "Volumen Musica"
 horizontal_alignment = 1
 
-[node name="VolumenSFX" type="HSlider" parent="CenterContainer/MenuOpciones"]
+[node name="VolumenSFX" type="HSlider" parent="VSplitContainer/CenterContainer/MenuOpciones"]
 custom_minimum_size = Vector2(0, 65)
 layout_mode = 2
 max_value = 1.0
 step = 0.001
 
-[node name="Label" type="Label" parent="CenterContainer/MenuOpciones/VolumenSFX"]
+[node name="Label" type="Label" parent="VSplitContainer/CenterContainer/MenuOpciones/VolumenSFX"]
 layout_mode = 0
 offset_right = 169.0
 offset_bottom = 23.0
 text = "Volumen SFX"
 horizontal_alignment = 1
 
-[node name="Volver" type="Button" parent="CenterContainer/MenuOpciones"]
+[node name="PantallaCompleta" type="CheckBox" parent="VSplitContainer/CenterContainer/MenuOpciones"]
+layout_mode = 2
+text = "Pantalla completa"
+alignment = 1
+
+[node name="Volver" type="Button" parent="VSplitContainer/CenterContainer/MenuOpciones"]
 layout_mode = 2
 text = "Volver"
 
-[node name="MenuCreditos" type="VBoxContainer" parent="CenterContainer"]
+[node name="MenuCreditos" type="VBoxContainer" parent="VSplitContainer/CenterContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CenterContainer/MenuCreditos"]
+[node name="Label" type="Label" parent="VSplitContainer/CenterContainer/MenuCreditos"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Un juego desarrollado por genios:
@@ -252,22 +185,21 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Volver" type="Button" parent="CenterContainer/MenuCreditos"]
+[node name="Volver" type="Button" parent="VSplitContainer/CenterContainer/MenuCreditos"]
 layout_mode = 2
 text = "Volver"
 
-[connection signal="pressed" from="CenterContainer/BotonesPrincipales/Jugar" to="." method="_on_jugar_pressed"]
-[connection signal="pressed" from="CenterContainer/BotonesPrincipales/Continuar" to="." method="_on_continuar_pressed"]
-[connection signal="pressed" from="CenterContainer/BotonesPrincipales/Opciones" to="." method="_on_opciones_pressed"]
-[connection signal="pressed" from="CenterContainer/BotonesPrincipales/Formulario" to="." method="_on_formulario_pressed"]
-[connection signal="pressed" from="CenterContainer/BotonesPrincipales/Guardar" to="." method="_on_guardar_pressed"]
-[connection signal="pressed" from="CenterContainer/BotonesPrincipales/Creditos" to="." method="_on_creditos_pressed"]
-[connection signal="pressed" from="CenterContainer/BotonesPrincipales/Clasificatoria" to="." method="_on_clasificatoria_pressed"]
-[connection signal="pressed" from="CenterContainer/BotonesPrincipales/NivelTest" to="." method="_on_nivel_test_pressed"]
-[connection signal="pressed" from="CenterContainer/BotonesPrincipales/Salir" to="." method="_on_salir_pressed"]
-[connection signal="toggled" from="CenterContainer/MenuOpciones/PantallaCompleta" to="." method="_on_pantalla_completa_toggled"]
-[connection signal="value_changed" from="CenterContainer/MenuOpciones/VolumenGeneral" to="." method="_on_volumen_general_value_changed"]
-[connection signal="value_changed" from="CenterContainer/MenuOpciones/VolumenMusica" to="." method="_on_volumen_musica_value_changed"]
-[connection signal="value_changed" from="CenterContainer/MenuOpciones/VolumenSFX" to="." method="_on_volumen_sfx_value_changed"]
-[connection signal="pressed" from="CenterContainer/MenuOpciones/Volver" to="." method="_on_volver_pressed"]
-[connection signal="pressed" from="CenterContainer/MenuCreditos/Volver" to="." method="_on_volver_pressed"]
+[connection signal="pressed" from="VSplitContainer/CenterContainer/BotonesPrincipales/Jugar" to="." method="_on_jugar_pressed"]
+[connection signal="pressed" from="VSplitContainer/CenterContainer/BotonesPrincipales/Opciones" to="." method="_on_opciones_pressed"]
+[connection signal="pressed" from="VSplitContainer/CenterContainer/BotonesPrincipales/Formulario" to="." method="_on_formulario_pressed"]
+[connection signal="pressed" from="VSplitContainer/CenterContainer/BotonesPrincipales/Guardar" to="." method="_on_guardar_pressed"]
+[connection signal="pressed" from="VSplitContainer/CenterContainer/BotonesPrincipales/Creditos" to="." method="_on_creditos_pressed"]
+[connection signal="pressed" from="VSplitContainer/CenterContainer/BotonesPrincipales/Clasificatoria" to="." method="_on_clasificatoria_pressed"]
+[connection signal="pressed" from="VSplitContainer/CenterContainer/BotonesPrincipales/NivelTest" to="." method="_on_nivel_test_pressed"]
+[connection signal="pressed" from="VSplitContainer/CenterContainer/BotonesPrincipales/Salir" to="." method="_on_salir_pressed"]
+[connection signal="value_changed" from="VSplitContainer/CenterContainer/MenuOpciones/VolumenGeneral" to="." method="_on_volumen_general_value_changed"]
+[connection signal="value_changed" from="VSplitContainer/CenterContainer/MenuOpciones/VolumenMusica" to="." method="_on_volumen_musica_value_changed"]
+[connection signal="value_changed" from="VSplitContainer/CenterContainer/MenuOpciones/VolumenSFX" to="." method="_on_volumen_sfx_value_changed"]
+[connection signal="toggled" from="VSplitContainer/CenterContainer/MenuOpciones/PantallaCompleta" to="." method="_on_pantalla_completa_toggled"]
+[connection signal="pressed" from="VSplitContainer/CenterContainer/MenuOpciones/Volver" to="." method="_on_volver_pressed"]
+[connection signal="pressed" from="VSplitContainer/CenterContainer/MenuCreditos/Volver" to="." method="_on_volver_pressed"]

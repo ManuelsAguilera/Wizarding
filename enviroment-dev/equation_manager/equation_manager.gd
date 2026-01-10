@@ -34,8 +34,7 @@ func _collect_equation_blocks() -> void:
 ## Verifica si una ecuación encontrada corresponde a alguna solución del nivel
 ## Llamado por LevelManager cuando BlockManager encuentra una ecuación válida
 func verify_equation(equation: String) -> bool:
-	print("EquationManager: Verifying equation: ", equation)
-	
+
 	var any_solution_found: bool = false
 	
 	# Revisar cada bloque EquationBlock
@@ -50,12 +49,8 @@ func verify_equation(equation: String) -> bool:
 		solution.triggerEvents(is_solved)
 		
 		if is_solved:
-			print("EquationManager: Correct solution found for equation: ", equation)
 			any_solution_found = true
 			# No hacer break - permitir que múltiples ecuaciones se resuelvan
-	
-	if not any_solution_found:
-		print("EquationManager: No correct solution found for equation: ", equation)
 	
 	return any_solution_found
 
@@ -83,8 +78,6 @@ func compare_solutions(eq_found: String, solution: EquationBlock) -> bool:
 	
 	#Filtrar si el signo inicial es positivo
 
-	print("dsfsdfsdfAAAA  ",right_side)
-
 	
 	if right_side[0] == "+":
 		right_side = right_side.substr(1)
@@ -103,10 +96,6 @@ func compare_solutions(eq_found: String, solution: EquationBlock) -> bool:
 	const EPSILON: float = 0.0001
 	var is_equal: bool = abs(result_float - expected_solution) < EPSILON
 	
-	if is_equal:
-		print("EquationManager: Match found - Variable: ", equation_variable, 
-			  ", Calculated: ", result_float, ", Expected: ", expected_solution)
-	
 	return is_equal
 
 # ============================================================================
@@ -121,13 +110,13 @@ func calculate_from_string(equation: String) -> Variant:
 	# Intentar parsear la expresión
 	var parse_error: int = expr.parse(equation)
 	if parse_error != OK:
-		print("EquationManager: Parse error in equation: ", equation, " - Error: ", parse_error)
+		printerr("EquationManager: Parse error in equation: ", equation, " - Error: ", parse_error)
 		return null
 	
 	# Ejecutar la expresión
 	var result: Variant = expr.execute()
 	if expr.has_execute_failed():
-		print("EquationManager: Execution error in equation: ", equation)
+		printerr("EquationManager: Execution error in equation: ", equation)
 		return null
 	
 	return result

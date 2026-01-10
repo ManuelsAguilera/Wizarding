@@ -2,6 +2,13 @@ extends Control
 
 
 const TEST_DIALOG:DialogueResource = preload("res://dialogos/levels_help.dialogue")
+@onready var pause_btn:Button = $AspectContainer/MarginContainer/GridContainer/Pausa
+@onready var menu_buttons:VBoxContainer =$AspectContainer/BotonesNivel
+@onready var bg:Panel = $AspectContainer/BG
+
+
+var paused = false
+
 
 func _ready():
 
@@ -45,3 +52,11 @@ func _on_last_level_pressed() -> void:
 func _on_help_test_pressed() -> void:
 
 	Global.invoke_dialog(TEST_DIALOG,Global.current_level_id)
+
+
+func _on_pause_pressed() -> void:
+	#Toggle pause state
+	paused = not paused
+	#Change visibility of background
+	bg.visible = paused
+	menu_buttons.visible = paused

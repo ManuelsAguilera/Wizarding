@@ -14,12 +14,27 @@ var levels:Array = [
 	"res://Levels/lvl6.tscn"
 ]
 
+var levels_by_name: Dictionary = {
+    "tuto_1": 0,
+    "tuto_2": 1,
+    "level_1": 2,
+    "level_2": 3,
+    "level_3": 4,
+    "level_4": 5,
+    "level_5": 6,
+    "level_6": 7,
+    "test": -1,
+	"":-1
+}
+
+
 var menus:Dictionary = {
 	"MainMenu":"res://Interfaces/MainMenu/MainMenu.tscn",
 	"GameUI":"res://Interfaces/GameUI/GameUI.tscn",
 	"LevelCompleted":"res://Interfaces/LevelCompleted/LevelCompletedScreen.tscn",
 	"Form":"res://Interfaces/FormUI/form_ui.tscn",
-	"Leaderboard":"res://Interfaces/LeaderBoard/Leaderboard.tscn"
+	"Leaderboard":"res://Interfaces/LeaderBoard/Leaderboard.tscn",
+	"LevelSelection":"res://Interfaces/LevelSelection/LevelSelection.tscn"
 }
 
 

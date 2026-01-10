@@ -1,10 +1,11 @@
 extends Node
 
 # Referencias a controladores
-var game_controller:GameController
+var game_controller: GameController
 
 # Variables de control de nivel
 var level_index: int = 0
+var max_level: int = 0
 var last_level: String = ""
 var current_level_id: String = ""
 
@@ -20,9 +21,9 @@ const MIN_AGE: int = 0
 const MAX_AGE: int = 150
 
 #Conexion con base de datos remota
-
+const remote_saving = false
 const SupabaseLoader = preload("res://supabase_connection/supabase.tscn")
-@export var supabase:Supabase = null
+@export var supabase: Supabase = null
 
 # Mapas temporales para relacionar data remota
 var _persona_by_id: Dictionary = {}
@@ -40,10 +41,8 @@ signal user_registered(success: bool, message: String)
 signal user_logged_in(success: bool, message: String)
 
 
-
 func _ready() -> void:
 	# Intentar cargar datos guardados de todos los usuarios
-
 	if !check_data_file():
 		printerr("No hay datos, cargando usuario generico")
 
@@ -54,7 +53,8 @@ func _ready() -> void:
 						"email": GENERIC_USER,
 						"age": 0,
 						"creation_date": Time.get_datetime_string_from_system(),
-						"level_index": 0  
+						"level_index": 0,
+						"max_level": 0
 					},
 					"levels": {}
 				}
@@ -62,7 +62,7 @@ func _ready() -> void:
 	
 	level_data = users_data[GENERIC_USER]["levels"]
 
-	if SupabaseLoader:
+	if SupabaseLoader && remote_saving:
 		print("instanciando")
 		supabase = SupabaseLoader.instantiate()
 		add_child(supabase)
@@ -76,8 +76,7 @@ func _ready() -> void:
 ### Dialogos
 
 
-func invoke_dialog(DIALOG:DialogueResource,title:String=""):
-
+func invoke_dialog(DIALOG: DialogueResource, title: String = ""):
 	# Conectar la señal solo si no está ya conectada
 	if !DialogueManager.dialogue_ended.is_connected(disable_dialog_mode):
 		DialogueManager.dialogue_ended.connect(disable_dialog_mode)
@@ -86,37 +85,38 @@ func invoke_dialog(DIALOG:DialogueResource,title:String=""):
 	dialog_mode = true
 
 
-
-func disable_dialog_mode(DIALOG:DialogueResource):
+func disable_dialog_mode(DIALOG: DialogueResource):
 	#Desactivar el modo dialogo
-	dialog_mode=false
+	dialog_mode = false
 
-###
 
-func update_level_index(next:bool=true):
-
+func update_level_index(next: bool = true):
 	if next:
 		level_index += 1
 	else:
-		level_index -=1
+		level_index -= 1
 	
 	if level_index >= game_controller.levels.size() or level_index < 0:
 		level_index = 0
 	
+	if level_index > max_level:
+		max_level = level_index
+
 	# Guardamos el nuevo level_index
 	if users_data.has(current_user):
 		users_data[current_user]["info"]["level_index"] = level_index
 		save_data()
 
-func set_current_level_id(id:String):
-	current_level_id=id
 
-##
+func set_current_level_id(id: String):
+	current_level_id = id
+
+
 func toggle_dev():
-	dev_mode= !dev_mode
+	dev_mode = !dev_mode
 
 
-#Que el nivel guarde los datos de completar un nivel}
+#Que el nivel guarde los datos de completar un nivel
 
 ###############################################################
 ## Nuevo sistema para guardado y cargado
@@ -149,8 +149,6 @@ func login_user(email: String) -> Dictionary:
 		return {"success": false, "message": "Usuario no encontrado localmente y Supabase no disponible"}
 	
 		
-
-
 func register_user(email: String, name: String, age: int) -> Dictionary:
 	# Validar datos
 	if email.strip_edges().is_empty() or name.strip_edges().is_empty():
@@ -170,7 +168,8 @@ func register_user(email: String, name: String, age: int) -> Dictionary:
 			"email": email,
 			"age": age,
 			"creation_date": Time.get_datetime_string_from_system(),
-			"level_index": 0  # Añadimos level_index inicial
+			"level_index": 0,
+			"max_level": 0
 		},
 		"levels": {}
 	}
@@ -181,8 +180,7 @@ func register_user(email: String, name: String, age: int) -> Dictionary:
 	return {"success": true, "message": "Usuario registrado correctamente"}
 
 
-
-func set_user(email: String,persona_id:int) -> void:
+func set_user(email: String, persona_id: int) -> void:
 	if email.strip_edges().is_empty():
 		return
 	
@@ -191,7 +189,7 @@ func set_user(email: String,persona_id:int) -> void:
 	if users_data.has(current_user):
 		level_data = users_data[current_user]["levels"]
 		print("level_index:", users_data[current_user]["info"]["level_index"])
-		level_index = users_data[current_user]["info"]["level_index"] 
+		level_index = users_data[current_user]["info"]["level_index"]
 	else:
 		printerr("Intentando establecer un usuario que no existe: ", email)
 		notificar_no_existe_user()
@@ -210,7 +208,7 @@ func get_all_users() -> Array:
 	return users_data.keys()
 
 # Sistema de guardado de niveles
-func record_level_data(level: String, moves: int, time: float, level_name: String = "") -> void:
+func record_level_data(level: String, moves: int, time: float) -> void:
 	# Registra los datos del nivel en memoria; ahora guarda también level_name
 	if level_data == null:
 		level_data = {}
@@ -219,10 +217,12 @@ func record_level_data(level: String, moves: int, time: float, level_name: Strin
 		"id": level,
 		"moves": moves,
 		"time": time,
-		"level_name": level_name,
+		"level_name": level,
 		"completion_date": Time.get_datetime_string_from_system()
 	}
 	
+	print("LEVEL DATAAAAAAA ", level_data[level])
+
 	last_level = level
 	users_data[current_user]["levels"] = level_data
 
@@ -239,18 +239,35 @@ func save_data() -> void:
 	if save_game:
 		save_game.store_var(users_data)
 		save_game.close()
-		print("datos de usuario: ",users_data)
-		print("Datos de usuarios guardados correctamente")
 	else:
 		printerr("No se ha podido guardar los datos de usuarios")
 	
 	save_json()
 	# Opcional: sincronizar con supabase si está disponible
-	if supabase != null:
+	if supabase != null && remote_saving:
 		# Solo sincronizar el usuario actual
 		sync_user_to_supabase(current_user, true)
 
+
+func validate_data_structure() -> bool:
+	if !users_data.has(current_user):
+		printerr("Usuario actual no existe en users_data")
+		return false
+	
+	var info = users_data[current_user].get("info", {})
+	var required_keys = ["level_index", "max_level", "email"]
+	for key in required_keys:
+		if !info.has(key):
+			printerr("Falta clave: ", key)
+			return false
+	
+	print("Estructura válida ✓")
+	return true
+
+
 func check_data_file() -> bool:
+	if validate_data_structure():
+		return false
 	var file := FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
 	if file:
 		users_data = file.get_var()
@@ -259,18 +276,16 @@ func check_data_file() -> bool:
 		else:
 			level_data = {}
 		file.close()
-		print("Datos de usuarios cargados correctamente")
+		print_debug("Datos de usuarios cargados correctamente")
 		return true
 	else:
-		print("No se ha encontrado un archivo de guardado, se creará uno nuevo")
+		print_debug("No se ha encontrado un archivo de guardado, se creará uno nuevo")
 		return false
 
 
 ##############################################
 ## Integración con Supabase
 ##############################################
-
-
 
 
 func _on_supabase_response(tag: String, success: bool, data) -> void:
@@ -303,15 +318,13 @@ func _on_supabase_response(tag: String, success: bool, data) -> void:
 					printerr("No registramos estos usuarios porque da errores")
 					
 
-
 				# Asegurar que el usuario está activo
-				set_user(correo,pid.to_int())
+				set_user(correo, pid.to_int())
 				# Refrescar jugador y levels relacionados
 				if supabase != null:
 					supabase.get_jugador()
 					supabase.get_level()
 				user_logged_in.emit(true, "Usuario cargado y activado desde Supabase")
-				print("emited")
 		else:
 			printerr("No se encontró ninguna persona para el fragmento:", tag.replace("find_persona:", ""))
 		return
@@ -342,14 +355,13 @@ func _on_supabase_response(tag: String, success: bool, data) -> void:
 			_jugador_by_id.clear()
 			if data is Array:
 				for jugador in data:
-					var jid = str(jugador.get("id", ""))				
+					var jid = str(jugador.get("id", ""))
 					
 					_jugador_by_id[jid] = jugador
-					if current_persona_id == jugador.get("persona_id",0):
+					if current_persona_id == jugador.get("persona_id", 0):
 						current_jugador_id = jid.to_int()
-						level_index = jugador.get("level_index",0)
+						level_index = jugador.get("level_index", 0)
 						
-					
 					
 					# Relacionar con persona (persona_id -> correo)
 					var persona_id = str(jugador.get("persona_id", ""))
@@ -452,18 +464,13 @@ func sync_user_to_supabase(email: String, only_last: bool = true) -> void:
 			lids_to_sync = [last_level]
 		else:
 			print("[AVISO] sync_user_to_supabase: no hay ultimo nivel para sincronizar")
-			_sync_lock=false
+			_sync_lock = false
 			return
 	else:
 		lids_to_sync = user_levels.keys()
 
 	print("[AVISO] lids_to_sync:", lids_to_sync)
 	for lid in lids_to_sync:
-		# imprimir informacion de cada elemento en user level
-		print("#---------------#")
-		print("Level ID:", lid)
-		print("Level Data:", user_levels[lid])
-		print("#---------------#")
 		var lvl = user_levels[lid]
 		var level_payload := {}
 		# Mantener id numérico si es posible (convertir o eliminar si no es válido)
@@ -479,17 +486,13 @@ func sync_user_to_supabase(email: String, only_last: bool = true) -> void:
 		level_payload["level_name"] = lvl.get("id", "")
 		#Enviar fk de jugador
 		
-		print("[AVISO] Current user: ",current_user)
-		print("[AVISO] Current user id: ",current_jugador_id)
 		if current_jugador_id < 0:
 			level_payload["jugador_id"] = 0
 		else:
 			level_payload["jugador_id"] = current_jugador_id
-		# Debug: imprimir payload antes del upsert
-		print("DEBUG supabase.upsert_level payload:", level_payload)
+
 		# Llamada al upsert de level
 		supabase.upsert_level(level_payload)
-		print("[AVISO MOSTRAR LIDS_TO_SYNC] ",lids_to_sync)
 
 	_sync_lock = false
 func save_json() -> void:
@@ -574,9 +577,7 @@ func _format_time_for_supabase(val) -> String:
 	return "%02d:%02d:%02d%s" % [hours, minutes, secs, frac_str]
 
 
-
 func notificar_no_existe_user():
-	print("NOTIFICANDO")
 	var dialog = AcceptDialog.new()
 	dialog.dialog_text = "Hola y bienvenido a wizarding, si ves esto es porque completaste el pretest."
 	dialog.title = "Bienvenido Jugador"

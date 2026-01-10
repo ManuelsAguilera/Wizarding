@@ -3,7 +3,7 @@ Mago: Usa el boton primario z o espacio para empujar.
 Mago: Luego atraviesa la puerta y pasa al siguiente nivel.
 ~ tuto_2
 Mago: Hola, ¿de nuevo me necesitas?
-Mago: Usa el boton secundario, x para arrastrar bloques.
+Mago: Usa el boton secundario, z o v para arrastrar bloques.
 Mago: Empuja el bloque y completa la ecuacion.
 Mago: ¿Necesitas algo mas?
 - No entiendo los bloques.
@@ -118,7 +118,7 @@ Mago: ¡Estoy aqui para ayudarte!
 Mago: Recuerda que un numero puede ser negativo si restas un numero mayor.
 Mago: Por ejemplo si me compro una escoba y tengo 3 wizardolars.
 Mago: Pero la escoba cuesta 5 wizardolars.
-Mago: Al comprarla le deberia 2 wizardolars a el [shake rate=20 level=10]wizardvendedor[/shake].
+Mago: Al comprarla le deberia 2 wizardolars a el [shake rate=20 level=10]wizardvende 	dor[/shake].
 Mago: Entonces tendria -2 wizardolars.
 - No entiendo la ecuación.
 	Mago: ¿Cuál?

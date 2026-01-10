@@ -134,6 +134,9 @@ func _process(delta: float) -> void:
 	else:
 		if timer.is_paused:
 			timer.unpauseTimer()
+	
+	if Global.dev_mode && Input.is_action_just_pressed("pass"):
+		_force_level_complete()
 
 
 
@@ -232,13 +235,16 @@ func _complete_level() -> void:
 	
 	_on_level_complete()
 
+func _force_level_complete():
+	print("Forzando final de level")
+	_complete_level()
+
 ## Evento personalizable para cuando se completa el nivel
 func _on_level_complete() -> void:
 	
 	Global.game_controller.change_zoom(Vector2(1,1))
 	Global.game_controller.change_gui_scene(Global.game_controller.menus["LevelCompleted"])
 	Global.game_controller.hide_level()
-
 
 
 

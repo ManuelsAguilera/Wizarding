@@ -11,7 +11,7 @@ const shadow_speed: float = 1.5 # Velocidad de la animación
 func _ready():
 
 	if OS.get_name() == "Web":
-		title.label_settings.font_size=60
+		title.label_settings.font_size=80
 
 	# Asegurar que el título tenga configuraciones de fuente
 	if title.label_settings == null:

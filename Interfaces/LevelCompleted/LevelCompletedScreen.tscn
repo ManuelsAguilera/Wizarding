@@ -1,13 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://hpfo8i8j8f2"]
+[gd_scene load_steps=7 format=3 uid="uid://hpfo8i8j8f2"]
 
 [ext_resource type="Script" uid="uid://cpsyfnuf8gvhk" path="res://Interfaces/LevelCompleted/level_completed_screen.gd" id="1_6pme7"]
-[ext_resource type="Shader" uid="uid://2ip1onjiwtri" path="res://Interfaces/LevelCompleted/LevelCompletedScreen.gdshader" id="2_q1cuu"]
-[ext_resource type="Texture2D" uid="uid://drr1bd18wv1u4" path="res://assets/backgrounds/Dungeon_brick_wall_grey.png" id="3_qq52e"]
+[ext_resource type="Theme" uid="uid://cls00qus7lehp" path="res://Interfaces/Themes/main_theme.tres" id="1_qq52e"]
+[ext_resource type="PackedScene" uid="uid://dsjbp2tgx624k" path="res://bg_menu.tscn" id="3_v8875"]
 [ext_resource type="PackedScene" uid="uid://tiwwfxxv34ao" path="res://Interfaces/stars/star_container.tscn" id="4_q1cuu"]
 [ext_resource type="Texture2D" uid="uid://dvlm63mp564g" path="res://assets/Certificado.png" id="5_qq52e"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ebigs"]
-shader = ExtResource("2_q1cuu")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v8875"]
 texture = ExtResource("5_qq52e")
@@ -19,18 +16,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_qq52e")
 script = ExtResource("1_6pme7")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-texture_repeat = 2
-material = SubResource("ShaderMaterial_ebigs")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_qq52e")
+[node name="TextureRect" parent="." instance=ExtResource("3_v8875")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 1280.0
+offset_bottom = 440.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -95,13 +94,12 @@ vertical_alignment = 1
 [node name="Stars" parent="VBoxContainer/CenterContainer/ResultContainer" instance=ExtResource("4_q1cuu")]
 layout_mode = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+[node name="Diploma" type="MarginContainer" parent="VBoxContainer"]
 visible = false
 layout_mode = 2
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_bottom = 32
+theme_override_constants/margin_bottom = 16
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/MarginContainer2"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/Diploma"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 size_flags_horizontal = 4

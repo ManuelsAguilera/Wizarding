@@ -7,6 +7,7 @@ extends Control
 @onready var clasificatoria_btn: Button = $VBoxContainer/VBoxContainer/MarginContainer3/Clasificatorias
 @onready var siguiente_nivel_btn: Button = $VBoxContainer/VBoxContainer/MarginContainer2/SiguienteNivel
 @onready var estrellas: StarContainer = $VBoxContainer/CenterContainer/ResultContainer/Stars
+@onready var diploma:MarginContainer = $VBoxContainer/Diploma
 # Añadidos: referencias a los labels para animarlos
 @onready var move_label: Label = $VBoxContainer/CenterContainer/ResultContainer/StatContainer/cantMovimientos
 @onready var time_label: Label = $VBoxContainer/CenterContainer/ResultContainer/StatContainer/cantTiempo
@@ -22,8 +23,9 @@ func _ready():
 	# Llegaste al final
 	if Global.level_index >= Global.game_controller.levels.size() - 1:
 		label.text = "Felicidades, eres el wizarding\nAqui esta tu diploma"
+		diploma.visible = true
 		siguiente_nivel_btn.visible = false
-		clasificatoria_btn.visible = true
+		
 	else:
 		Global.update_level_index()
 

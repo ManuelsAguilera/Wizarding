@@ -1,0 +1,58 @@
+[gd_scene load_steps=5 format=3 uid="uid://nja8bm51ar4s"]
+
+[ext_resource type="Theme" uid="uid://c0f3og88kp7xb" path="res://Interfaces/LevelSelection/level_selection.tres" id="1_2vq5m"]
+[ext_resource type="Script" uid="uid://dtm0128ins6kn" path="res://Interfaces/LevelSelection/level_selector.gd" id="2_7j4un"]
+[ext_resource type="PackedScene" uid="uid://tiwwfxxv34ao" path="res://Interfaces/stars/star_container.tscn" id="2_iodql"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7j4un"]
+bg_color = Color(0, 0, 0, 0.223529)
+expand_margin_left = 8.0
+expand_margin_right = 8.0
+shadow_color = Color(0.45098, 0.156863, 0.619608, 0.552941)
+shadow_size = 2
+
+[node name="LevelSelector" type="Control"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+theme = ExtResource("1_2vq5m")
+script = ExtResource("2_7j4un")
+level_name = "test"
+level_label = "test"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(64, 80)
+layout_mode = 2
+offset_right = 48.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_7j4un")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_right = 6
+
+[node name="VSplitContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Button" type="Button" parent="PanelContainer/MarginContainer/VSplitContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_vertical = 4
+text = "1
+"
+
+[node name="Stars" parent="PanelContainer/MarginContainer/VSplitContainer" instance=ExtResource("2_iodql")]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+size_flags_vertical = 4
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VSplitContainer/Button" to="." method="_on_button_pressed"]
