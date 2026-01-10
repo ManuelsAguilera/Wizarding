@@ -47,22 +47,18 @@ func getZoom() -> Vector2:
 
 # Función llamada cuando el jugador llega a una posición específica
 func _on_jugador_en_posicion(posicion: Vector2):
-    """Maneja el evento cuando el jugador llega a una posición específica"""
     if mostrar_dialogo_jugador_en_posicion and not dialogo_posicion_mostrado:
         mostrar_dialogo(titulo_dialogo_posicion)
         dialogo_posicion_mostrado = true
 
 # Función llamada cuando se resuelve la primera ecuación
 func _on_primera_ecuacion_resuelta():
-    """Maneja el evento cuando se resuelve la primera ecuación del nivel"""
     if mostrar_dialogo_primera_ecuacion_resuelta and not dialogo_primera_ecuacion_mostrado:
         mostrar_dialogo(titulo_dialogo_primera_ecuacion)
         dialogo_primera_ecuacion_mostrado = true
 
 # Función llamada cuando se inicia el nivel
 func _on_nivel_inicio():
-    print("LLAMDO NIVEL INICIO")
-    """Maneja el evento cuando se completa el nivel"""
     if mostrar_dialogo_nivel_inicio and not dialogo_nivel_inicio_mostrado:
         mostrar_dialogo(titulo_dialogo_nivel_inicio)
         dialogo_nivel_inicio_mostrado = true
@@ -71,16 +67,12 @@ func _on_nivel_inicio():
 
 # Función llamada cuando se completa el nivel
 func _on_nivel_completado():
-    """Maneja el evento cuando se completa el nivel"""
     if mostrar_dialogo_nivel_completado and not dialogo_nivel_completado_mostrado:
         mostrar_dialogo(titulo_dialogo_nivel_completado)
         dialogo_nivel_completado_mostrado = true
 
 # Función para mostrar el diálogo
 func mostrar_dialogo(titulo: String):
-    """Muestra un diálogo con el título especificado"""
-    # Aquí puedes implementar la lógica para mostrar el diálogo
-    # Por ejemplo, si tienes un sistema de diálogos global:
     if Global.has_method("invoke_dialog"):
         Global.invoke_dialog(LEVEL_DIALOG,titulo)
     else:
@@ -88,23 +80,19 @@ func mostrar_dialogo(titulo: String):
 
 # Función para resetear el estado de diálogos mostrados
 func resetear_dialogos():
-    """Resetea el estado de todos los diálogos para permitir que se muestren nuevamente"""
     dialogo_posicion_mostrado = false
     dialogo_primera_ecuacion_mostrado = false
     dialogo_nivel_completado_mostrado = false
 
 # Función para forzar mostrar un diálogo específico
 func forzar_dialogo_posicion():
-    """Fuerza la visualización del diálogo de posición"""
     if mostrar_dialogo_jugador_en_posicion:
         mostrar_dialogo(titulo_dialogo_posicion)
 
 func forzar_dialogo_primera_ecuacion():
-    """Fuerza la visualización del diálogo de primera ecuación"""
     if mostrar_dialogo_primera_ecuacion_resuelta:
         mostrar_dialogo(titulo_dialogo_primera_ecuacion)
 
 func forzar_dialogo_nivel_completado():
-    """Fuerza la visualización del diálogo de nivel completado"""
     if mostrar_dialogo_nivel_completado:
         mostrar_dialogo(titulo_dialogo_nivel_completado)

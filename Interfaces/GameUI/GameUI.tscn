@@ -1,7 +1,53 @@
-[gd_scene load_steps=8 format=3 uid="uid://dowkj7lifbfvv"]
+[gd_scene load_steps=22 format=3 uid="uid://dowkj7lifbfvv"]
 
 [ext_resource type="Script" uid="uid://b72762bhmfs18" path="res://Interfaces/GameUI/game_ui.gd" id="1_1dfbg"]
+[ext_resource type="Theme" uid="uid://cls00qus7lehp" path="res://Interfaces/Themes/main_theme.tres" id="1_1qgfd"]
 [ext_resource type="Texture2D" uid="uid://bidiicvvanfh6" path="res://assets/TouchButtons.png" id="2_re3ht"]
+[ext_resource type="Texture2D" uid="uid://chj8dullqeyre" path="res://assets/FantasyUIfree/FantasyUIfree/freefantasy.png" id="4_xvwgp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0uep1"]
+atlas = ExtResource("4_xvwgp")
+region = Rect2(113, 178, 14, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7o6gf"]
+texture = SubResource("AtlasTexture_0uep1")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6c8hk"]
+atlas = ExtResource("4_xvwgp")
+region = Rect2(113, 178, 14, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gtgys"]
+texture = SubResource("AtlasTexture_6c8hk")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qo0ly"]
+atlas = ExtResource("4_xvwgp")
+region = Rect2(97, 177, 14, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_abnio"]
+texture = SubResource("AtlasTexture_qo0ly")
+
+[sub_resource type="Theme" id="Theme_n2nj0"]
+Button/styles/focus = SubResource("StyleBoxTexture_7o6gf")
+Button/styles/hover = SubResource("StyleBoxTexture_gtgys")
+Button/styles/normal = SubResource("StyleBoxTexture_abnio")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gtgys"]
+atlas = ExtResource("4_xvwgp")
+region = Rect2(81, 226, 14, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qo0ly"]
+texture = SubResource("AtlasTexture_gtgys")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7o6gf"]
+atlas = ExtResource("4_xvwgp")
+region = Rect2(65, 225, 14, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6c8hk"]
+texture = SubResource("AtlasTexture_7o6gf")
+
+[sub_resource type="Theme" id="Theme_gtgys"]
+Button/styles/hover = SubResource("StyleBoxTexture_qo0ly")
+Button/styles/normal = SubResource("StyleBoxTexture_6c8hk")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1qgfd"]
 atlas = ExtResource("2_re3ht")
@@ -24,6 +70,7 @@ atlas = ExtResource("2_re3ht")
 region = Rect2(256, 0, 64, 64)
 
 [node name="GameUi" type="Control"]
+z_index = 100
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,6 +79,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("1_1qgfd")
 script = ExtResource("1_1dfbg")
 
 [node name="AspectContainer" type="AspectRatioContainer" parent="."]
@@ -42,6 +90,41 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="BG" type="Panel" parent="AspectContainer"]
+visible = false
+show_behind_parent = true
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="AspectContainer"]
+custom_minimum_size = Vector2(96, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="GridContainer" type="GridContainer" parent="AspectContainer/MarginContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Pausa" type="Button" parent="AspectContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource("Theme_n2nj0")
+text = "
+"
+
+[node name="Help" type="Button" parent="AspectContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_gtgys")
+text = "
+"
 
 [node name="Touch" type="Control" parent="AspectContainer"]
 modulate = Color(1, 1, 1, 0.392157)
@@ -125,29 +208,30 @@ action = "primary"
 visibility_mode = 1
 
 [node name="BotonesNivel" type="VBoxContainer" parent="AspectContainer"]
+visible = false
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 8
-alignment = 1
 
-[node name="Help" type="Button" parent="AspectContainer/BotonesNivel"]
+[node name="Menu" type="Button" parent="AspectContainer/BotonesNivel"]
 layout_mode = 2
-text = "Ayuda"
+text = "Menu Principal"
 
 [node name="Reset" type="Button" parent="AspectContainer/BotonesNivel"]
 layout_mode = 2
 text = "Reiniciar"
 
-[node name="Menu" type="Button" parent="AspectContainer/BotonesNivel"]
+[node name="Reanudar" type="Button" parent="AspectContainer/BotonesNivel"]
 layout_mode = 2
-text = "Menu"
+text = "Reanudar
+"
 
 [node name="BotonesDev" type="VBoxContainer" parent="AspectContainer"]
 visible = false
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 4
+size_flags_horizontal = 4
+size_flags_vertical = 0
 theme_override_constants/separation = 8
 alignment = 1
 
@@ -160,12 +244,10 @@ text = "NextLevel
 layout_mode = 2
 text = "LastLevel"
 
-[node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
-zoom = Vector2(0.91, 0.91)
-
-[connection signal="pressed" from="AspectContainer/BotonesNivel/Help" to="." method="_on_help_test_pressed"]
-[connection signal="pressed" from="AspectContainer/BotonesNivel/Reset" to="." method="_on_reset_pressed"]
+[connection signal="pressed" from="AspectContainer/MarginContainer/GridContainer/Pausa" to="." method="_on_pause_pressed"]
+[connection signal="pressed" from="AspectContainer/MarginContainer/GridContainer/Help" to="." method="_on_help_test_pressed"]
 [connection signal="pressed" from="AspectContainer/BotonesNivel/Menu" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="AspectContainer/BotonesNivel/Reset" to="." method="_on_reset_pressed"]
+[connection signal="pressed" from="AspectContainer/BotonesNivel/Reanudar" to="." method="_on_pause_pressed"]
 [connection signal="pressed" from="AspectContainer/BotonesDev/NextLevel" to="." method="_on_next_level_pressed"]
 [connection signal="pressed" from="AspectContainer/BotonesDev/LastLevel" to="." method="_on_last_level_pressed"]

@@ -28,9 +28,9 @@ var time_reference: Dictionary = {
 var moves_reference: Dictionary = {
 	"tuto_1": 20,
 	"tuto_2": 20,
-	"level_1":20,
-	"level_2":26,
-	"level_3":39,
+	"level_1":26,
+	"level_2":30,
+	"level_3":50,
 	"level_4":73,
 	"level_5":115,
 	"level_6": 145,
@@ -56,7 +56,7 @@ func _ready() -> void:
 
 # Muestra las estrellas según el Vector3 (x,y,z -> 0/1).
 # Resetea las texturas y lanza la animación con 0.5s entre cada estrella.
-func show_stars(shown: Vector3) -> void:
+func show_stars(shown: Vector3,animation:bool = true) -> void:
 	if is_animating:
 		return
 
@@ -65,18 +65,32 @@ func show_stars(shown: Vector3) -> void:
 		if child is TextureRect:
 			child.texture = star_void
 
-	# Iniciar animación
-	_animate_stars(shown)
+	if animation:
+		# Iniciar animación
+		_animate_stars(shown)
+	else:
+		var vals: Array = [int(shown.x), int(shown.y), int(shown.z)]
+		for i in range(3):
+			
+			var star = stars[i]
+			if star is TextureRect:
+				if vals[i] == 1:
+					star.texture = star_filled
+					
+				star.visible = true
 
 
-# Función principal para cargar estadísticas, calcular y mostrar estrellas
+
+
+
+# Función principal para cargar estadísticas, calcular y mostrar estrellas llamado por nivel completado
 func load_and_show_level_stats(time: float, moves: int, level_id: Variant) -> Dictionary:
 	# Convertir level_id a String para consistencia
 	var id_str: String = str(level_id)
 	last_level_id = id_str
 	
 	# Calcular estrellas
-	last_stars = calcular_estrellas(time, moves, id_str)
+	last_stars = calculate_stars(time, moves, id_str)
 	
 	# Mostrar las estrellas con animación
 	show_stars(last_stars)
@@ -89,8 +103,11 @@ func load_and_show_level_stats(time: float, moves: int, level_id: Variant) -> Di
 		"total_stars": cant_stars()
 	}
 
+
+
+
 # Calcula 3 estrellas: completado, tiempo y movimientos.
-func calcular_estrellas(time: float, moves: int, id: String) -> Vector3:
+func calculate_stars(time: float, moves: int, id: String) -> Vector3:
 	var estrellas := Vector3(0, 0, 0)
 
 	# Primera estrella: siempre otorgada por completar el nivel
@@ -109,6 +126,8 @@ func calcular_estrellas(time: float, moves: int, id: String) -> Vector3:
 			estrellas.z = 1
 
 	return estrellas
+
+
 
 # Verifica si el tiempo supera el threshold para obtener la estrella
 func has_time_star(level_id: String) -> bool:

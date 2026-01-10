@@ -13,10 +13,10 @@ class_name Cell
 
 var styles = {
 	"header" = {
-		"fondo": Color("#572491"),
+		"fondo": Color("#603196ff"),
 		"texto": Color("#e6d0a1"),
 		"bold": true,
-		"tamaño": 14
+		"tamaño": 32
 	},
 	"normal" = {
 		"fondo": Color("#e6d0a1"),
